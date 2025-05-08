@@ -199,6 +199,8 @@ class Skin_Loop_Base extends Skin_Base {
 	 * @since 3.8.0
 	 */
 	protected function render_post() {
+		error_log('Skin_Loop_Base: render_post called for product: ' . get_the_ID());
+		
 		if ( $this->has_alternate_templates() ) {
 			$this->render_post_if_widget_has_alternate_templates();
 		} else {

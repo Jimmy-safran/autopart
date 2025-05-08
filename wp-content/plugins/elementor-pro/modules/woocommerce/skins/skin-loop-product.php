@@ -31,6 +31,8 @@ class Skin_Loop_Product extends Skin_Loop_Base {
 	}
 
 	public function render() {
+		error_log('Rendering Products Widget');
+		
 		$this->parent->add_render_attribute( '_wrapper', 'class', 'woocommerce' );
 
 		global $wp_query;
@@ -56,6 +58,9 @@ class Skin_Loop_Product extends Skin_Loop_Base {
 
 	protected function render_post() {
 		global $product;
+		
+		error_log('Rendering product: ' . get_the_ID());
+		error_log('Template file: ' . locate_template('woocommerce/content-product.php'));
 
 		if ( ! $product instanceof \WC_Product ) {
 			$product = wc_get_product( get_the_ID() );

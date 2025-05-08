@@ -1,5 +1,5 @@
 <?php
-
+	
 	$shop_sidebar = get_theme_mod('shop_sidebar');
 
 	if (is_active_sidebar('shop-widgets') && empty($shop_sidebar) && !defined('ENOVATHEMES_ADDONS')) {
