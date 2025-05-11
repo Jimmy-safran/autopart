@@ -18,3 +18,13 @@ Updated: 2025-04-24 18:30:09
 /*this is the add-to-cart part's style in product page */
 
 
+/* input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+} */

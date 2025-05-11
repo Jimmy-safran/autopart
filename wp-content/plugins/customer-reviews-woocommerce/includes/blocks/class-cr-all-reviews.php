@@ -468,61 +468,8 @@ if (! class_exists('CR_All_Reviews')) :
 				$return .= $this->show_summary_table();
 			}
 
-			// show media files uploaded by customers
-			if ( $this->shortcode_atts['show_media'] ) {
-				$return .= CR_Reviews::display_review_images_top( $comments_media );
-			}
-
-			$return .= CR_Ajax_Reviews::get_search_field( true );
-
-			// show tags
-			$return .= CR_Ajax_Reviews::get_tags_field( $comments_tags );
-
-			// show count of reviews
-			$return .= $this->show_count_row( $top_comments_count, $page, $per_page, 0 == $this->shortcode_atts['show_more'], 0, 0 );
-
-			if( 0 >= count( $comments ) ) {
-				$return .= '<p class="cr-search-no-reviews">' . esc_html__( 'Sorry, no reviews match your current selections', 'customer-reviews-woocommerce' ) . '</p>';
-				$return .= '</div>';
-				return $return;
-			}
-
-			$hide_avatars = 'hidden' === $this->shortcode_atts['avatars'] ? true : false;
-
-			$return .= '<ol class="commentlist">';
-			if ( 'initials' === $this->shortcode_atts['avatars'] ) {
-				add_filter( 'get_avatar', array( 'CR_Reviews_Grid', 'cr_get_avatar' ), 10, 5 );
-			}
-			$return .= wp_list_comments( apply_filters('ivole_product_review_list_args', array(
-				'callback' => array( 'CR_Reviews', 'callback_comments' ),
-				'page'  => 1,
-				'per_page' => $per_page,
-				'reverse_top_level' => false,
-				'echo' => false,
-				'cr_show_products' => $this->shortcode_atts['show_products'],
-				'cr_hide_avatars' => $hide_avatars
-			)), $comments );
-			if ( 'initials' === $this->shortcode_atts['avatars'] ) {
-				remove_filter( 'get_avatar', array( 'CR_Reviews_Grid', 'cr_get_avatar' ) );
-			}
-			$return .= '<span class="cr-pagination-review-spinner"></span>';
-			$return .= '</ol>';
-
-			if ( $this->shortcode_atts['show_more'] == 0 ) {
-				$pages = ceil( $top_comments_count / $per_page );
-				// echo the pagination
-				$return .= '<div class="cr-all-reviews-pagination">';
-				$return .= self::cr_paginate_links($page, $pages);
-				$return .= '</div>';
-			} else {
-				if( $this->shortcode_atts['show_more'] < $top_comments_count ) {
-					$return .= '<button id="cr-show-more-all-reviews" class="cr-show-more-button" type="button" data-page="1">';
-					$return .=  sprintf( __( 'Show more reviews (%d)', 'customer-reviews-woocommerce' ), $top_comments_count - $this->shortcode_atts['show_more'] );
-					$return .= '</button>';
-				}
-			}
-			$return .= '<span class="cr-show-more-review-spinner" style="display:none;"></span>';
-			$return .= '<p class="cr-search-no-reviews" style="display:none">' . esc_html__( 'Sorry, no reviews match your current selections', 'customer-reviews-woocommerce' ) . '</p>';
+			
+			
 
 			$return .= '</div>';
 
@@ -843,6 +790,8 @@ if (! class_exists('CR_All_Reviews')) :
 			}
 
 			$summary_box_classes = 'cr-summaryBox-wrap';
+			
+			
 			if ( $this->shortcode_atts['add_review'] ) {
 				$summary_box_classes .= ' cr-summaryBox-add-review';
 			}
@@ -851,12 +800,22 @@ if (! class_exists('CR_All_Reviews')) :
 			if ( $this->shortcode_atts['add_review'] ) {
 				$output .= '<div class="cr-summary-separator-side"></div>';
 			}
+
+
+			$output .= '<div>';
+			$output .= '<div><span><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></div>';
+			
 			$output .= '<div class="cr-overall-rating-wrap">';
-			$output .= '<div class="cr-average-rating"><span>' . number_format_i18n( $average, 1 ) . '</span></div>';
-			$output .= '<div class="cr-average-rating-stars"><div class="crstar-rating-svg" role="img" aria-label="' . esc_attr( sprintf( __( 'Rated %s out of 5', 'woocommerce' ), number_format_i18n( $average, 1 ) ) ) . '">' . CR_Reviews::get_star_rating_svg( $average, 0, '' ) . '</div></div>';
-			$output .= '<div class="cr-total-rating-count">' . sprintf( _n( 'Based on %s review', 'Based on %s reviews', $all, 'customer-reviews-woocommerce' ), number_format_i18n( $all ) ) . '</div>';
+			$output .= '<div class="cr-average-rating">';
+			$output .= '<span>' . number_format_i18n( $average, 1 ) . '</span>';
+			$output .= '<span class="slash-five">/5</span>';
+			$output .= '</div>'; 
+
+			$output .= '<div class="cr-total-rating-count">' . sprintf( _n( 'global ratings from %s reviews', 'global ratings from %s reviews', $all, 'customer-reviews-woocommerce' ), number_format_i18n( $all ) ) . '</div>';
+			
 			$output .= '</div>';
-			$output .= '<div class="cr-summary-separator"><div class="cr-summary-separator-int"></div></div>';
+			$output .= '</div>';
+
 			if( 0 < $this->shortcode_atts['show_more'] ) {
 				$output .= '<div class="ivole-summaryBox cr-all-reviews-ajax">';
 			} else {
@@ -867,11 +826,13 @@ if (! class_exists('CR_All_Reviews')) :
 			$output .= '<tr class="ivole-histogramRow">';
 			// five
 			if( $five > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="5">' . __( '5 star', 'customer-reviews-woocommerce' ) . '</span></td>';
-				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="5"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%">' . $five_percent . '</div></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="5">' . (string)$five_percent . '%</span></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="5">' . __( '5', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="5"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%">' . $five . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="5">' . (string)$five . '</span></td>';
 			} else {
-				$output .= '<td class="ivole-histogramCell1">' . __('5 star', 'customer-reviews-woocommerce') . '</td>';
+				$output .= '<td class="ivole-histogramCell1">' . __('5', 'customer-reviews-woocommerce') . '</td>';
+				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%"></div></div></td>';
 				$output .= '<td class="ivole-histogramCell3">' . (string)$five_percent . '%</td>';
 			}
@@ -880,11 +841,13 @@ if (! class_exists('CR_All_Reviews')) :
 			$output .= '<tr class="ivole-histogramRow">';
 			// four
 			if( $four > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="4">' . __( '4 star', 'customer-reviews-woocommerce' ) . '</span></td>';
-				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="4"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%">' . $four_percent . '</div></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="4">' . (string)$four_percent . '%</span></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="4">' . __( '4', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="4"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%">' . $four . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="4">' . (string)$four . '</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __('4 star', 'customer-reviews-woocommerce') . '</td>';
+				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%"></div></div></td>';
 				$output .= '<td class="ivole-histogramCell3">' . (string)$four_percent . '%</td>';
 			}
@@ -893,11 +856,13 @@ if (! class_exists('CR_All_Reviews')) :
 			$output .= '<tr class="ivole-histogramRow">';
 			// three
 			if( $three > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="3">' . __( '3 star', 'customer-reviews-woocommerce' ) . '</span></td>';
-				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="3"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%">' . $three_percent . '</div></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="3">' . (string)$three_percent . '%</span></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="3">' . __( '3', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="3"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%">' . $three . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="3">' . (string)$three . '</span></td>';
 			} else {
-				$output .= '<td class="ivole-histogramCell1">' . __('3 star', 'customer-reviews-woocommerce') . '</td>';
+				$output .= '<td class="ivole-histogramCell1">' . __('3', 'customer-reviews-woocommerce') . '</td>';
+				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%"></div></div></td>';
 				$output .= '<td class="ivole-histogramCell3">' . (string)$three_percent . '%</td>';
 			}
@@ -906,11 +871,13 @@ if (! class_exists('CR_All_Reviews')) :
 			$output .= '<tr class="ivole-histogramRow">';
 			// two
 			if( $two > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="2">' . __( '2 star', 'customer-reviews-woocommerce' ) . '</span></td>';
-				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%">' . $two_percent .'</div></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="2">' . (string)$two_percent . '%</span></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="2">' . __( '2', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%">' . $two .'</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="2">' . (string)$two . '</span></td>';
 			} else {
-				$output .= '<td class="ivole-histogramCell1">' . __('2 star', 'customer-reviews-woocommerce') . '</td>';
+				$output .= '<td class="ivole-histogramCell1">' . __('2', 'customer-reviews-woocommerce') . '</td>';
+				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%"></div></div></td>';
 				$output .= '<td class="ivole-histogramCell3">' . (string)$two_percent . '%</td>';
 			}
@@ -919,11 +886,13 @@ if (! class_exists('CR_All_Reviews')) :
 			$output .= '<tr class="ivole-histogramRow">';
 			// one
 			if( $one > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="1">' . __( '1 star', 'customer-reviews-woocommerce' ) . '</span></td>';
-				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="1"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%">' . $one_percent . '</div></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="1">' . (string)$one_percent . '%</span></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="1">' . __( '1', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="1"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%">' . $one . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="1">' . (string)$one . '</span></td>';
 			} else {
-				$output .= '<td class="ivole-histogramCell1">' . __('1 star', 'customer-reviews-woocommerce') . '</td>';
+				$output .= '<td class="ivole-histogramCell1">' . __('1', 'customer-reviews-woocommerce') . '</td>';
+				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%"></div></div></td>';
 				$output .= '<td class="ivole-histogramCell3">' . (string)$one_percent . '%</td>';
 			}
@@ -939,6 +908,8 @@ if (! class_exists('CR_All_Reviews')) :
 				$output .= '</div>';
 				$output .= '<div class="cr-summary-separator-side"></div>';
 			}
+			$output .= '<div><span>Reviews sorted from newest to oldest</span></div>';
+
 			$output .= '</div>';
 			return $output;
 		}

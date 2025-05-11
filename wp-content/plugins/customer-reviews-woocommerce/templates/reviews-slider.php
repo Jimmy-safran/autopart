@@ -37,62 +37,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 							}
 							?>
 						</div>
-						<?php
-						if( 'yes' === get_option( 'woocommerce_review_rating_verification_label' ) && wc_review_is_from_verified_owner( $review->comment_ID ) ) {
-							echo '<div class="reviewer-verified">';
-							echo '<img class="cr-reviewer-verified" src="' . plugin_dir_url( dirname( __FILE__ ) ) . 'img/verified.svg' . '" alt="' . $verified_text . '" width="22" height="22" loading="lazy" />';
-							echo $verified_text;
-							echo '</div>';
-						} else {
-							echo '<div class="reviewer-verified">';
-							echo esc_html__( 'Reviewer', 'customer-reviews-woocommerce' );
-							echo '</div>';
-						}
-						?>
+						
+						
 					</div>
 				</div>
 				<div class="rating-row">
 					<div class="rating">
 						<div class="crstar-rating-svg" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'woocommerce' ), $rating ) ); ?>"><?php echo CR_Reviews::get_star_rating_svg( $rating, 0, '' ); ?></div>
 					</div>
-					<div class="rating-label">
-						<?php echo $rating . '/5'; ?>
+					
+				</div>
+				<div class="purchasing_row">
+					<div>
+						<?php echo 'Purchased on:'; ?>
+					</div>
+					<div>
+						<?php
+							echo 'Leave a review on' . $review->comment_date;
+							
+						?>
 					</div>
 				</div>
 				<?php
 					do_action( 'cr_slider_before_review_text', $review );
 				?>
-				<div class="middle-row">
-					<div class="review-content">
-						<div class="review-text">
-						<?php
-						$clear_content = wp_strip_all_tags( $review->comment_content );
-						if( $max_chars && mb_strlen( $clear_content ) > $max_chars ) {
-							$less_content = wp_kses_post( mb_substr( $clear_content, 0, $max_chars ) );
-							$more_content = wp_kses_post( mb_substr( $clear_content, $max_chars ) );
-							$read_more = '<span class="cr-slider-read-more">...<br><a href="#">' . esc_html__( 'Show More', 'customer-reviews-woocommerce' ) . '</a></span>';
-							$more_content = '<div class="cr-slider-details" style="display:none;">' . $more_content . '<br><span class="cr-slider-read-less"><a href="#">' . esc_html__( 'Show Less', 'customer-reviews-woocommerce' ) . '</a></span></div>';
-							$comment_content = $less_content . $read_more . $more_content;
-							echo $comment_content;
-						} else {
-							echo wpautop( wp_kses_post( $review->comment_content ) );
-						}
-						?>
-						</div>
-					</div>
-					<?php if ( $order_id && intval( $review->comment_post_ID ) !== intval( $shop_page_id ) ): ?>
-						<div class="verified-review-row">
-							<div class="verified-badge"><?php printf( $badge, $review->comment_post_ID, $order_id ); ?></div>
-						</div>
-					<?php elseif ( $order_id && intval( $review->comment_post_ID ) === intval( $shop_page_id ) ): ?>
-						<div class="verified-review-row">
-							<div class="verified-badge"><?php printf( $badge_sr, $order_id ); ?></div>
-						</div>
-					<?php endif; ?>
-					<div class="datetime">
-						<?php printf( _x( '%s ago', '%s = human-readable time difference', 'customer-reviews-woocommerce' ), human_time_diff( mysql2date( 'U', $review->comment_date, true ), current_time( 'timestamp' ) ) ); ?>
-					</div>
-				</div>
+				
 				<?php
 				if ( $incentivized_label ) :
 					$coupon_code = get_comment_meta( $review->comment_ID, 'cr_coupon_code', true );

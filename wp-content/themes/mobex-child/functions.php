@@ -630,3 +630,23 @@ add_action( 'wp_loaded', function() {
     remove_action( 'woocommerce_after_single_product', 'mobex_enovathemes_woocommerce_after_single_product' );
 } );
 
+
+
+// customizing the customer reviews plugin
+
+
+
+function load_custom_cr_all_reviews() {
+    $custom_file = get_stylesheet_directory() . '/customizations/customer-reviews-woocommerce/includes/blocks/class-cr-all-reviews.php';
+    if ( file_exists( $custom_file ) ) {
+        require_once $custom_file;
+    } else {
+        error_log( 'Custom file not found: ' . $custom_file );
+    }
+}
+
+add_action( 'init', 'load_custom_cr_all_reviews', 20 );
+
+add_action( 'plugins_loaded', function() {
+    remove_action( 'init', 'original_plugin_function_that_loads_class_cr_all_reviews' );
+}, 20 );

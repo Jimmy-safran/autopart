@@ -736,9 +736,9 @@ function enovathemes_addons_include_dynamic_styles() {
 	$dynamic_css = "";
 
 	$dynamic_css_caches = enovathemes_addons_dynamic_styles_cached();
-	if (!empty($dynamic_css_caches)) {
-		$dynamic_css .= $dynamic_css_caches;
-	}
+	// if (!empty($dynamic_css_caches)) {
+	// 	$dynamic_css .= $dynamic_css_caches;
+	// }
 
 	if (is_plugin_active( 'elementor/elementor.php' )) {
             

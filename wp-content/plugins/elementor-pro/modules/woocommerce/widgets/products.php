@@ -14,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-
 class Products extends Products_Base {
 
 	use Products_Trait;
@@ -351,13 +350,10 @@ class Products extends Products_Base {
 
 	protected function render() {
 
-		
-
 		if ( WC()->session ) {
 			wc_print_notices();
 		}
 
-		
 		$settings = $this->get_settings_for_display();
 		$post_type_setting = $settings[ Products_Renderer::QUERY_CONTROL_NAME . '_post_type' ];
 
