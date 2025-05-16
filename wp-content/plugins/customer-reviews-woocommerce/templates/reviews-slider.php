@@ -53,7 +53,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 					<div>
 						<?php
-							echo 'Leave a review on' . $review->comment_date;
+							$datetime_object = new DateTime($review->comment_date);
+
+							// Format the DateTime object to display only the date (YYYY-MM-DD)
+							
+							echo 'Leave a review on' . ' ' . $datetime_object->format('Y-m-d');
 							
 						?>
 					</div>

@@ -1,0 +1,49 @@
+/* (Your existing CSS for accordion) */
+.faq-accordion {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.faq-question {
+    background-color: #f8f8f8;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.faq-question::after {
+    content: '\25BE'; /* Down arrow */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.faq-question.collapsed::after {
+    content: '\25B8'; /* Right arrow */
+}
+
+.faq-answer {
+    padding: 10px;
+    display: none;
+    background-color: #fff;
+}
+
+.faq-accordion.open .faq-answer {
+    display: block;
+}
+
+.styled-acf-field {
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+
+.styled-acf-field p {
+    margin-bottom: 10px;
+}

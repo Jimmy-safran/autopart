@@ -1,0 +1,49 @@
+.js-categories-list a, .js-categories-list a:focus, .js-categories-list a:hover {
+  text-decoration: none;
+}
+.js-categories-list .loading {
+  display: inline-block;
+  padding-left: 5px;
+  vertical-align: middle;
+  width: 25px;
+}
+
+.jcl-hide {
+  display: none;
+}
+
+body .wp-block-js-categories-list-categories-widget ul.jcl_widget,
+body .wp-block-js-categories-list-categories-widget ul.jcl_widget ul,
+body ul.jcl_widget, ul.jcl_widget ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.wp-block-js-categories-list-categories-widget ul.jcl_widget li,
+.jcl_widget ul li {
+  list-style: none;
+}
+
+.jcl_widget li a {
+  display: inline-block;
+}
+
+/** Bullet's padding **/
+.jcl_symbol {
+  width: 16px;
+  min-height: 16px;
+}
+
+.layout-left .jcl_symbol {
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.layout-right .jcl_symbol {
+  margin-left: 5px;
+}
+.layout-right .no_child {
+  display: none;
+}
+
+/*# sourceMappingURL=jcl.css.map */

@@ -23,6 +23,106 @@ add_action( 'wp_enqueue_scripts', 'chld_thm_cfg_parent_css', 10 );
 
 // END ENQUEUE PARENT ACTION
 
+
+
+
+
+// product's categories side bar
+function get_hierarchical_product_categories() {
+    $categories = get_terms(
+        array(
+            'taxonomy'   => 'product_cat',
+            'hide_empty' => true,
+            'orderby'    => 'name',
+            'order'      => 'ASC',
+            'parent'     => 0,
+        )
+    );
+
+    $category_tree = array();
+    if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
+        foreach ( $categories as $category ) {
+            $category_tree[] = get_category_data( $category );
+        }
+    }
+    return $category_tree;
+}
+
+/**
+ * Recursive function to get category data, including subcategories.
+ */
+function get_category_data( $category ) {
+    $category_data = array(
+        'id'       => $category->term_id,
+        'name'     => $category->name,
+        'slug'     => $category->slug,
+        'url'      => get_term_link( $category ),
+        'children' => array(),
+    );
+
+    $subcategories = get_terms(
+        array(
+            'taxonomy'   => 'product_cat',
+            'hide_empty' => true,
+            'orderby'    => 'name',
+            'order'      => 'ASC',
+            'parent'     => $category->term_id,
+        )
+    );
+
+    if ( ! empty( $subcategories ) && ! is_wp_error( $subcategories ) ) {
+        foreach ( $subcategories as $subcategory ) {
+            $category_data['children'][] = get_category_data( $subcategory );
+        }
+    }
+
+    return $category_data;
+}
+
+function display_categories_frontend($categories, $level = 0) {
+    foreach ($categories as $category) {
+        $has_children = false;
+        if (!empty($category['children'])) {
+            $has_children = true;
+        }
+        echo '<li class="product-category-item level-' . $level . ' ' . ($has_children ? 'has-children' : '') . '" data-category-id="' . $category['id'] . '" data-category-name="' . $category['name'] . '" data-category-slug="' . $category['slug'] . '" data-category-url="' . $category['url'] . '">';
+        echo '<a href="#" class="category-link">';
+        echo esc_html($category['name']);
+        echo '</a>';
+        if (!empty($category['children'])) {
+            echo '<ul class="product-categories-list sub-level" data-parent-id="' . $category['id'] . '" style="display:none;">';
+            display_categories_frontend($category['children'], $level + 1);
+            echo '</ul>';
+        }
+        echo '</li>';
+    }
+}
+
+function product_categories_shortcode() {
+    $categories = get_hierarchical_product_categories();
+    ob_start();
+    ?>
+    <div class="product-categories-wrapper">
+        <ul class="product-categories-list main-level">
+            <?php display_categories_frontend($categories, 0); ?>
+        </ul>
+    </div>
+    <div class="category-screen" style="display: none;"></div>
+    <?php
+    $output = ob_get_clean();
+    return $output;
+}
+add_shortcode( 'custom_product_categories', 'product_categories_shortcode' );
+
+function my_category_scripts() {
+        wp_enqueue_script( 'my-categories-script', get_stylesheet_directory_uri() . '/js/product-categories-sidebar.js', array('jquery'), '1.0.0', true );
+}
+add_action( 'wp_enqueue_scripts', 'my_category_scripts' );
+
+
+
+
+
 /**
  * Shortcode to display product features from a custom field.
  */
@@ -464,7 +564,7 @@ function manufacturer_references_shortcode( $atts ) {
             foreach ( $manufacturers_data as $manufacturer => $references ) {
                 $output .= '<div class="manufacturer-item">';
                 $output .= '<h3>' . esc_html( strtoupper( $manufacturer ) ) . '</h3>';
-                $output .= '<p>' . esc_html( implode( ', ', $references ) ) . '</p>';
+                $output .= '<p><a href="#">' . esc_html( implode( ', ', $references ) ) . '</a></p>';
                 $output .= '</div>';
             }
         } else {
@@ -484,7 +584,7 @@ function manufacturer_references_styles() {
     ?>
     <style type="text/css">
         .manufacturer-references-wrapper {
-            background-color: #f7f7f7;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 5px;
             
@@ -557,7 +657,7 @@ function equivalent_references_shortcode( $atts ) {
             foreach ( $manufacturers_data as $manufacturer => $references ) {
                 $output .= '<div class="manufacturer-item">';
                 $output .= '<h3>' . esc_html( strtoupper( $manufacturer ) ) . '</h3>';
-                $output .= '<p>' . esc_html( implode( ', ', $references ) ) . '</p>';
+                $output .= '<p><a href="#">' . esc_html( implode( ', ', $references ) ) . '</a></p>';
                 $output .= '</div>';
             }
         } else {
@@ -607,7 +707,7 @@ function mount_on_shortcode( $atts ) {
             foreach ( $manufacturers_data as $manufacturer => $references ) {
                 $output .= '<div class="manufacturer-item">';
                 $output .= '<h3>' . esc_html( strtoupper( $manufacturer ) ) . '</h3>';
-                $output .= '<p>' . esc_html( implode( ', ', $references ) ) . '</p>';
+                $output .= '<p><a href="#">' . esc_html( implode( ', ', $references ) ) . '</a></p>';
                 $output .= '</div>';
             }
         } else {
@@ -632,21 +732,402 @@ add_action( 'wp_loaded', function() {
 
 
 
-// customizing the customer reviews plugin
+
+/**
+ * Shortcode to display a category ACF field with styled output.
+ *
+ * @param array $atts Shortcode attributes.
+ * - field_name (string, required): The name of the ACF field.
+ * @return string The output HTML, styled to resemble the image.
+ */
+
+
+ function styled_category_acf_field_shortcode() {
+
+    $output = "";
+
+    $main_summary = get_category_acf_field( "main_summary" );
+
+    if ( $main_summary ) {
+        $sentences = preg_split('/([.?!]["\']?\s|$)/', wp_strip_all_tags( $main_summary ), -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        $title = isset($sentences[0]) ? trim($sentences[0]) : '';
+        $content_raw = '';
+        for ($i = 1; $i < count($sentences); $i++) {
+            $content_raw .= trim($sentences[$i]);
+        }
+        $content = ltrim($content_raw, '? ');
+
+        $output .= '<div class="styled-acf-field">';
+        if ($title) {
+            $output .= '<h6>' . wp_kses_post( $title . (substr(rtrim($title), -1) === '?' ? '' : '?') ) . '</h6>';
+        }
+        if ($content) {
+            $paragraphs = explode( "\n", $content );
+            foreach ( $paragraphs as $p ) {
+                $p = trim($p);
+                if (!empty($p)) {
+                    $output .= '<p>' . wp_kses_post( $p ) . '</p>';
+                }
+            }
+        }
+
+        $faq1_content = get_category_acf_field( "faq1" );
+        if ( $faq1_content ) {
+            $sentences_faq1 = preg_split('/([.?!]["\']?\s|$)/', wp_strip_all_tags( $faq1_content ), -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+            $title_faq1 = isset($sentences_faq1[0]) ? trim($sentences_faq1[0]) : 'FAQ';
+            $content_faq1_raw = '';
+            for ($i = 1; $i < count($sentences_faq1); $i++) {
+                $content_faq1_raw .= trim($sentences_faq1[$i]);
+            }
+            $content_faq1 = ltrim($content_faq1_raw, '? ');
+            $output .= '<div class="faq-accordion">';
+            $output .= '<h6 class="faq-question">' . wp_kses_post( $title_faq1 . (substr(rtrim($title_faq1), -1) === '?' ? '' : '?') ) . '</h6>';
+            $paragraphs_faq1 = explode( "\n", $content_faq1 );
+            $output .= '<div class="faq-answer">';
+            foreach ( $paragraphs_faq1 as $p ) {
+                $p = trim($p);
+                if (!empty($p)) {
+                    $output .= '<p>' . wp_kses_post( $p ) . '</p>';
+                }
+            }
+            $output .= '</div>';
+            $output .= '</div>';
+        }
+
+        $faq2_content = get_category_acf_field( "faq2" );
+        if ( $faq2_content ) {
+            $sentences_faq2 = preg_split('/([.?!]["\']?\s|$)/', wp_strip_all_tags( $faq2_content ), -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+            $title_faq2 = isset($sentences_faq2[0]) ? trim($sentences_faq2[0]) : 'FAQ';
+            $content_faq2_raw = '';
+            for ($i = 1; $i < count($sentences_faq2); $i++) {
+                $content_faq2_raw .= trim($sentences_faq2[$i]);
+            }
+            $content_faq2 = ltrim($content_faq2_raw, '? ');
+            $output .= '<div class="faq-accordion">';
+            $output .= '<h6 class="faq-question">' . wp_kses_post( $title_faq2 . (substr(rtrim($title_faq2), -1) === '?' ? '' : '?') ) . '</h6>';
+            $paragraphs_faq2 = explode( "\n", $content_faq2 );
+            $output .= '<div class="faq-answer">';
+            foreach ( $paragraphs_faq2 as $p ) {
+                $p = trim($p);
+                if (!empty($p)) {
+                    $output .= '<p>' . wp_kses_post( $p ) . '</p>';
+                }
+            }
+            $output .= '</div>';
+            $output .= '</div>';
+        }
+
+        $faq3_content = get_category_acf_field( "faq3" );
+        if ( $faq3_content ) {
+            $sentences_faq3 = preg_split('/([.?!]["\']?\s|$)/', wp_strip_all_tags( $faq3_content ), -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+            $title_faq3 = isset($sentences_faq3[0]) ? trim($sentences_faq3[0]) : 'FAQ';
+            $content_faq3_raw = '';
+            for ($i = 1; $i < count($sentences_faq3); $i++) {
+                $content_faq3_raw .= trim($sentences_faq3[$i]);
+            }
+            $content_faq3 = ltrim($content_faq3_raw, '? ');
+            $output .= '<div class="faq-accordion">';
+            $output .= '<h6 class="faq-question">' . wp_kses_post( $title_faq3 . (substr(rtrim($title_faq3), -1) === '?' ? '' : '?') ) . '</h6>';
+            $paragraphs_faq3 = explode( "\n", $content_faq3 );
+            $output .= '<div class="faq-answer">';
+            foreach ( $paragraphs_faq3 as $p ) {
+                $p = trim($p);
+                if (!empty($p)) {
+                    $output .= '<p>' . wp_kses_post( $p ) . '</p>';
+                }
+            }
+            $output .= '</div>';
+            $output .= '</div>';
+        }
+
+        $output .= '</div>';
+    }
+
+    return $output;
+}
+add_shortcode( 'styled_category_info', 'styled_category_acf_field_shortcode' );
+
+function enqueue_category_accordion_styles() {
+    wp_enqueue_style( 'category-accordion-style', get_stylesheet_directory_uri() . '/css/category-accordion.css', array(), '1.0.0', 'all' );
+    // Adjust the path '/css/category-accordion.css' to the actual location of your CSS file.
+    // You can also adjust the version number '1.0.0' as needed.
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_category_accordion_styles' );
+
+function enqueue_category_accordion_scripts() {
+    wp_enqueue_script( 'category-accordion-script', get_stylesheet_directory_uri() . '/js/category-accordion.js', array(), '1.0.0', true );
+    // Adjust the path '/js/category-accordion.js' to the actual location of your JS file.
+    // The `true` argument ensures the script is loaded in the footer, which is generally recommended for performance.
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_category_accordion_scripts' );
 
 
 
-function load_custom_cr_all_reviews() {
-    $custom_file = get_stylesheet_directory() . '/customizations/customer-reviews-woocommerce/includes/blocks/class-cr-all-reviews.php';
-    if ( file_exists( $custom_file ) ) {
-        require_once $custom_file;
+
+
+function styled_link_acf_field_shortcode( $atts ) {
+    $atts = shortcode_atts( array(
+        'field_name' => '',
+        'field_name_2' => '',
+    ), $atts );
+
+    $field_name = sanitize_text_field( $atts['field_name'] );
+    $field_value = get_category_acf_field( $field_name ); // Use the function from the previous answer
+
+    $output = '';
+
+    if ( $field_value ) {
+        $output .= '<div style="
+            background-color: #f7f7f7;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            background-image: url(' . get_bloginfo('template_directory') . '/../../uploads/Tuto_Fallback.jpg);
+            background-size: cover;
+            background-position: center;
+            border-radius: 5px;
+            min-height: 200px;
+            position: relative;
+            padding-bottom: 10px; /* Reduced padding-bottom */
+            box-sizing: border-box;
+            box-shadow:1px 2px 9px -3px rgba(0,0,0,0.3) !important;
+        ">';
+
+        $output .= '<a href="' . $field_value . '" style="
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-indent: -9999px;
+            overflow: hidden;
+            z-index: 1;
+        ">ASSEMBLY TUTORIAL</a>';
+
+        $output .= '<div style="
+            text-align: center;
+            color: #fff;
+            z-index: 2;
+            padding-top: 0px; /* Removed padding-top */
+            position: relative;
+        ">';
+        $output .= '<p style="
+            font-size: 16px;
+            line-height: 1.5;
+            color: #fff; /* Set text color to white */
+            margin-bottom: 5px; /* Add a little margin between text and link */
+        ">Changing an alternator on a Peugeot 206 1.4 HDi</p>';
+        $output .= '<a href="'. $field_value .'" style="
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block; /* changed to inline-block */
+            
+        ">ASSEMBLY TUTORIAL</a>';
+        $output .= '</div>';
+        $output .= '</div>';
+        return $output;
+    }
+    return '';
+}
+add_shortcode( 'styled_link_category_acf', 'styled_link_acf_field_shortcode' );
+
+
+
+function get_category_acf_field( $field_name ) {
+    // Get the current category ID.
+    $current_category = get_queried_object();
+
+    if ( $current_category && isset( $current_category->term_id ) ) {
+        $category_id = $current_category->term_id;
+
+        // Get the ACF field value for the category.
+        $field_value = get_field( $field_name, 'product_cat_' . $category_id );
+        if ($field_value) {
+            return $field_value;
+        }
+    }
+    return ''; // Return empty string if no value
+}
+add_shortcode( 'styled_category_acf', 'styled_category_acf_field_shortcode' );
+
+// Show the total count of products in the current category
+function category_product_count_shortcode() {
+    global $wp_query;
+    $total_products = $wp_query->found_posts;
+    if ($total_products > 0) {
+        return '<h6 class="category-product-count">Total products in this category: ' . esc_html($total_products) . '</h6>';
+    }
+    return '';
+}
+add_shortcode('category_product_count', 'category_product_count_shortcode');
+
+
+
+
+
+
+
+
+function category_search_form_shortcode() {
+    // Generate a unique ID for the input field to avoid conflicts.
+    $input_id = 'category-search-input-' . uniqid();
+
+    $output = '<div class="category-search-wrapper" style="position: relative;">'; // Added position relative
+    $output .= '<label for="' . esc_attr( $input_id ) . '" class="screen-reader-text">' . esc_html_e( 'Search Products', 'your-theme-textdomain' ) . '</label>';
+    $output .= '<input type="search" id="' . esc_attr( $input_id ) . '" class="search-field" placeholder="' . esc_attr_e( 'Search Products...', 'your-theme-textdomain' ) . '" value="' . get_search_query() . '" name="s" style="width: 100%; padding-right: 40px; box-sizing: border-box;" />';
+    $output .= '<input type="hidden" name="post_type" value="product" />';
+    $output .= '<button type="submit" class="search-submit" style="position: absolute; top: 0; right: 0; height: 100%; background-color: #0078d7; color: white; border: none; padding: 0 10px; cursor: pointer; display: flex; align-items: center; border-radius: 0 5px 5px 0;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    </button>';
+
+    // Add a dropdown element.
+    $output .= '<select id="category-dropdown" name="product_cat" style="position: absolute; top: 100%; left: 0; width: 100%; z-index: 10; display: none; /* Initially hidden */ background-color: white; border: 1px solid #ccc; border-top: none; border-radius: 0 0 5px 5px; max-height: 200px; overflow-y: auto;"></select>';
+
+    $output .= '</div>'; // Close the wrapper
+    return $output;
+}
+add_shortcode( 'category_search', 'category_search_form_shortcode' );
+
+/**
+ * Modifies the main query to filter products by search term within the current category.
+ *
+ * This function is hooked to the 'pre_get_posts' action, which allows us to modify
+ * the query before WordPress executes it.
+ *
+ * @param WP_Query $query The WP_Query object.
+ */
+function category_search_filter_products( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && is_archive() && is_product_category() ) {
+        // Check if it's the main query on a product category archive page.
+
+        if ( isset( $_GET['s'] ) && ! empty( $_GET['s'] ) ) {
+            // Check if a search term is present.
+            $search_term = sanitize_text_field( $_GET['s'] );
+            $current_category = get_queried_object();
+
+            if ( ! empty( $current_category ) ) {
+                if ( isset( $_GET['product_cat'] ) && ! empty( $_GET['product_cat'] ) ) {
+                    $selected_category = sanitize_text_field( $_GET['product_cat'] );
+                    $query->set( 'tax_query', array(
+                        array(
+                            'taxonomy' => 'product_cat',
+                            'field' => 'slug',
+                            'terms' => $selected_category,
+                            'include_children' => true,
+                        ),
+                    ));
+                } else {
+                    $query->set('s', $search_term);
+                    $query->set( 'tax_query', array(
+                        array(
+                            'taxonomy' => 'product_cat',
+                            'field'    => 'term_id',
+                            'terms'    => $current_category->term_id,
+                            'include_children' => true,
+                        ),
+                    ));
+                }
+            } else {
+                // Log an error if the category object is empty
+                error_log( 'Error: Current category object is empty in category_search_filter_products().' );
+            }
+        }
+    }
+}
+add_action( 'pre_get_posts', 'category_search_filter_products' );
+
+
+
+/**
+ * Function to get category image URL
+ */
+function get_category_image_url($category_id) {
+    $thumbnail_id = get_term_meta( $category_id, 'thumbnail_id', true );
+    return $thumbnail_id ? wp_get_attachment_url( $thumbnail_id ) : false;
+}
+
+
+// Add AJAX endpoint to handle category search.
+add_action( 'wp_ajax_get_category_suggestions', 'get_category_suggestions' );
+add_action( 'wp_ajax_nopriv_get_category_suggestions', 'get_category_suggestions' ); // For non-logged-in users.
+
+/**
+ * Returns category suggestions based on the search term.
+ */
+function get_category_suggestions() {
+    $search_term = isset( $_POST['term'] ) ? sanitize_text_field( $_POST['term'] ) : '';
+
+    if ( ! empty( $search_term ) ) {
+        $categories = get_terms( array(
+            'taxonomy' => 'product_cat',
+            'name__like' => $search_term,
+            'hide_empty' => false,
+        ) );
+
+        $results = array();
+        foreach ( $categories as $category ) {
+            $results[] = array(
+                'id' => $category->term_id,
+                'name' => $category->name,
+                'slug' => $category->slug,
+            );
+        }
+        error_log("get_category_suggestions results: " . print_r($results, true)); //DEBUG
+        wp_send_json_success( $results );
     } else {
-        error_log( 'Custom file not found: ' . $custom_file );
+        wp_send_json_error( array( 'message' => 'No search term provided.' ) );
     }
 }
 
-add_action( 'init', 'load_custom_cr_all_reviews', 20 );
 
-add_action( 'plugins_loaded', function() {
-    remove_action( 'init', 'original_plugin_function_that_loads_class_cr_all_reviews' );
-}, 20 );
+// Enqueue JavaScript to handle the autocomplete functionality.
+function enqueue_category_search_script() {
+    $theme_dir = get_stylesheet_directory_uri();
+    wp_enqueue_script(
+        'category-search-autocomplete',
+        $theme_dir . '/category-search.js',
+        array( 'jquery' ),
+        '1.0',
+        true
+    );
+    wp_localize_script(
+        'category-search-autocomplete',
+        'ajax_object',
+        array( 'ajax_url' => admin_url( 'admin-ajax.php' ) )
+    );
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_category_search_script' );
+
+
+function check_jquery_registered() {
+    if (!wp_script_is('jquery', 'registered')) {
+        error_log('jQuery is not registered!');
+    }
+}
+add_action('wp_enqueue_scripts', 'check_jquery_registered', 0); // Check very early
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

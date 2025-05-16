@@ -846,7 +846,7 @@ if (! class_exists('CR_All_Reviews')) :
 				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="4"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%">' . $four . '</div></div></div></td>';
 				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="4">' . (string)$four . '</span></td>';
 			} else {
-				$output .= '<td class="ivole-histogramCell1">' . __('4 star', 'customer-reviews-woocommerce') . '</td>';
+				$output .= '<td class="ivole-histogramCell1">' . __('4', 'customer-reviews-woocommerce') . '</td>';
 				$output .= '<td class="ivole-star"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="cr-rating-icon-bg" fill="currentColor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg></span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%"></div></div></td>';
 				$output .= '<td class="ivole-histogramCell3">' . (string)$four_percent . '%</td>';
