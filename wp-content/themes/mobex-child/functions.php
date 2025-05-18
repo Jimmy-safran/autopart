@@ -28,6 +28,7 @@ add_action( 'wp_enqueue_scripts', 'chld_thm_cfg_parent_css', 10 );
 
 
 // product's categories side bar
+
 function get_hierarchical_product_categories() {
     $categories = get_terms(
         array(
@@ -118,8 +119,6 @@ function my_category_scripts() {
         wp_enqueue_script( 'my-categories-script', get_stylesheet_directory_uri() . '/js/product-categories-sidebar.js', array('jquery'), '1.0.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'my_category_scripts' );
-
-
 
 
 
@@ -725,10 +724,7 @@ add_shortcode( 'mount_on', 'mount_on_shortcode' );
 
 
 
-// Remove the footer banner from the single product page
-add_action( 'wp_loaded', function() {
-    remove_action( 'woocommerce_after_single_product', 'mobex_enovathemes_woocommerce_after_single_product' );
-} );
+
 
 
 
@@ -1113,6 +1109,25 @@ function check_jquery_registered() {
 add_action('wp_enqueue_scripts', 'check_jquery_registered', 0); // Check very early
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Remove the footer banner from the single product page
+add_action( 'wp_loaded', function() {
+    remove_action( 'woocommerce_after_single_product', 'mobex_enovathemes_woocommerce_after_single_product' );
+} );
 
 
 
