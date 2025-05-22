@@ -1,0 +1,34 @@
+# Translation of Plugins - Packlink PRO shipping module - Stable (latest release) in German
+# This file is distributed under the same license as the Plugins - Packlink PRO shipping module - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-07-03 12:23+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Loco https://localise.biz/\n"
+"Language: de-DE\n"
+"Project-Id-Version: Plugins - Packlink PRO shipping module - Stable (latest "
+"release)\n"
+"\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-03 12:23+0000\n"
+"Last-Translator: \n"
+"Language-Team: German\n"
+"X-Loco-Version: 2.6.10; wp-6.5.5"
+
+#. Plugin URI of the plugin
+#: packlink-pro-shipping.php
+msgid "https://en.wordpress.org/plugins/packlink-pro-shipping/"
+msgstr "https://de.wordpress.org/plugins/packlink-pro-shipping/"
+
+#. Description of the plugin
+#: packlink-pro-shipping.php
+msgid ""
+"Save up to 70% on your shipping costs. No fixed fees, no minimum shipping "
+"volume required. Manage all your shipments in a single platform."
+msgstr ""
+"Spare bis zu 70% deiner Versandkosten. Keine Grundgebühren oder "
+"Mindestvolumina notwendig. Verwalte alle deine Sendungen aus einer einzigen "
+"Plattform heraus. "
