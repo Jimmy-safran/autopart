@@ -1,0 +1,50 @@
+TecCom\Order\TXML5\OrderProcessingInstructionsType:
+    properties:
+        dispatchMode:
+            expose: true
+            access_type: public_method
+            serialized_name: DispatchMode
+            accessor:
+                getter: getDispatchMode
+                setter: setDispatchMode
+            type: string
+        requestedDeliveryDate:
+            expose: true
+            access_type: public_method
+            serialized_name: RequestedDeliveryDate
+            accessor:
+                getter: getRequestedDeliveryDate
+                setter: setRequestedDeliveryDate
+            type: TecCom\Order\TXML5\DateType
+        warehouseReference:
+            expose: true
+            access_type: public_method
+            serialized_name: WarehouseReference
+            accessor:
+                getter: getWarehouseReference
+                setter: setWarehouseReference
+            type: string
+        backlog:
+            expose: true
+            access_type: public_method
+            serialized_name: Backlog
+            accessor:
+                getter: getBacklog
+                setter: setBacklog
+            type: bool
+        completeDelivery:
+            expose: true
+            access_type: public_method
+            serialized_name: CompleteDelivery
+            accessor:
+                getter: getCompleteDelivery
+                setter: setCompleteDelivery
+            type: bool
+        completeShipment:
+            expose: true
+            access_type: public_method
+            serialized_name: CompleteShipment
+            accessor:
+                getter: getCompleteShipment
+                setter: setCompleteShipment
+            type: bool

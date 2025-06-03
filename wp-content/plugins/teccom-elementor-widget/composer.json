@@ -1,0 +1,32 @@
+{
+  "name": "yourname/teccom-buyer",
+  "description": "PHP integration for TecCom buyer using xsd2php and JMS Serializer",
+  "type": "project",
+  "require": {
+    "jms/serializer": "^3.32",
+    "doctrine/annotations": "^2.0",
+    "goetas-webservices/xsd2php-runtime": "^0.2.17"
+  },
+  
+  "extra": {
+    "vendor-cleaner": {
+      "directories": [ "tests", "Tests", "test", "doc", "docs", "example", "examples", "bench", "benchmark" ],
+      "patterns": [ "*.md", "*.rst", "CHANGELOG*", "README*" ]
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "TecCom\\": "src/TecCom/"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "composer dump-autoload"
+    ],
+    "post-update-cmd": [
+      "composer dump-autoload"
+    ]
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.teccom.de/tecorder/invoic/txml25" xmlns:txml="http://www.teccom.de/tecorder/invoic/txml25" targetNamespace="http://www.teccom.de/tecorder/invoic/txml25" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  
+  <xs:include schemaLocation="TXML_SIMPLETYPES.xsd" />
+  <xs:include schemaLocation="TXML_COMPLEXTYPES.xsd" />
+  <xs:include schemaLocation="TXML_ENUMTYPES.xsd" />
+  <xs:include schemaLocation="TXML_2.5_INVOICE_HEADER_PARTS.xsd"/>
+
+  <!-- Invoice Header -->
+	<xs:complexType name="InvoiceHeaderType">
+		<xs:sequence>
+			<xs:group ref="InvoiceHeaderPart1Invoice" />
+			<xs:group ref="InvoiceHeaderPart2Generic" />
+			<xs:element name="TaxTreatmentCode">
+				<xs:complexType>
+					<xs:attribute name="Value" type="TaxTreatmentCodeType" use="required" />
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="InvoiceDueDate" type="DateElementType" minOccurs="0"/>
+			<xs:element name="PaymentInstruction" type="xs:string" minOccurs="0"/>
+			<xs:element name="PaymentTerms" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PaymentDeadline" type="PaymentDeadlineType"/>
+						<xs:element name="PaymentDiscount">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DiscountPercent" type="decimaldot3"/>
+									<xs:element name="DiscountDays" type="xs:nonNegativeInteger"/>
+									<xs:element name="Date" type="DateType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SellerParty" type="AktivbankSellerPartyType"/>
+			<xs:element name="BuyerParty" type="AktivbankBuyerPartyType">
+				<xs:unique name="restrictAktivbankBuyerPartyType">
+					<xs:selector xpath="txml:AdditionalPartyNumber"/>
+					<xs:field xpath="@Qualifier"/>
+				</xs:unique>
+			</xs:element>
+			<xs:element name="DeliveryParty" type="PartyTypeWithOutTaxRegistrationNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="InvoiceOrg" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="InvoiceParty" type="AktivbankInvoicePartyType">
+							<xs:unique name="restrictAktivbankInvoicePartyType">
+								<xs:selector xpath="txml:AdditionalPartyNumber"/>
+								<xs:field xpath="@Qualifier"/>
+							</xs:unique>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AdditionalParty" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="TaxRegistrationNumber" type="VATType" minOccurs="0" />
+						<xs:element name="AdditionalPartyNumber" type="AdditionalPartyNumberPayeeType" />
+						<xs:element name="Address" type="AddressType"/>
+						<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Currency" type="ISO_4217_Code" />
+			<xs:element name="Banking" type="BankingType" maxOccurs="unbounded" />
+			<xs:element name="FreeText" type="FreeTextType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- AddtionalPartyNumber Qualifier for AdditionalParty -->
+	<xs:complexType name="AdditionalPartyNumberPayeeType">
+		<xs:simpleContent>
+			<xs:extension base="xs:positiveInteger">
+				<xs:attribute name="Qualifier" use="required" fixed="Payee" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<!-- AktivbankInvoicePartyType -->
+	<xs:complexType name="AktivbankInvoicePartyType">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="string13" minOccurs="1"  maxOccurs="1"/>
+			<xs:element name="TaxRegistrationNumber" type="VATType" />
+			<xs:element name="AdditionalPartyNumber" minOccurs="2" maxOccurs="2">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:positiveInteger">
+							<xs:attribute name="Qualifier" use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="Invoicee"/>
+										<xs:enumeration value="ZR"/>
+									</xs:restriction>
+							  </xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Address" type="AddressType"/>
+			<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<!-- AktivbankBuyerPartyType -->
+	<xs:complexType name="AktivbankBuyerPartyType">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="string13" />
+			<xs:element name="TaxRegistrationNumber" type="VATType" />
+			<xs:element name="AdditionalPartyNumber" minOccurs="2" maxOccurs="2">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:positiveInteger">
+							<xs:attribute name="Qualifier" use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="MemberShipNumber"/>
+										<xs:enumeration value="ZR"/>
+									</xs:restriction>
+							  </xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Address" type="AddressType"/>
+			<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- AktivbankSellerPartyType -->
+	<xs:complexType name="AktivbankSellerPartyType">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="string13" />
+			<xs:element name="TaxRegistrationNumber" type="VATType" />
+      <xs:element name="AdditionalPartyNumber">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:positiveInteger">
+              <xs:attribute name="Qualifier" use="required" fixed="ZR" />
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+			<xs:element name="Address" type="AddressType"/>
+			<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,26 @@
+TecCom\Order\TXML5\PkgInfoType:
+    properties:
+        packageKind:
+            expose: true
+            access_type: public_method
+            serialized_name: PackageKind
+            accessor:
+                getter: getPackageKind
+                setter: setPackageKind
+            type: string
+        description:
+            expose: true
+            access_type: public_method
+            serialized_name: Description
+            accessor:
+                getter: getDescription
+                setter: setDescription
+            type: string
+        totalPackages:
+            expose: true
+            access_type: public_method
+            serialized_name: TotalPackages
+            accessor:
+                getter: getTotalPackages
+                setter: setTotalPackages
+            type: int

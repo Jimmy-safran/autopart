@@ -1,0 +1,1068 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bearbeitet mit XMLSpy v2023 rel. 2 (x64) (http://www.altova.com) von TecAlliance GmbH (TecAlliance GmbH) -->
+<!-- edited with XMLSpy v2023 rel. 2 (x64) (http://www.altova.com) by Christian Drexler (TecAlliance GmbH) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="Txml_5.0_Common.xsd"/>
+    <xs:element name="DesAdv">
+        <xs:annotation>
+            <xs:documentation>The despatch advice is used by the seller to inform the buyer about the delivery of ordered articles.</xs:documentation>
+            <xs:appinfo>
+                <history>
+                    <version>v1.0</version>
+                    <changedBy>RMA</changedBy>
+                    <changedOn>20210311</changedOn>
+                    <change>Upgraded to TXML 5.0 Common 1.7; added namespace; added enumeration lists</change>
+                </history>
+                <history>
+                    <version>v1.1</version>
+                    <changedBy>RMA</changedBy>
+                    <changedOn>20210803</changedOn>
+                    <change>Upgraded to TXML 5.0 Common 1.8; schema updated</change>
+                </history>
+                <history>
+                    <version>v1.2</version>
+                    <changedBy>RHA</changedBy>
+                    <changedOn>20210827</changedOn>
+                    <change>Upgraded to TXML 5.0 Common 1.9; removed promotion from Reference</change>
+                </history>
+                <history>
+                    <version>v1.3</version>
+                    <changedBy>RMA</changedBy>
+                    <changedOn>20211005</changedOn>
+                    <change>Upgraded to TXML 5.0 Common 1.10</change>
+                </history>
+                <history>
+                    <version>v1.3</version>
+                    <changedBy>MDR</changedBy>
+                    <changedOn>20220927</changedOn>
+                    <change>Upgraded to TXML 5.0 Common 1.11</change>
+                </history>
+                <history>
+                    <version>v1.4</version>
+                    <changedBy>CD</changedBy>
+                    <changedOn>20240124</changedOn>
+                    <change>Removed schema version from filename</change>
+                </history>
+                <history>
+                    <version>v1.5</version>
+                    <changedBy>CD</changedBy>
+                    <changedOn>20240124</changedOn>
+                    <change>Changed shipping marks; defined handling instruction codes; extended hazardous goods</change>
+                </history>
+                <history>
+                    <version>v1.6</version>
+                    <changedBy>TR</changedBy>
+                    <changedOn>20240521</changedOn>
+                    <change>Updated schema-internal documentation</change>
+                </history>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Head">
+                    <xs:annotation>
+                        <xs:documentation>Information about the whole despatch advice.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="DocumentNumber">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">The identifier of the despatch advice.
+
+This **must** be unique over all despatch advices the seller sends (that is, no two despatch advices may share the same identifier).</xs:documentation>
+                                    <xs:appinfo>
+                                        <altova:exampleValues>
+                                            <altova:example value="DESADV-20240104-140512-13"/>
+                                        </altova:exampleValues>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="0"/>
+                                        <xs:maxLength value="35"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IssueDate" type="xs:dateTime">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">The specific point in time when the despatch advice was created.
+
+It **must** include the time zone (which is the number of hours and minutes the given date and time is ahead or behind UTC time).</xs:documentation>
+                                    <xs:appinfo>
+                                        <altova:exampleValues>
+                                            <altova:example value="2024-01-04T14:05:15+01:00"/>
+                                        </altova:exampleValues>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="DispatchDate">
+                                <xs:annotation>
+                                    <xs:documentation>The date and, possibly, time when the shipment was or will be despatched.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Qualifier">
+                                            <xs:annotation>
+                                                <xs:documentation>How the date is to be interpreted.</xs:documentation>
+                                                <xs:appinfo>
+                                                    <altova:exampleValues>
+                                                        <altova:example value="At"/>
+                                                    </altova:exampleValues>
+                                                </xs:appinfo>
+                                            </xs:annotation>
+                                            <xs:simpleType>
+                                                <xs:restriction base="DateTypeQualifierCodeList">
+                                                    <xs:enumeration value="Before">
+                                                        <xs:annotation>
+                                                            <xs:documentation>Latest possible date.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:enumeration>
+                                                    <xs:enumeration value="At">
+                                                        <xs:annotation>
+                                                            <xs:documentation>Exact date.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:enumeration>
+                                                    <xs:enumeration value="After">
+                                                        <xs:annotation>
+                                                            <xs:documentation>Earliest possible date.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:enumeration>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="Date" type="xs:date">
+                                            <xs:annotation>
+                                                <xs:documentation>The actual date of despatch.</xs:documentation>
+                                                <xs:appinfo>
+                                                    <altova:exampleValues>
+                                                        <altova:example value="2024-01-04"/>
+                                                    </altova:exampleValues>
+                                                </xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="Time" type="xs:time" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>The actual time of despatch.
+
+It **must** include the time zone (which is the number of hours and minutes the given date and time is ahead or behind UTC time).</xs:documentation>
+                                                <xs:appinfo>
+                                                    <altova:exampleValues>
+                                                        <altova:example value="14:05:15+01:00"/>
+                                                    </altova:exampleValues>
+                                                </xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="DeliveryDate" type="DateType">
+                                <xs:annotation>
+                                    <xs:documentation>The date when the recipient will receive the shipment.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Reference" type="ReferenceHeaderType" minOccurs="0" maxOccurs="9999">
+                                <xs:annotation>
+                                    <xs:documentation>A reference to another document.
+
+1.  The seller **must** always add references to all of the buyer's orders contained in this shipment with the qualifier `BuyerOrderNumber`. Its values **must** be the `DocumentNumber`s of the buyer's orders.
+
+2.  The seller **must** always add references to all of the buyer's orders contained in this shipment with the qualifier `SellerOrderNumber`. Its values **must** be the order numbers the seller has assigned to the buyer's orders in their ERP system.
+
+3.  The seller **can** add more than one reference with the qualifier `SellerOrderNumber`, for example, if the order was split internally in their ERP system.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="TransportDetails" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>The transport details for the shipment.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="DispatchMode" type="DispatchModeCodeList" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>The dispatch mode the seller has used for the shipment.</xs:documentation>
+                                                <xs:appinfo>
+                                                    <altova:exampleValues>
+                                                        <altova:example value="Road-Express"/>
+                                                    </altova:exampleValues>
+                                                </xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="Description" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Additional descriptive text.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="17"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="TransitDirection" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>The direction of travel for the shipment.</xs:documentation>
+                                                <xs:appinfo>
+                                                    <altova:exampleValues>
+                                                        <altova:example value="SupplierToBuyer"/>
+                                                    </altova:exampleValues>
+                                                </xs:appinfo>
+                                            </xs:annotation>
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="BuyerToSupplier">
+                                                        <xs:annotation>
+                                                            <xs:documentation>Shipment from the buyer back to the seller, for example, if the buyer returns unsold stock.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:enumeration>
+                                                    <xs:enumeration value="SupplierToBuyer">
+                                                        <xs:annotation>
+                                                            <xs:documentation>Shipment from the seller to the buyer. The normal direction of travel for an order the buyer has placed with the seller.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:enumeration>
+                                                    <xs:enumeration value="misc">
+                                                        <xs:annotation>
+                                                            <xs:documentation>Miscellaneous.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:enumeration>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="LicensePlate" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>The license plate or registration number of the carrier vehicle.</xs:documentation>
+                                                <xs:appinfo>
+                                                    <altova:exampleValues>
+                                                        <altova:example value="M-TA 9999"/>
+                                                    </altova:exampleValues>
+                                                </xs:appinfo>
+                                            </xs:annotation>
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="35"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Shipment" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the whole shipment.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="ShipmentNumber" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>The shipment number assigned to the shipment.</xs:documentation>
+                                                <xs:appinfo>
+                                                    <altova:exampleValues>
+                                                        <altova:example value="234235"/>
+                                                    </altova:exampleValues>
+                                                </xs:appinfo>
+                                            </xs:annotation>
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="35"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="Info" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Information about the outermost packages in the shipment.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="TotalOuterPackages">
+                                                        <xs:annotation>
+                                                            <xs:documentation>The number of outermost packages in the shipment.
+
+For example, if the shipment would consist of 40 cartons and 20 cartons are packaged on one pallet and 20 cartons on another pallet, then the 2 pallets are the outermost packages. 
+
+On the other hand, if the shipment would consist of 2 individual cartons (that is, both have a shipping label), then the 2 cartons are the outermost packages.</xs:documentation>
+                                                            <xs:appinfo>
+                                                                <altova:exampleValues>
+                                                                    <altova:example value="2"/>
+                                                                </altova:exampleValues>
+                                                            </xs:appinfo>
+                                                        </xs:annotation>
+                                                        <xs:simpleType>
+                                                            <xs:restriction base="xs:int">
+                                                                <xs:minExclusive value="0"/>
+                                                                <xs:totalDigits value="7"/>
+                                                            </xs:restriction>
+                                                        </xs:simpleType>
+                                                    </xs:element>
+                                                    <xs:element name="OuterPackages" minOccurs="0" maxOccurs="9999">
+                                                        <xs:annotation>
+                                                            <xs:documentation>Detailed information about an outermost package.</xs:documentation>
+                                                        </xs:annotation>
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="PackageKind">
+                                                                    <xs:annotation>
+                                                                        <xs:documentation>The type of packaging material.</xs:documentation>
+                                                                        <xs:appinfo>
+                                                                            <altova:exampleValues>
+                                                                                <altova:example value="201"/>
+                                                                            </altova:exampleValues>
+                                                                        </xs:appinfo>
+                                                                    </xs:annotation>
+                                                                    <xs:simpleType>
+                                                                        <xs:restriction base="PackageKindTypeList"/>
+                                                                    </xs:simpleType>
+                                                                </xs:element>
+                                                                <xs:element name="Description" minOccurs="0">
+                                                                    <xs:annotation>
+                                                                        <xs:documentation>The human-readable description of the packaging material.</xs:documentation>
+                                                                        <xs:appinfo>
+                                                                            <altova:exampleValues>
+                                                                                <altova:example value="Euro pallet"/>
+                                                                            </altova:exampleValues>
+                                                                        </xs:appinfo>
+                                                                    </xs:annotation>
+                                                                    <xs:simpleType>
+                                                                        <xs:restriction base="xs:string">
+                                                                            <xs:maxLength value="70"/>
+                                                                        </xs:restriction>
+                                                                    </xs:simpleType>
+                                                                </xs:element>
+                                                                <xs:element name="Amount">
+                                                                    <xs:annotation>
+                                                                        <xs:documentation>The number of packaging materials of this kind.</xs:documentation>
+                                                                        <xs:appinfo>
+                                                                            <altova:exampleValues>
+                                                                                <altova:example value="2"/>
+                                                                            </altova:exampleValues>
+                                                                        </xs:appinfo>
+                                                                    </xs:annotation>
+                                                                    <xs:simpleType>
+                                                                        <xs:restriction base="xs:int">
+                                                                            <xs:minExclusive value="0"/>
+                                                                            <xs:totalDigits value="7"/>
+                                                                        </xs:restriction>
+                                                                    </xs:simpleType>
+                                                                </xs:element>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="Measurements" type="MeasurementsType" minOccurs="0" maxOccurs="10">
+                                            <xs:annotation>
+                                                <xs:documentation>A measurement of the shipment.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="TrackingLink" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>The hyperlink to an external resource (usually a web application on the internet) used to track the shipment.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:maxLength value="2000"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="SellerParty" type="PartyType1">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the seller.
+
+The `Number` for the seller party is usually assigned by the buyer. It is the number under which the seller is known in the buyer's ERP system.
+
+The seller **must** return their own address and contact information.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="BuyerParty" type="PartyType1">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the buyer.
+
+The `Number` for the buyer party is usually assigned by the seller. It is the number under which the buyer is known in the seller's ERP system.
+
+1.  The seller **must** return the buyer's address and contact information stored in the seller ERP system for the buyer party number sent by the buyer.
+
+2.  It is **not allowed** to copy these values from the order.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="DeliveryParty" type="PartyType2" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the recipient of the shipment.
+
+1.  The seller **must** return the recipient's address and contact information stored in their ERP system for the delivery party number sent by the buyer.
+
+2.  It is **not allowed** to copy these values from the order.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AdditionalParty" type="AdditionalPartyType" minOccurs="0" maxOccurs="10">
+                                <xs:annotation>
+                                    <xs:documentation>Information about another party involved in the shipment.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ExternalDocument" type="ExternalDocumentType" minOccurs="0" maxOccurs="9">
+                                <xs:annotation>
+                                    <xs:documentation>An external resource that applies to the whole despatch advice.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AdditionalParameters" type="AdditionalParametersType" minOccurs="0" maxOccurs="30">
+                                <xs:annotation>
+                                    <xs:documentation>An additional parameter that conveys specific information that applies to the whole document.
+
+The seller **must** only use these qualifiers:
+
+1.  `StorageLocation`</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="FreeText" type="FreeTextValueType" minOccurs="0" maxOccurs="50">
+                                <xs:annotation>
+                                    <xs:documentation>Arbitrary information that applies to the whole despatch advice.
+
+Free text **must** be agreed between buyer and seller, otherwise the buyer will ignore it.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:choice>
+                    <xs:element name="Package" maxOccurs="9999">
+                        <xs:annotation>
+                            <xs:documentation>Information about a package contained in the shipment.
+
+The seller **must** use this if they **can** provide the actual packaging hierarchy/structure.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Number">
+                                    <xs:annotation>
+                                        <xs:documentation>The package number.
+
+1.  It **must** be unique over all package instances.
+
+2.  It must start with `1` for the first package.
+
+3.  It must increase by `1` for each additional package.
+
+4.  This number is only used for identifying this package within the despatch advice, for example, for representing the package hierarchy/structure.</xs:documentation>
+                                        <xs:appinfo>
+                                            <altova:exampleValues>
+                                                <altova:example value="1"/>
+                                            </altova:exampleValues>
+                                        </xs:appinfo>
+                                    </xs:annotation>
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:int">
+                                            <xs:minExclusive value="0"/>
+                                            <xs:totalDigits value="4"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="ParentId">
+                                    <xs:annotation>
+                                        <xs:documentation>The number of the parent package in which this package is contained.
+
+This **must** be set to `0` If this package is at the outermost level and has no parent package.</xs:documentation>
+                                        <xs:appinfo>
+                                            <altova:exampleValues>
+                                                <altova:example value="0"/>
+                                            </altova:exampleValues>
+                                        </xs:appinfo>
+                                    </xs:annotation>
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:int">
+                                            <xs:totalDigits value="4"/>
+                                            <xs:minInclusive value="0"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="Level" minOccurs="0">
+                                    <xs:annotation>
+                                        <xs:documentation>The package level.
+
+This is a convenience information which states whether or not the package contains other packages and/or is contained in another package on the physical level.</xs:documentation>
+                                        <xs:appinfo>
+                                            <altova:exampleValues>
+                                                <altova:example value="Outer"/>
+                                            </altova:exampleValues>
+                                        </xs:appinfo>
+                                    </xs:annotation>
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="Inner">
+                                                <xs:annotation>
+                                                    <xs:documentation>The package is located at the innermost level of the physical packaging hierarchy. It is contained in another package, but it does not contain other packages. For example, a carton with articles in it.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:enumeration>
+                                            <xs:enumeration value="Intermediate">
+                                                <xs:annotation>
+                                                    <xs:documentation>The package is located on an intermediate level of the physical packaging hierarchy. It is contained in another package and also contains other packages. For example, a container which contains cartons.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:enumeration>
+                                            <xs:enumeration value="Outer">
+                                                <xs:annotation>
+                                                    <xs:documentation>The package is located on the outermost level of the physical packaging hierarchy. It is not contained in another package, but it contains other packages. For example, a pallet on which containers are packed.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:enumeration>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="Info" type="PkgInfoType" minOccurs="0">
+                                    <xs:annotation>
+                                        <xs:documentation>The detail packaging information about this package.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Identification" type="PkgIdType" minOccurs="0" maxOccurs="3">
+                                    <xs:annotation>
+                                        <xs:documentation>An identifier of this package.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Reference" type="ReferenceHeaderType" minOccurs="0">
+                                    <xs:annotation>
+                                        <xs:documentation>A reference to the packing list.
+
+1.  The seller **must** use the qualifier `PackingListNumber`.
+
+2.  The seller **must not** use this for any other kind of reference.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Measurements" type="MeasurementsType" minOccurs="0" maxOccurs="10">
+                                    <xs:annotation>
+                                        <xs:documentation>A measurement of the package.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Handling" minOccurs="0" maxOccurs="10">
+                                    <xs:annotation>
+                                        <xs:documentation>A handling instruction for this package.</xs:documentation>
+                                    </xs:annotation>
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="HazardousMaterialClassCode" minOccurs="0">
+                                                <xs:annotation>
+                                                    <xs:documentation>The dangerous goods class for items in this package.</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:simpleType>
+                                                    <xs:restriction base="xs:string">
+                                                        <xs:enumeration value="1">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 1 - Explosives.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="1.1">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 1 (Explosives) Division 1.1 - Mass Explosive Hazard.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="1.2">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 1 (Explosives) Division 1.2 - Projection Hazard.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="1.3">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 1 (Explosives) Division 1.3 - Fire and/or Minor Blast/Minor Projection Hazard.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="1.4">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 1 (Explosives) Division 1.4 - Minor Explosion Hazard.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="1.5">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 1 (Explosives) Division 1.5 - Very Insensitive With Mass Explosion Hazard.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="1.6">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 1 (Explosives) Division 1.6 - Extremely Insensitive; No Mass Explosion Hazard.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="2.1">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 2 (Gases) Division 2.1 - Flammable Gases.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="2.2">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 2 (Gases) Division 2.2 - Nonflammable Gases.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="2.3">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 2 (Gases) Division 2.3 - Toxic Gases.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="3">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 3 - Flammable and Combustible Liquids.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="4.1">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 4 (Flammable) Division 4.1 - Flammable Solids.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="4.2">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 4 (Flammable) Division 4.2 - Spontaneously Combustible.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="4.3">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 4 (Flammable) Division 4.3 - Dangerous When Wet.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="5.1">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 5 (Oxidizing, Organic) Division 5.1 - Oxidizing Substances.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="5.2">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 5 (Oxidizing, Organic) Division 5.2 - Organic Peroxides.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="6.1">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 6 (Toxic, Infectious) Division 6.1 - Toxic Substances.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="6.2">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 6 (Toxic, Infectious) Division 6.2 - Infectious Substances.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="7">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 7 - Radioactive Materials.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="8">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 8 - Corrosives.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="9">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Class 9 - Miscellaneous Hazardous Materials.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                    </xs:restriction>
+                                                </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="HazardousMaterialDescription" minOccurs="0">
+                                                <xs:annotation>
+                                                    <xs:documentation>The hazardous material category name.</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:simpleType>
+                                                    <xs:restriction base="xs:string">
+                                                        <xs:maxLength value="35"/>
+                                                    </xs:restriction>
+                                                </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="HandlingInstructionCode" minOccurs="0">
+                                                <xs:annotation>
+                                                    <xs:documentation>The handling instruction code.</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:simpleType>
+                                                    <xs:restriction base="xs:string">
+                                                        <xs:enumeration value="1">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Heat sensitive. The object is heat sensitive.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="2">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Store in dry environment. The object must be stored in dry environment.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="3">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Stacked. The identified item is, or can be stacked.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="11">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Refrigeration required. Item must be refrigerated for proper handling.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="12">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Refrigeration not required. Item does not need to be refrigerated for proper handling.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="13">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Destroy. The identified goods are to be destroyed according to specified instructions.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="14">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Keep frozen. The identified products is frozen and should be kept frozen.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="15">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Hang garment. The identified product(s) should be handled as a hanging garment.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="16">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Labeling required. The identified product is/are to be labelled.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="17">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Keep in a lying position. The identified product(s) should be kept in a lying position.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="18">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Move according to instruction. The identified product is to be moved according to instructions specified.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="19">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Pack according to instruction. The identified product is to be packed according to the instructions provided.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="20">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Prepare for shipment. The identified product(s) is(are) to be prepared for shipment.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="21">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Reserve according to instruction. Reserve identified goods according to specified instructions.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="22">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Light sensitive. The product is sensitive to light.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="23">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Transit or cross docking delivery request. The identified product is to be delivered via a transit or cross docking facility.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="24">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Unpacking required. The identified product is to be unpacked from the identified package.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="25">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Keep in upright/standing position. The identified product should be kept in an upright or standing position.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="AVI">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Live animal.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="BIG">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Outsized.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="CRU">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Crushable.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="DAE">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Dangerous article. A code indicating that an article is dangerous.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="EAT">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Foodstuffs.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="FAC">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Factory package. Item isn’t packed for end consumer. Repacking might be necessary</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="FTD">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Frost danger.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="HEA">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Heavy cargo. 150 kg and over per piece.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="HWC">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Handle with care.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="MF">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Multiple facings. The item has multiple facings (views) for presentation in the shelf.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="NES">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Nestable. A package which can be stacked into similar package types e.g applies for dishes, plates, bowls or buckets.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="NSD">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Nesting depth. The item can be stacked into into each other (e.g. plates, bowls or buckets). The nesting refers to the depth of the item's facing (main view).</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="NSH">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Nesting height. The item can be stacked into into each other (e.g. plates, bowls or buckets). The nesting refers to the height of the item's facing (main view).</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="NSW">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Nesting width. The item can be stacked into into each other (e.g. plates, bowls or buckets). The nesting refers to the width of the item's facing (main view).</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="OHG">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Overhang item.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="PIC">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Pick. The identified product is to be picked.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="PKS">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Pick in sequence. The identified product is to be picked according to a specific sequence.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="PSC">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Pest controlling.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="SSN">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Smell sensitive.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="STR">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Stacking restricted.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="UST">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Unstackable.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="VAL">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Valuable cargo.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                    </xs:restriction>
+                                                </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="HandlingInstructionsDescription" minOccurs="0">
+                                                <xs:annotation>
+                                                    <xs:documentation>The handling instruction description.</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:simpleType>
+                                                    <xs:annotation>
+                                                        <xs:documentation>Additional info or short description about handling instructions for packages or contained articles</xs:documentation>
+                                                    </xs:annotation>
+                                                    <xs:restriction base="xs:string">
+                                                        <xs:maxLength value="70"/>
+                                                    </xs:restriction>
+                                                </xs:simpleType>
+                                            </xs:element>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="ShippingMarks" minOccurs="0" maxOccurs="99">
+                                    <xs:annotation>
+                                        <xs:documentation>A shipping mark which is printed on the package.</xs:documentation>
+                                    </xs:annotation>
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="Label">
+                                                <xs:annotation>
+                                                    <xs:documentation>The type of shipping mark.</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:simpleType>
+                                                    <xs:restriction base="xs:string">
+                                                        <xs:enumeration value="BuyerInstructions">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Buyer's instructions on package.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="SupplierInstructions">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Supplier's instructions on package</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="CarrierInstructions">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Carrier's instructions on package.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="LegalRequirements">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Legal requirements on package.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="IndustryInstructions">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Industry instructions on package.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="GS1AssetIdentifier">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with GS1 Global Individual Asset Identifier (GIAI).</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="Price">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with price per unit of measure.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="SSCC">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with Serial Shipping Container code (SSCC).</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="FirstFreezingDate">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with first freezing date.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="BatchNumber">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with batch number.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="ProductionDate">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with production date.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="ProductSerialNumber">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with a product serial number.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="ExpiryDate">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with expiry date.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="BestBeforeDate">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with best before date</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="NetWeight">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with net weight.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="PackagingDate">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with packaging date.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="GRAI">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with GS1 Global Returnable Asset Identifier (GRAI).</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="GreetingMessage">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with greeting message.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="GS1Number">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with GS1 number.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="PackageIdentityNumber">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Package Identity Number on Package.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="GINC">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with Global Identification Number for Consignment (GINC).</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="GSIN">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with Global Shipment Identification Number (GSIN)</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                        <xs:enumeration value="UseByDate">
+                                                            <xs:annotation>
+                                                                <xs:documentation>Marked with use by date.</xs:documentation>
+                                                            </xs:annotation>
+                                                        </xs:enumeration>
+                                                    </xs:restriction>
+                                                </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="Description" minOccurs="0">
+                                                <xs:annotation>
+                                                    <xs:documentation>The actual value of the shipping mark.</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:simpleType>
+                                                    <xs:restriction base="xs:string">
+                                                        <xs:maxLength value="350"/>
+                                                    </xs:restriction>
+                                                </xs:simpleType>
+                                            </xs:element>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="Item" type="ItemType" minOccurs="0" maxOccurs="9999">
+                                    <xs:annotation>
+                                        <xs:documentation>An item contained in this package.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ItemList">
+                        <xs:annotation>
+                            <xs:documentation>Information about all the items contained in the shipment.
+
+The seller **must** use this if they **cannot** provide the actual packaging hierarchy/structure.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Item" type="ItemType" maxOccurs="9999">
+                                    <xs:annotation>
+                                        <xs:documentation>An item contained in the shipment.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute name="version" use="required" fixed="5.0">
+                <xs:annotation>
+                    <xs:documentation>The document's TXML version.
+
+This **must** be set to the fixed value provided in the schema.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

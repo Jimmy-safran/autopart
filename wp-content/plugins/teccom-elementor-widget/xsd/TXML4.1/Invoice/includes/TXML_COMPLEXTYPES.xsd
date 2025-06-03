@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:include schemaLocation="TXML_SIMPLETYPES.xsd"/>
+	<xs:include schemaLocation="TXML_ENUMTYPES.xsd"/>
+	<!-- Complex data types -->
+	<xs:complexType name="AmountType">
+		<xs:sequence>
+			<xs:element name="Amount" type="decimaldot3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountType2">
+		<xs:sequence>
+			<xs:element name="Amount" type="decimaldot2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountType5">
+		<xs:sequence>
+			<xs:element name="Amount" type="decimaldot5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuantityElementType">
+		<xs:sequence>
+			<xs:element name="Quantity" type="QuantityType" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- MessageStatusType -->
+	<xs:complexType name="MessageStatusType">
+		<xs:sequence/>
+		<xs:attribute name="Value" type="MessageStatusValueType" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="AllowOrChargeType">
+		<xs:sequence>
+			<xs:element name="AllowOrChargeSequenceNumber" type="xs:positiveInteger" minOccurs="0"/>
+			<xs:element name="AllowOrChargeIdentifier" minOccurs="1">
+				<xs:complexType>
+					<xs:attribute name="Value" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="Allow"/>
+								<xs:enumeration value="Charge"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AllowOrChargeCode" type="AllowOrChargeCodeType" minOccurs="1"/>
+			<xs:element name="AllowOrChargeDescription" type="xs:string" minOccurs="1"/>
+			<xs:element name="Percent" type="decimaldot3" minOccurs="0"/>
+			<xs:element name="Amount" type="decimaldot5" minOccurs="0"/>
+			<xs:element name="Tax" type="TaxType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- BankingType definition -->
+	<xs:complexType name="BankingType">
+		<xs:sequence>
+			<xs:element name="Bankname" type="string40"/>
+			<xs:element name="BankAccount" type="xs:string" minOccurs="0"/>
+			<xs:element name="BankCodeNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="IBAN" type="IBANType"/>
+			<xs:element name="SWIFT-BIC" type="BICType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- TaxType part needed mainly for InvoiceDetail -->
+	<xs:group name="TaxTypePart1">
+		<xs:sequence>
+			<xs:element name="TaxCode" type="TaxCodeType"/>
+			<xs:element name="Percent" type="decimaldot3"/>
+		</xs:sequence>
+	</xs:group>
+	<!-- TaxType part needed mainly for InvoiceDetail -->
+	<xs:group name="TaxTypePart2">
+		<xs:sequence>
+			<xs:element name="Amount" type="decimaldot5"/>
+			<xs:element name="TaxableAmount" type="decimaldot5" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<!-- Tax type definition for InvoiceDetail -->
+	<xs:complexType name="TaxType">
+		<xs:sequence>
+			<xs:group ref="TaxTypePart1"/>
+			<xs:group ref="TaxTypePart2" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Tax type definition for InvoiceSummary -->
+	<xs:complexType name="TaxTypeInvoiceSummary">
+		<xs:sequence>
+			<xs:group ref="TaxTypePart1"/>
+			<xs:group ref="TaxTypePart2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Adress type definition -->
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="Name1" type="string35">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Name und Adresse müssen den im Handelsregister bzw. Register der Steuerpflichtigen eingetragenen Daten entsprechen. Die Rechtsform ist mit dem Namen anzugeben.
+          </xs:documentation>
+					<xs:documentation><![CDATA[<Name1>Lieferant GmbH</Name1>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name2" type="string35" minOccurs="0"/>
+			<xs:element name="Street1" type="string35">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Straße oder Postfach
+          </xs:documentation>
+					<xs:documentation><![CDATA[<Street1>Lieferantenstraße 20</Street1>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Street2" type="string35" minOccurs="0"/>
+			<xs:element name="PostalCode" type="string9">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Postzeitzahl oder Postfach. Falls keine Postleitzahl vorhanden ist, mit blank füllen, da Pflichtfeld.
+          </xs:documentation>
+					<xs:documentation><![CDATA[<PostalCode>80333</PostalCode>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="City" type="string35">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Ort
+          </xs:documentation>
+					<xs:documentation><![CDATA[<City>München</City>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryCode" type="ISO_3166-1_Alpha-2_Code">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Länderkennzeichen zweistellig nach ISO 3166-1
+          </xs:documentation>
+					<xs:documentation><![CDATA[<CountryCode>DE</CountryCode>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryName" type="string35" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Ländername
+          </xs:documentation>
+					<xs:documentation><![CDATA[<CountryName>Deutschland</CountryName>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- contact type definition -->
+	<xs:complexType name="ContactInformationType">
+		<xs:all>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="Telephone" type="xs:string" minOccurs="0"/>
+			<xs:element name="Fax" type="xs:string" minOccurs="0"/>
+			<xs:element name="EMail" type="xs:string" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<!-- CustomerInfoTyp used in Order -->
+	<xs:complexType name="CustomerInfoType">
+		<xs:attribute name="Name" type="string30" use="required"/>
+		<xs:attribute name="Telephone" type="string25"/>
+	</xs:complexType>
+	<!-- ContractRef type definition -->
+	<xs:complexType name="ContractRefType">
+		<xs:sequence>
+			<xs:element name="ContractNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="ScheduleNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="CostCenter" type="xs:string" minOccurs="0"/>
+			<xs:element name="Assignment" type="xs:string" minOccurs="0"/>
+			<xs:element name="ProjectNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="DeliveryDate" type="DateType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Date element definition used as extra node -->
+	<xs:complexType name="DateElementType">
+		<xs:sequence>
+			<xs:element name="Date" type="DateType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Date type definition
+			Note: it does not check if date format and date string fit together - not possible with XML Schema 1.0
+	-->
+	<xs:complexType name="DateType">
+		<xs:simpleContent>
+			<xs:extension base="DateFormatType">
+				<xs:attribute name="Qualifier" default="At">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">
+              Datumsart
+            </xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Before"/>
+							<xs:enumeration value="At"/>
+							<xs:enumeration value="After"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="Format" default="YYYYMMDD">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">
+              Datumsformat
+            </xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="YYYYMMDD"/>
+							<xs:enumeration value="YYYYMMDDHHMM"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DesAdvRefType">
+		<xs:sequence>
+			<xs:element name="DocumentNumber" type="string35"/>
+			<xs:element name="Date" type="DateType"/>
+		</xs:sequence>
+	</xs:complexType>
+		<xs:complexType name="InvoiceRefType">
+		<xs:sequence>
+			<xs:element name="DocumentNumber" type="string35"/>
+			<xs:element name="Date" type="DateType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FreeTextType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+        Freitext auf Kopfebene
+        Kann genutz werden um weiterführende Informationen zu übermitteln falls vom Kunden gewünsch.
+      </xs:documentation>
+			<xs:documentation><![CDATA[<FreeText Caption="DispatchDate">20110810</FreeText>]]></xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="string210">
+				<xs:attribute name="Caption" type="string35" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">
+              Feldbeschriftung des Freitextes
+              Zu verwenden sind die Werte aus der Werteliste, alternativ "ZZZ" = Freitext undefiniert.
+            </xs:documentation>
+						<xs:documentation><![CDATA[Caption="DispatchDate"]]></xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!-- not in use
+	<xs:complexType name="InvoiceOrgType">
+		<xs:sequence>
+			<xs:element name="TaxRegistrationNumber" type="VATType" minOccurs="0"/>
+			<xs:element name="InvoiceParty" type="PartyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	-->
+	<!-- OrderRefType -->
+	<xs:complexType name="OrderRefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+        Bezug zur Bestellung
+      </xs:documentation>
+			<xs:documentation xml:lang="en">
+        Order reference
+      </xs:documentation>
+			<xs:documentation><![CDATA[<OrderRef>
+				<SellerOrderNumber>183</SellerOrderNumber>
+				<BuyerOrderNumber>03462</BuyerOrderNumber>
+				<Date Format="YYYYMMDD" Qualifier="At">20110809</Date>
+			</OrderRef>]]></xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SellerOrderNumber" type="string10">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Auftragsnummer des Lieferanten
+            Diese Feld ist technisch wichtig und muss befüllt werden. Falls der Lieferant keine Auftragsnummer vergibt, kann hier die Bestellnummer des Kunden angegeben werden.
+          </xs:documentation>
+					<xs:documentation xml:lang="en">
+            Order ID supplier
+            This is the order number given by the supplier system
+          </xs:documentation>
+					<xs:documentation><![CDATA[<SellerOrderNumber>183</SellerOrderNumber>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BuyerOrderNumber" type="string20">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Auftragsnummer der Bestellung
+            Bestellnummer des Bestellers ist wichtig um den Bezug zu seiner Bestellung herzustellen.
+          </xs:documentation>
+					<xs:documentation xml:lang="en">
+            Order ID purchaser
+            This is the order number given by the purchaser
+          </xs:documentation>
+					<xs:documentation><![CDATA[<BuyerOrderNumber>03462</BuyerOrderNumber>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="DateType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Datum der Bestellung des Kunden
+            Hinweis: Hier ist das Datum der Bestellung des Kunden anzugeben, nicht das Datum der Buchung oder Bestätigung des Lieferanten.
+          </xs:documentation>
+					<xs:documentation xml:lang="en">
+            Order date
+            This is the buyer order date
+          </xs:documentation>
+					<xs:documentation><![CDATA[<Date Format="YYYYMMDD" Qualifier="At">20110809</Date>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ResponseType -->
+	<xs:complexType name="ResponseType">
+		<xs:sequence>
+			<xs:element name="Text" type="string256"/>
+			<xs:element name="Parameter" type="string256" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="ResponseClass" type="ResponseClassType" use="required"/>
+		<xs:attribute name="Code" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="0"/>
+					<xs:maxInclusive value="9999"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Type">
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="0"/>
+					<xs:maxInclusive value="5"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<!-- OfferReferneceType 
+	<xs:complexType name="OfferReferenceType">
+		<xs:sequence>
+			<xs:element name="Number" type="string10" />
+			<xs:element name="Date" type="DateType" />
+		</xs:sequence>
+		<xs:attribute name="Qualifier" type="OfferReferenceQualifierType" />
+	</xs:complexType> -->
+	<xs:complexType name="PartyType">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="string13"/>
+			<xs:element name="TaxRegistrationNumber" type="VATType"/>
+			<xs:element name="AdditionalPartyNumber" type="AdditionalPartyNumberType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Address" type="AddressType"/>
+			<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartyTypeWithOutTaxRegistrationNumber">
+		<xs:sequence>
+			<xs:element name="PartyNumber" minOccurs="0" type="string13"/>
+			<xs:element name="TaxRegistrationNumber" type="VATType" minOccurs="0"/>
+			<xs:element name="AdditionalPartyNumber" type="AdditionalPartyNumberType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Address" type="AddressType"/>
+			<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- DeliveryInfoType -->
+	<xs:complexType name="DeliveryInfoType">
+		<xs:sequence>
+			<xs:element name="Quantity" type="QuantityType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Date" type="DateType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- OrderDeliveryPartyType -->
+	<xs:complexType name="OrderDeliveryPartyType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+        Wenn in der Bestellung ein Warenempfänger mit Warenempfängernummer angegeben wurde, müssen diese Angaben zwingend in der OrdRsp zurückgesendet werden.
+        Wichtig: Wenn der Kunde ohne PartyNumber bestellt hat, darf der Lieferant hier keine selbst vergebene PartyNumber zurücksenden, sondern muss die PartyNumber weggelassen werden und eine Adresse geliefert werden.
+        Die Partnernummern sind wichtig um die Nachrichten durch die TecCom Plattform zu transportieren und wird von Besteller vorgegeben
+      </xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="PartyNumber" type="PartyNumberType"/>
+				<xs:element name="Address" type="AddressType" minOccurs="0"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="Address" type="AddressType"/>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<!-- OrderSellerPartyType -->
+	<xs:complexType name="OrderSellerPartyType">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="SellerPartyNumberType"/>
+			<xs:element name="Address" type="AddressType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- OrderBuyerPartyType -->
+	<xs:complexType name="OrderBuyerPartyType">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="OrderBuyerPartyNumberType"/>
+			<xs:element name="Address" type="AddressType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- DesAdvPartyType -->
+	<xs:complexType name="DesAdvPartyType">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="string13" minOccurs="0"/>
+			<xs:element name="Address" type="AddressType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- OrderRspPartyType -->
+	<xs:complexType name="OrderRspPartyType">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="string13"/>
+			<xs:element name="Address" type="AddressType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SellerPartyNumberType">
+		<xs:simpleContent>
+			<xs:extension base="string13">
+				<xs:attribute name="Qualifier" type="OrderPartyNumberQualifierType" use="required" fixed="BuyerNumber"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="OrderBuyerPartyNumberType">
+		<xs:simpleContent>
+			<xs:extension base="string13">
+				<xs:attribute name="Qualifier" type="OrderPartyNumberQualifierType" use="required" fixed="SupplierNumber"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PartyNumberType">
+		<xs:simpleContent>
+			<xs:extension base="string13">
+				<xs:attribute name="Qualifier" type="OrderPartyNumberQualifierType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AdditionalPartyNumberType">
+		<xs:simpleContent>
+			<xs:extension base="string13">
+				<xs:attribute name="Qualifier" type="AdditionalPartyNumberQualifierType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!-- OrderProcessingExpressType -->
+	<xs:complexType name="OrderProcessingExpressType">
+		<xs:attribute name="DispatchMode" type="DispatchModeExpressType" use="required"/>
+		<xs:attribute name="CompleteDelivery" type="YesNoType"/>
+		<xs:attribute name="BackOrder" type="YesNoType" fixed="No"/>
+	</xs:complexType>
+	<!-- OrderProcessingStockType -->
+	<xs:complexType name="OrderProcessingStockType">
+		<xs:attribute name="DispatchMode" type="DispatchModeStockType" use="required"/>
+		<xs:attribute name="CompleteDelivery" type="YesNoType" fixed="No"/>
+		<xs:attribute name="BackOrder" type="YesNoType" fixed="Yes"/>
+	</xs:complexType>
+	<!-- OrderItemProcessingType -->
+	<xs:complexType name="OrderItemProcessingType">
+		<xs:attribute name="PartialDelivery" type="YesNoType" default="Yes"/>
+		<xs:attribute name="AlternativePart" type="YesNoType" default="Yes"/>
+		<xs:attribute name="BackOrder" type="YesNoType" default="No"/>
+	</xs:complexType>
+	<!-- ItemInstructionType -->
+	<xs:complexType name="ItemInstructionType">
+		<xs:sequence/>
+		<xs:attribute name="Value" type="ItemInstructionValueType" use="required"/>
+	</xs:complexType>
+	<!-- OrderItemRef -->
+	<xs:complexType name="OrderItemRefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+        Bezug zur Bestellposition in der Bestellung
+      </xs:documentation>
+			<xs:documentation xml:lang="en">
+        Reference to order line item
+      </xs:documentation>
+			<xs:documentation><![CDATA[<OrderItemRef>
+				<SellerOrderItemRef>00003</SellerOrderItemRef>
+				<BuyerOrderItemRef>00003</BuyerOrderItemRef>
+			</OrderItemRef>]]></xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SellerOrderItemRef" type="integer6">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Positionsnummer des Lieferanten aus dem Lieferanten ERP
+          </xs:documentation>
+					<xs:documentation xml:lang="en">
+            Reference to order line item (Supplier systems)
+          </xs:documentation>
+					<xs:documentation><![CDATA[<SellerOrderItemRef>00003</SellerOrderItemRef>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BuyerOrderItemRef" type="integer6">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Positionsnummer des Bestellers. Wird beim verwendet um den Bezug zur ursprünglichen Bestellung herzustellen
+          </xs:documentation>
+					<xs:documentation xml:lang="en">
+            Reference to order line item (Purchaser systems)
+            This is used to match the item line with the original ORDER line number.
+          </xs:documentation>
+					<xs:documentation><![CDATA[<BuyerOrderItemRef>00003</BuyerOrderItemRef>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Order FreeParamType -->
+	<xs:complexType name="FreeParamType">
+		<xs:sequence>
+			<xs:element name="Parameter" type="string20"/>
+		</xs:sequence>
+		<xs:attribute name="ParamId" type="ParamIdType" use="required"/>
+	</xs:complexType>
+	<!-- QuantityType -->
+	<xs:complexType name="QuantityType">
+		<xs:simpleContent>
+			<xs:extension base="decimaldot2">
+				<xs:attribute name="UoM" type="UnitOfMeasurementsType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">
+              Einheit der Maßangabe
+              Einheit der Maßeinheit. Es sind nur gültige Werte aus der Werteliste zu verwenden
+            </xs:documentation>
+						<xs:documentation><![CDATA[UoM="KGM"]]></xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!-- MeasurementsType -->
+	<xs:complexType name="MeasurementsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+        Summe der Maße und Gewichte
+        Die im "Total Packs" angegebenen Maße gelten für die gesamte Lieferung
+      </xs:documentation>
+			<xs:documentation><![CDATA[<Measurements>
+				<MeasurementUnit MeasurementUnitQualifier="AAA" UoM="KGM">1.50</MeasurementUnit>
+				<MeasurementUnit MeasurementUnitQualifier="AAA" UoM="KGM">18.25</MeasurementUnit>
+				<MeasurementUnit MeasurementUnitQualifier="LN" UoM="MTR">1.20</MeasurementUnit>
+				<MeasurementUnit MeasurementUnitQualifier="WD" UoM="MTR">0.80</MeasurementUnit>
+				<MeasurementUnit MeasurementUnitQualifier="HT" UoM="MTR">0.90</MeasurementUnit>
+			</Measurements>]]></xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementUnit" type="MeasurementUnitType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Volumen, Maße und Gewichte
+            "Segment mehrfach, pro Maßangabe:
+            1. Nettogewicht ist der Gewicht der Ware
+            2. Bruttogewischt ist inkl. Verpackung
+            3. Maße der Kompletten Sendung (L/B/H) x3
+            4. Volumen der Kompletten Sendung"
+          </xs:documentation>
+					<xs:documentation><![CDATA[<MeasurementUnit MeasurementUnitQualifier="AAA" UoM="KGM">1.50</MeasurementUnit>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- MeasurementsUnitType -->
+	<xs:complexType name="MeasurementUnitType">
+		<xs:simpleContent>
+			<xs:extension base="decimaldot2">
+				<xs:attribute name="MeasurementUnitQualifier" type="MeasurementUnitQualifierType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">
+              Dimension der Maßangabe
+              Beschreibung der Maßangabe. Es sind nur gültige Werte aus der Werteliste zu verwenden
+            </xs:documentation>
+						<xs:documentation><![CDATA[MeasurementUnitQualifier="AAA"]]></xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="UoM" type="UnitOfMeasurementsType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">
+              Einheit der Maßangabe
+              Einheit der Maßeinheit. Es sind nur gültige Werte aus der Werteliste zu verwenden
+            </xs:documentation>
+						<xs:documentation><![CDATA[UoM="KGM"]]></xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!-- PkgInfoType -->
+	<xs:complexType name="PkgInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+        Information zur Verpackungseinheit
+        Anzahl der Verpackungen auf erster Ebene.
+      </xs:documentation>
+			<xs:documentation><![CDATA[<PkgInfo>
+			<PacketCount>2</PacketCount>
+			<PacketKind>8</PacketKind>
+			<PacketKindFreeText>Einwegpalette</PacketKindFreeText>
+		</PkgInfo>]]></xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PacketCount" type="integer8">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Anzahl der Verpackungseinheiten
+            Anzahl wie viele Unterverpackungen dieses Package enthält
+          </xs:documentation>
+					<xs:documentation><![CDATA[<PacketCount>2</PacketCount>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PacketKind" type="PackageKindType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Art der Verpackungseinheit
+          </xs:documentation>
+					<xs:documentation><![CDATA[<PacketKind>8</PacketKind>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PacketKindFreeText" type="string35" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Beschreibung der Verpackungseinheit
+          </xs:documentation>
+					<xs:documentation><![CDATA[<PacketKindFreeText>TOTAL PACKS</PacketKindFreeText>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- PkgIdType -->
+	<xs:complexType name="PkgIdType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+        Kennung der Verpackungseinheit
+      </xs:documentation>
+			<xs:documentation><![CDATA[<PkgId>
+				<PkgIdentSystem>17</PkgIdentSystem>
+				<PkgIdentNumberQualifier>BN</PkgIdentNumberQualifier>
+				<PkgIdentNumber>54321</PkgIdentNumber>
+			</PkgId>]]></xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PkgIdentSystem" type="PkgIdentSystemType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Kennzeichnungssystematik
+            Beschreibt die Logik der PkgIdentNumber (Lieferanten und/oder Besteller Logik)
+          </xs:documentation>
+					<xs:documentation><![CDATA[<PkgIdentSystem>17</PkgIdentSystem>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PkgIdentNumberQualifier" type="PkgIdentNumberQualifierType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Kennzeichungsart
+            Beschreibt die Logik der PkgIdentNumber (Lieferanten und/oder Besteller Logik)
+          </xs:documentation>
+					<xs:documentation><![CDATA[<PkgIdentNumberQualifier>BN</PkgIdentNumberQualifier>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PkgIdentNumber" type="string18">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Kennzeichen
+            Nummer auf dem Packet in der Logik wie in PkgIdentSystem angegeben.
+          </xs:documentation>
+					<xs:documentation><![CDATA[<PkgIdentNumber>54321</PkgIdentNumber>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- PkgRefType -->
+	<xs:complexType name="PkgRefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+        Referenzinformation zu einer Packliste
+        Kann genutzt werden um auf andere Dokumente zu referenzieren
+      </xs:documentation>
+			<xs:documentation><![CDATA[<PkgRef>
+				<PkgRefQualifier>PK</PkgRefQualifier>
+				<PkgRefNumber>X4856</PkgRefNumber>
+			</PkgRef>]]></xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PkgRefQualifier" type="PkgRefQualifierType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Referenznummern Qualifier
+            Referenzinformation = PK
+          </xs:documentation>
+					<xs:documentation><![CDATA[<PkgRefQualifier>PK</PkgRefQualifier>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PkgRefNumber" type="string35">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Referenznummer als Freitext
+            Nummer der Packliste
+          </xs:documentation>
+					<xs:documentation><![CDATA[<PkgRefNumber>X4856</PkgRefNumber>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ProductIdType -->
+	<xs:complexType name="ProductIdType">
+		<xs:sequence>
+			<xs:element name="MakerCode" type="string6">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Herstellercode
+            Das im TecDoc-Katalog hinterlegte Herstellerkürzel. Muss bei Lieferanten mit mehreren Sortimenten gefüllt sein, sonst ist "*" der Standardwert.
+          </xs:documentation>
+					<xs:documentation><![CDATA[<MakerCode>*</MakerCode>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProductNumber" type="string30">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Artikelnummern des Lieferanten
+            Artikelnummer des Hersteller die geliefert wurde. Bei Substitution + Ersatz ist das ursprünglich bestellte Material mit SubstitutedProductNumber zu füllen. Dies ist die externe (Katalog, z. B. TecDOC)  Bestellnummer und nicht die LIEF interne MATNR.
+          </xs:documentation>
+					<xs:documentation><![CDATA[<ProductNumber>W7DC</ProductNumber>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ean" type="EANType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            EAN Nummer
+            Die European Article Number (EAN) ist die frühere Bezeichnung für die Globale Artikelidentnummer
+          </xs:documentation>
+					<xs:documentation><![CDATA[<Ean>1313131313</Ean>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BuyerProductNumber" type="string30" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Artikelnummer des Bestellers
+            In der Regel gibt der Besteller die bei Ihm im ERP geführte Artikelnummer, mit der ProductNumer/EAN, bei der Bestellung mit. Sobald diese Nummer gefüllt ist muss sie zwingend in Nachfolgedokumenten zurückgegeben werden.
+          </xs:documentation>
+					<xs:documentation><![CDATA[<BuyerProductNumber>W7DC-BO</BuyerProductNumber>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubstitutedProductNumber" type="string30" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Ursprünglich bestellte Artikelnummer
+            Ursprünglich bestellte Artikelnummer des Kunden um einen Bestellbezug herstellen zu können. (Wichtig in der OrderResponse)
+          </xs:documentation>
+					<xs:documentation xml:lang="en">
+            Ordered product number
+            Produced originally ordered item number of customers increased by an order relating to
+          </xs:documentation>
+					<xs:documentation><![CDATA[<SubstitutedProductNumber>W7DCS</SubstitutedProductNumber>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- OrderProductDescriptionType -->
+	<xs:complexType name="OrderProductDescriptionType">
+		<xs:sequence>
+			<xs:element name="ProductName" maxOccurs="2">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="string40">
+							<xs:attribute name="Language" type="ISO_3166-1_Alpha-2_Code"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ReverseProductDescriptionType -->
+	<xs:complexType name="ReverseProductDescriptionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+        Kurzbeschreibung vom Lieferanten (muss nicht den gesendeten Werten des Bestellers entsprechen) und ist in der Sprache des Bestellers auszugeben.
+      </xs:documentation>
+			<xs:documentation><![CDATA[<ProductDescription>
+				<ProductName1>Zündkerzen</ProductName1>
+			</ProductDescription>]]></xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ProductName1" type="string35">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Artikelbezeichnung1
+            Kurzbeschreibung vom Lieferanten (muss nicht den gesendeten Werten des Bestellers entsprechen) und ist in der Sprache des Bestellers auszugeben.
+          </xs:documentation>
+					<xs:documentation xml:lang="en">
+            Supplier product description1
+          </xs:documentation>
+					<xs:documentation><![CDATA[<ProductName1>Zündkerzen</ProductName1>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProductName2" minOccurs="0">
+				<xs:complexType mixed="true">
+					<xs:simpleContent>
+						<xs:extension base="string35">
+							<xs:attribute name="Language" type="ISO_3166-1_Alpha-2_Code"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ProductPriceType -->
+	<xs:complexType name="ProductPriceType">
+		<xs:sequence>
+			<xs:element name="PriceCategory" type="PriceCategoryType" default="undefined" minOccurs="0"/>
+			<xs:element name="Price" type="decimaldot3"/>
+			<xs:element name="DiscountGroup" type="string6" minOccurs="0"/>
+			<xs:element name="PriceUnit" type="QuantityElementType" minOccurs="0"/>
+			<xs:element name="Currency" type="ISO_4217_Code" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- AlternativeType -->
+	<xs:complexType name="AlternativeType">
+		<xs:sequence>
+			<xs:element name="ProductId" type="ProductIdType"/>
+			<xs:element name="ProductDescription" type="OrderProductDescriptionType"/>
+			<xs:element name="ProductPrice" type="ProductPriceType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- QtyVarianceType -->
+	<xs:complexType name="QtyVarianceType">
+		<xs:sequence>
+			<xs:element name="Quantity" type="QuantityType"/>
+			<xs:element name="DeviationReason" type="DeviationReasonType" minOccurs="0"/>
+			<xs:element name="ModificationReason" type="ModificationReasonType" minOccurs="0"/>
+			<xs:element name="QtyVarComment" type="string40" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- TransportDetailsType -->
+	<xs:complexType name="TransportDetailsType">
+		<xs:sequence>
+			<xs:element name="TransportMode" type="TransportModeType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Art des Transportes
+            Beschreibt auf welchem Weg die Ware transportiert wird
+          </xs:documentation>
+					<xs:documentation><![CDATA[<TransportMode>30</TransportMode>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportTypeMeansCode" type="TransportTypeMeansCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Art des Transportmittels
+            Beschreibt mit welchem Transportmittel die Ware transportiert wird
+          </xs:documentation>
+					<xs:documentation><![CDATA[<TransportTypeMeansCode>34</TransportTypeMeansCode>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportTypeMeansFree" type="string35" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            Art des Transportmittels Text
+            Beschreibender Text zum Transportmittel z. B. KFZ Kennzeichen des Fahrzeugs
+          </xs:documentation>
+					<xs:documentation><![CDATA[<TransportTypeMeansFree>Expressdienstleister</TransportTypeMeansFree>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CarrierIdentificationILN" type="string14" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">
+            ILN des Frachtführers
+            eindeutige DUNS, ILN oder GLN Nummer des Spediteurs
+          </xs:documentation>
+					<xs:documentation><![CDATA[<TransportTypeMeansFree>Expressdienstleister</TransportTypeMeansFree>]]></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

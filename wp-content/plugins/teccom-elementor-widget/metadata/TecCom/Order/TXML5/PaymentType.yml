@@ -1,0 +1,29 @@
+TecCom\Order\TXML5\PaymentType:
+    properties:
+        mode:
+            expose: true
+            access_type: public_method
+            serialized_name: Mode
+            accessor:
+                getter: getMode
+                setter: setMode
+            type: string
+        reference:
+            expose: true
+            access_type: public_method
+            serialized_name: Reference
+            accessor:
+                getter: getReference
+                setter: setReference
+            type: string
+        financialInstitution:
+            expose: true
+            access_type: public_method
+            serialized_name: FinancialInstitution
+            accessor:
+                getter: getFinancialInstitution
+                setter: setFinancialInstitution
+            xml_list:
+                inline: true
+                entry_name: FinancialInstitution
+            type: array<TecCom\Order\TXML5\PaymentType\FinancialInstitutionAType>

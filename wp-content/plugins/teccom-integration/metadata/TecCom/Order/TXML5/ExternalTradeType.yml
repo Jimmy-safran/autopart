@@ -1,0 +1,34 @@
+TecCom\Order\TXML5\ExternalTradeType:
+    properties:
+        countryOfOrigin:
+            expose: true
+            access_type: public_method
+            serialized_name: CountryOfOrigin
+            accessor:
+                getter: getCountryOfOrigin
+                setter: setCountryOfOrigin
+            type: string
+        regionOfOrigin:
+            expose: true
+            access_type: public_method
+            serialized_name: RegionOfOrigin
+            accessor:
+                getter: getRegionOfOrigin
+                setter: setRegionOfOrigin
+            type: string
+        harmonizedTariffSystem:
+            expose: true
+            access_type: public_method
+            serialized_name: HarmonizedTariffSystem
+            accessor:
+                getter: getHarmonizedTariffSystem
+                setter: setHarmonizedTariffSystem
+            type: string
+        customsOriginPreference:
+            expose: true
+            access_type: public_method
+            serialized_name: CustomsOriginPreference
+            accessor:
+                getter: getCustomsOriginPreference
+                setter: setCustomsOriginPreference
+            type: string

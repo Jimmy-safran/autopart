@@ -1,0 +1,26 @@
+TecCom\Order\TXML5\MeasurementsType:
+    properties:
+        qualifier:
+            expose: true
+            access_type: public_method
+            serialized_name: Qualifier
+            accessor:
+                getter: getQualifier
+                setter: setQualifier
+            type: string
+        unit:
+            expose: true
+            access_type: public_method
+            serialized_name: Unit
+            accessor:
+                getter: getUnit
+                setter: setUnit
+            type: string
+        value:
+            expose: true
+            access_type: public_method
+            serialized_name: Value
+            accessor:
+                getter: getValue
+                setter: setValue
+            type: float

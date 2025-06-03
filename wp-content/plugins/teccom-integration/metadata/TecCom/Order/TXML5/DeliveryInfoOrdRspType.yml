@@ -1,0 +1,58 @@
+TecCom\Order\TXML5\DeliveryInfoOrdRspType:
+    properties:
+        quantityType:
+            expose: true
+            access_type: public_method
+            serialized_name: QuantityType
+            accessor:
+                getter: getQuantityType
+                setter: setQuantityType
+            type: string
+        quantity:
+            expose: true
+            access_type: public_method
+            serialized_name: Quantity
+            accessor:
+                getter: getQuantity
+                setter: setQuantity
+            type: float
+        uoM:
+            expose: true
+            access_type: public_method
+            serialized_name: UoM
+            accessor:
+                getter: getUoM
+                setter: setUoM
+            type: string
+        warehouseReference:
+            expose: true
+            access_type: public_method
+            serialized_name: WarehouseReference
+            accessor:
+                getter: getWarehouseReference
+                setter: setWarehouseReference
+            type: string
+        infoText:
+            expose: true
+            access_type: public_method
+            serialized_name: InfoText
+            accessor:
+                getter: getInfoText
+                setter: setInfoText
+            type: string
+        deliveryDate:
+            expose: true
+            access_type: public_method
+            serialized_name: DeliveryDate
+            accessor:
+                getter: getDeliveryDate
+                setter: setDeliveryDate
+            type: TecCom\Order\TXML5\DateType
+        dispatchDate:
+            expose: true
+            access_type: public_method
+            serialized_name: DispatchDate
+            accessor:
+                getter: getDispatchDate
+                setter: setDispatchDate
+            type: TecCom\Order\TXML5\DateType

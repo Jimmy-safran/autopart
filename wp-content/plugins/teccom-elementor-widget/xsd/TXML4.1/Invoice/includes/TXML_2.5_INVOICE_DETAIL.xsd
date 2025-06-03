@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.teccom.de/tecorder/invoic/txml25" targetNamespace="http://www.teccom.de/tecorder/invoic/txml25" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:include schemaLocation="TXML_SIMPLETYPES.xsd" />
+  <xs:include schemaLocation="TXML_COMPLEXTYPES.xsd" />
+  <xs:include schemaLocation="TXML_ENUMTYPES.xsd" />
+
+  <!-- Invoice Detail -->
+	<!-- Invoice Positions
+			Note: mandatory because of compatibility to Invoice 1.0 -->		
+	<xs:complexType name="InvoiceDetailType">
+		<xs:sequence>
+			<xs:element name="PositionNumber" type="integer6" />
+			<xs:element name="Quantity" type="QuantityType" />	
+			<xs:element name="MaterialType" type="xs:string" minOccurs="0"/>
+			<xs:element name="ProductId" type="ProductIdType" />
+			<xs:element name="ProductDescription" type="ReverseProductDescriptionType" />
+			<xs:element name="BuyerPartyNumber" type="string13" minOccurs="0"/>
+			<xs:element name="DeliveryPartyNumber" type="string13" minOccurs="0"/>
+			<xs:element name="DesAdvRef" type="DesAdvRefType" />
+			<xs:element name="DesAdvItemRef">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PositionNumber" type="string6" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="OrderRef" type="OrderRefType">
+				<xs:annotation>
+				  <xs:documentation xml:lang="de">
+					Bezug zur Bestellung
+				  </xs:documentation>
+				  <xs:documentation xml:lang="en">
+					Order reference
+				  </xs:documentation>			  
+				  <xs:documentation>
+					<![CDATA[<OrderRef>
+						<SellerOrderNumber>183</SellerOrderNumber>
+						<BuyerOrderNumber>03462</BuyerOrderNumber>
+						<Date Format="YYYYMMDD" Qualifier="At">20110809</Date>
+					</OrderRef>]]>
+				  </xs:documentation>
+				</xs:annotation>
+			  </xs:element>
+			<xs:element name="OrderItemRef" type="OrderItemRefType">
+				<xs:annotation>
+				  <xs:documentation xml:lang="de">
+					Bezug zur Bestellposition in der Bestellung
+				  </xs:documentation>
+				  <xs:documentation xml:lang="en">
+					Reference to order line item
+				  </xs:documentation>			  
+				  <xs:documentation>
+					<![CDATA[<OrderItemRef>
+						<SellerOrderItemRef>00003</SellerOrderItemRef>
+						<BuyerOrderItemRef>00003</BuyerOrderItemRef>
+					</OrderItemRef>]]>
+				  </xs:documentation>
+				</xs:annotation>
+		    </xs:element>		
+			<xs:element name="ContractRef" type="ContractRefType" minOccurs="0"/>
+			<xs:element name="AllowOrCharge" type="AllowOrChargeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Tax" type="TaxType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="UnitPrice" type="AmountType5" />
+			<xs:element name="TotalPrice" type="AmountType5" minOccurs="0"/>
+			<xs:element name="TotalValue" type="AmountType5" />
+			<xs:element name="AdditionalPrice" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:decimal">
+							<xs:attribute name="AdditionalPriceType" type="PriceCategoryType" use="required"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ExternalTrade" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CountryOfOrigin" type="ISO_3166-1_Alpha-2_Code" minOccurs="0"/>
+						<xs:element name="RegionOfOrigin" type="xs:string" minOccurs="0"/>
+						<xs:element name="StatisticGroup" type="xs:string" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FreeText" type="FreeTextType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

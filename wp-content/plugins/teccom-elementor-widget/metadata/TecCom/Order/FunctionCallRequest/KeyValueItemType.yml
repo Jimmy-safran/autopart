@@ -1,0 +1,22 @@
+TecCom\Order\FunctionCallRequest\KeyValueItemType:
+    properties:
+        key:
+            expose: true
+            access_type: public_method
+            serialized_name: key
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getKey
+                setter: setKey
+            type: string
+        value:
+            expose: true
+            access_type: public_method
+            serialized_name: value
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getValue
+                setter: setValue
+            type: string

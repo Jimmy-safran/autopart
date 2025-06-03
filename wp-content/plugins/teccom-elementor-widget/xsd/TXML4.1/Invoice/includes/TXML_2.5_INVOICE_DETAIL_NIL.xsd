@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.teccom.de/tecorder/invoic/txml25" targetNamespace="http://www.teccom.de/tecorder/invoic/txml25" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	
+	<!-- Invoice Detail with empty nodes-->
+	<!-- Invoice Positions
+			Note: mandatory because of compatibility to Invoice 1.0 -->
+  <xs:complexType name="InvoiceDetailType">
+    <xs:sequence>
+      <xs:element name="PositionNumber" type="xs:string" fixed=""/>
+      <xs:element name="Quantity" fixed="">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="UoM" use="required" fixed="."/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ProductId">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MakerCode" type="xs:string" fixed=""/>
+            <xs:element name="ProductNumber" type="xs:string" fixed=""/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ProductDescription">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ProductName1" type="xs:string" fixed=""/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TotalValue">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Amount" type="xs:string" fixed=""/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

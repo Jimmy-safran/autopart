@@ -1,0 +1,32 @@
+TecCom\Order\FunctionCallRequest\ParameterDataType:
+    properties:
+        parameterValue:
+            expose: true
+            access_type: public_method
+            serialized_name: ParameterValue
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getParameterValue
+                setter: setParameterValue
+            type: string
+        parameterType:
+            expose: true
+            access_type: public_method
+            serialized_name: ParameterType
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getParameterType
+                setter: setParameterType
+            type: string
+        attributes:
+            expose: true
+            access_type: public_method
+            serialized_name: Attributes
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getAttributes
+                setter: setAttributes
+            type: TecCom\Order\FunctionCallRequest\DTOStringDictionaryType

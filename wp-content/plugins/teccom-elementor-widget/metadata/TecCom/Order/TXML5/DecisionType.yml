@@ -1,0 +1,58 @@
+TecCom\Order\TXML5\DecisionType:
+    properties:
+        itemStatus:
+            expose: true
+            access_type: public_method
+            serialized_name: ItemStatus
+            accessor:
+                getter: getItemStatus
+                setter: setItemStatus
+            type: string
+        goodwill:
+            expose: true
+            access_type: public_method
+            serialized_name: Goodwill
+            accessor:
+                getter: getGoodwill
+                setter: setGoodwill
+            type: bool
+        acceptedNetAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: AcceptedNetAmount
+            accessor:
+                getter: getAcceptedNetAmount
+                setter: setAcceptedNetAmount
+            type: float
+        creditNoteNetAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: CreditNoteNetAmount
+            accessor:
+                getter: getCreditNoteNetAmount
+                setter: setCreditNoteNetAmount
+            type: float
+        rejectionReason:
+            expose: true
+            access_type: public_method
+            serialized_name: RejectionReason
+            accessor:
+                getter: getRejectionReason
+                setter: setRejectionReason
+            type: string
+        action:
+            expose: true
+            access_type: public_method
+            serialized_name: Action
+            accessor:
+                getter: getAction
+                setter: setAction
+            type: TecCom\Order\TXML5\DecisionType\ActionAType
+        currency:
+            expose: true
+            access_type: public_method
+            serialized_name: Currency
+            accessor:
+                getter: getCurrency
+                setter: setCurrency
+            type: string

@@ -1,0 +1,66 @@
+TecCom\Order\TXML5\AllowOrChargeType:
+    properties:
+        sequenceNumber:
+            expose: true
+            access_type: public_method
+            serialized_name: SequenceNumber
+            accessor:
+                getter: getSequenceNumber
+                setter: setSequenceNumber
+            type: int
+        allowance:
+            expose: true
+            access_type: public_method
+            serialized_name: Allowance
+            accessor:
+                getter: getAllowance
+                setter: setAllowance
+            type: TecCom\Order\TXML5\AllowOrChargeType\AllowanceAType
+        charge:
+            expose: true
+            access_type: public_method
+            serialized_name: Charge
+            accessor:
+                getter: getCharge
+                setter: setCharge
+            type: TecCom\Order\TXML5\AllowOrChargeType\ChargeAType
+        internalReference:
+            expose: true
+            access_type: public_method
+            serialized_name: InternalReference
+            accessor:
+                getter: getInternalReference
+                setter: setInternalReference
+            type: string
+        description:
+            expose: true
+            access_type: public_method
+            serialized_name: Description
+            accessor:
+                getter: getDescription
+                setter: setDescription
+            type: string
+        percent:
+            expose: true
+            access_type: public_method
+            serialized_name: Percent
+            accessor:
+                getter: getPercent
+                setter: setPercent
+            type: float
+        amount:
+            expose: true
+            access_type: public_method
+            serialized_name: Amount
+            accessor:
+                getter: getAmount
+                setter: setAmount
+            type: float
+        tax:
+            expose: true
+            access_type: public_method
+            serialized_name: Tax
+            accessor:
+                getter: getTax
+                setter: setTax
+            type: TecCom\Order\TXML5\TaxType

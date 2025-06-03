@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bearbeitet mit XMLSpy v2023 rel. 2 (x64) (http://www.altova.com) von TecAlliance GmbH (TecAlliance GmbH) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="TXML_5.0_Common.xsd"/>
+    <xs:element name="OrdRsp">
+        <xs:annotation>
+            <xs:documentation>The order response is used by the seller to confirm or deny the acceptance of the order of the buyer.
+
+The buyer **must** evaluate the order response in full to understand how the order was confirmed or why it was denied by the seller.</xs:documentation>
+            <xs:appinfo>
+                <history>
+                    <version>v1.0</version>
+                    <changedBy>RMA</changedBy>
+                    <changedOn>20210311</changedOn>
+                    <change>Added namespace; upgrade to Txml_5.0_Common v1.6</change>
+                </history>
+                <history>
+                    <version>v1.1</version>
+                    <changedBy>RMA</changedBy>
+                    <changedOn>20210413</changedOn>
+                    <change>Upgraded to Txml_5.0_Common v1.7</change>
+                </history>
+                <history>
+                    <version>v1.2</version>
+                    <changedBy>RMA</changedBy>
+                    <changedOn>20210803</changedOn>
+                    <change>Upgraded to TXML_5.0_Common v1.8; updated schema</change>
+                </history>
+                <history>
+                    <version>v1.3</version>
+                    <changedBy>RHA</changedBy>
+                    <changedOn>20210827</changedOn>
+                    <change>Upgraded to TXML_5.0_Common v1.9; removed promotion from Reference</change>
+                </history>
+                <history>
+                    <version>v1.4</version>
+                    <changedBy>RMA</changedBy>
+                    <changedOn>20211005</changedOn>
+                    <change>Upgraded to TXML_5.0_Common v1.10</change>
+                </history>
+                <history>
+                    <version>v1.5</version>
+                    <changedBy>MDR</changedBy>
+                    <changedOn>20220927</changedOn>
+                    <change>Upgraded to TXML_5.0_Common v1.11</change>
+                </history>
+                <history>
+                    <version>v1.6</version>
+                    <changedBy>CD</changedBy>
+                    <changedOn>20240124</changedOn>
+                    <change>Removed schema version from filename</change>
+                </history>
+                <history>
+                    <version>v1.7</version>
+                    <changedBy>TR</changedBy>
+                    <changedOn>20240306</changedOn>
+                    <change>Revised schema documentation</change>
+                </history>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Head">
+                    <xs:annotation>
+                        <xs:documentation>Information about the whole order response.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="DocumentNumber">
+                                <xs:annotation>
+                                    <xs:documentation>The identifier of the order response (this is **not** the seller order number).
+
+This **must** be unique over all order responses the seller sends (that is, no two order responses may share the same identifier).</xs:documentation>
+                                    <xs:appinfo>
+                                        <altova:exampleValues>
+                                            <altova:example value="ORDRSP-20240105-100334-27"/>
+                                        </altova:exampleValues>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="0"/>
+                                        <xs:maxLength value="35"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IssueDate" type="xs:dateTime">
+                                <xs:annotation>
+                                    <xs:documentation>The specific point in time when the order response was created.
+
+It **must** include the time zone (which is the number of hours and minutes the given time is ahead or behind UTC time).</xs:documentation>
+                                    <xs:appinfo>
+                                        <altova:exampleValues>
+                                            <altova:example value="2024-01-04T15:51:39+01:00"/>
+                                        </altova:exampleValues>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Reference" type="ReferenceHeaderType" maxOccurs="9999">
+                                <xs:annotation>
+                                    <xs:documentation>A reference to another document.
+
+1.  The seller **must** always add a reference to the buyer's order with the qualifier `BuyerOrderNumber`. Its value **must** be the `DocumentNumber` of the buyer's order.
+
+2.  The seller **must** always add a reference to the buyer's order with the qualifier `SellerOrderNumber` if the order was created successfully. Its value **must** be the order number the seller has assigned to the buyer's order in their ERP system.
+
+3.  The seller **can** add more than one reference with the qualifier `SellerOrderNumber`, for example, if the order was split internally in their ERP system.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="SellerParty" type="PartyType1">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the seller.
+
+The `Number` for the seller party is usually assigned by the buyer. It is the number under which the seller is known in the buyer's ERP system.
+
+The seller **must** return their own address and contact information.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="BuyerParty" type="PartyType1">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the buyer.
+
+The `Number` for the buyer party is usually assigned by the seller. It is the number under which the buyer is known in the seller's ERP system.
+
+1.  The seller **must** return the buyer's address and contact information stored in the seller ERP system for the buyer party number sent by the buyer.
+
+2.  It is **not allowed** to copy these values from the order.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="DeliveryParty" type="PartyType2" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the recipient of the order.
+
+1.  The seller **must** return the recipient's address and contact information stored in the seller ERP system for the delivery party number sent by the buyer.
+
+2.  It is **not allowed** to copy these values from the order.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AdditionalParty" type="AdditionalPartyType" minOccurs="0" maxOccurs="10">
+                                <xs:annotation>
+                                    <xs:documentation>Information about another party involved in the order.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Currency" type="CurrencyType">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the currency of the order response.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ProcessingInstructions" type="OrderProcessingInstructionsType">
+                                <xs:annotation>
+                                    <xs:documentation>The processing instructions the buyer has sent in the order.
+
+This **must** be copied from the order unchanged.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ExternalDocument" type="ExternalDocumentType" minOccurs="0" maxOccurs="9">
+                                <xs:annotation>
+                                    <xs:documentation>An external resource that applies to the whole order response.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AllowOrCharge" type="AllowOrChargeType" minOccurs="0" maxOccurs="99">
+                                <xs:annotation>
+                                    <xs:documentation>An allowance or charge that applies to the whole order response.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Tax" type="TaxType" minOccurs="0" maxOccurs="5">
+                                <xs:annotation>
+                                    <xs:documentation>A tax that applies to the whole order response.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AdditionalParameters" type="AdditionalParametersType" minOccurs="0" maxOccurs="30">
+                                <xs:annotation>
+                                    <xs:documentation>An additional parameter that conveys specific information that applies to the whole document.
+
+The seller **must** only use these qualifiers:
+
+1.  `StorageLocation`
+2.  `MinimumOrderValue`</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Payment" type="Payment" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the terms of payment.
+
+The seller **can** use this to inform the buyer how they expect them to pay for the order.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="FreeText" type="FreeTextValueType" minOccurs="0" maxOccurs="50">
+                                <xs:annotation>
+                                    <xs:documentation>Arbitrary information that applies to the whole order response.
+
+Free text **must** be agreed between buyer and seller, otherwise the buyer will ignore it.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Response" type="ResponseType" minOccurs="0" maxOccurs="9">
+                                <xs:annotation>
+                                    <xs:documentation>A status information response that applies to the whole order response.
+
+1.  The seller **must** send status information responses to the buyer to unambiguously inform them about defined situations that occurred during the processing of the order.
+
+2.  For that, the seller **must** use the pre-defined TecCom status information responses or define their own.
+
+3.  The seller **must** communicate their own status information responses to the buyer.
+
+4.  The buyer **must** evaluate the status information responses to have their implementation react accordingly.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Line" maxOccurs="999999">
+                    <xs:annotation>
+                        <xs:documentation>Information about an individual order line.
+
+1.  The order of the order response lines **can** differ from the order in the order.
+
+2.  Therefore the buyer **must** match the lines from their availablity request with the line number contained in `Reference/Line`.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Number">
+                                <xs:annotation>
+                                    <xs:documentation>The position number of the line.
+
+1.  This number **must** be a positive integer and be greater than the position number of the previous line (if any).
+
+2.  The position number **must** be the same for the line itself and any subline belonging to the line.
+
+3.  This number **must not** be used as a reference to the line in the order.</xs:documentation>
+                                    <xs:appinfo>
+                                        <altova:exampleValues>
+                                            <altova:example value="1"/>
+                                        </altova:exampleValues>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:int">
+                                        <xs:minExclusive value="0"/>
+                                        <xs:totalDigits value="6"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="SubLine" type="SubLineType" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>If present, indicates that this line is a subline.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="TotalQuantity">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the requested and confirmed quantity of the line.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Requested" type="QuantityType">
+                                            <xs:annotation>
+                                                <xs:documentation>Information about the requested quantity.
+
+This **must** be copied from the requested quantity of the order for the main line and each of its sublines.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="Confirmed" type="QuantityType">
+                                            <xs:annotation>
+                                                <xs:documentation>Information about the confirmed quantity.
+
+1.  The total confirmed quantity **must** be the sum of the confirmed quantities of the main line and all its sublines.
+
+    That is, if the buyer orders 50 PCE of article 123 and the seller delivers 30 PCE of article 123 and 20 PCE of functional alternative article 123-54, then the main line has confirmed quantity 30 PCE and the subline has confirmed quantity 20 PCE for total confirmed quantity 50 PCE.
+
+2.  If the replacement list functionality is used, then:
+
+    1.  The confirmed quantity for the main line **must** be `0`.
+    2.  The confirmed quantities of all its sublines must be equal.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="ProductId" type="ProductIdChoiceType">
+                                <xs:annotation>
+                                    <xs:documentation>One or more product identifiers of the requested article.
+
+One or more product identifiers of the requested article.
+
+1.  The seller **must** return every identifier that was sent by the buyer.
+
+2.  The seller **must** return the identifiers stored in their ERP system for the identified article.
+
+3.  The seller **must** return the `BuyerProductNumber` identifier as sent by the buyer.
+
+4.  The seller **can** return additional identifiers from their ERP system that the buyer has not sent.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ProductName" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>The name of the article.</xs:documentation>
+                                    <xs:appinfo>
+                                        <altova:exampleValues>
+                                            <altova:example value="Hood for Audi A4"/>
+                                        </altova:exampleValues>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="256"/>
+                                        <xs:minLength value="0"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="RequestedDeliveryDate" type="DateType" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>The requested delivery date from the order.
+
+1.  The seller **must** copy this date from the order if it exists there on either line level or header level.
+
+2.  The date on line level overwrites the date on header level.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="DeliveryInfo" type="DeliveryInfoOrdRspType" minOccurs="0" maxOccurs="30">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the delivery schedule of the article.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="QtyVariance" type="QtyVarianceType" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the difference between requested and confirmed quantity.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Price" type="ProductPriceType" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information about different types of prices.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AllowOrCharge" type="AllowOrChargeType" minOccurs="0" maxOccurs="99">
+                                <xs:annotation>
+                                    <xs:documentation>An allowance or charge that applies to the line.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Tax" type="TaxType" minOccurs="0" maxOccurs="10">
+                                <xs:annotation>
+                                    <xs:documentation>A tax that applies to the line.
+
+The seller **must not** use this unless the line is taxed differently than the whole document.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Reference" type="ReferenceLineType" maxOccurs="9999">
+                                <xs:annotation>
+                                    <xs:documentation>A reference to another document.
+
+1.  The seller **must** always add a reference to the buyer's order with the qualifier `BuyerOrderNumber`. Its value **must** be the `DocumentNumber` of the buyer's order.
+
+2.  The seller **must** always add a reference to the buyer's order with the qualifier `SellerOrderNumber` if the order was created successfully. Its value **must** be the order number the seller has assigned to the buyer's order in their ERP system.
+
+3.  The seller **can** add more than one reference with the qualifier `SellerOrderNumber`, for example, if the order was split internally in their ERP system.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Measurements" type="MeasurementsType" minOccurs="0" maxOccurs="99">
+                                <xs:annotation>
+                                    <xs:documentation>A measurement of the article.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ExternalTrade" type="ExternalTrade" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information that is relevant for the export of the article.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ExternalDocument" type="ExternalDocumentType" minOccurs="0" maxOccurs="9">
+                                <xs:annotation>
+                                    <xs:documentation>An external resource with additional information about the article.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AdditionalParameters" type="AdditionalParametersType" minOccurs="0" maxOccurs="30">
+                                <xs:annotation>
+                                    <xs:documentation>An additional parameter that conveys specific information that applies to the line.
+
+The seller **must** only use these qualifiers:
+
+1.  `StorageLocation`
+2.  `MaterialGroup`
+3.  `MinimumOrderValue`</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="FreeText" type="FreeTextValueType" minOccurs="0" maxOccurs="50">
+                                <xs:annotation>
+                                    <xs:documentation>Arbitrary information that relates to the line.
+
+Free text **must** be agreed between buyer and seller, otherwise the buyer will ignore it.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Response" type="ResponseType" minOccurs="0" maxOccurs="9">
+                                <xs:annotation>
+                                    <xs:documentation>A status information response that applies to the line.
+
+1.  The seller **must** send status information response to the buyer to unambiguously inform them about defined situations that occurred during the processing of order line.
+
+2.  For that, the seller **must** use the pre-defined TecCom status information responses or define their own.
+
+3.  The seller **must** communicate their own status information responses to the buyer.
+
+4.  The buyer **must** evaluate the status information responses to have their implementation react accordingly.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Summary" type="SummaryType" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>The financial summary of the whole order response.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:string" use="required" fixed="5.0">
+                <xs:annotation>
+                    <xs:documentation>The document's TXML version.
+
+This **must** be set to the fixed value provided in the schema.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,17 @@
+TecCom\Order\FunctionCallResponse\DTOStringDictionaryType:
+    properties:
+        items:
+            expose: true
+            access_type: public_method
+            serialized_name: Items
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getItems
+                setter: setItems
+            type: array<TecCom\Order\FunctionCallResponse\KeyValueItemType>
+            xml_list:
+                inline: false
+                entry_name: KeyValueItem
+                skip_when_empty: true
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse

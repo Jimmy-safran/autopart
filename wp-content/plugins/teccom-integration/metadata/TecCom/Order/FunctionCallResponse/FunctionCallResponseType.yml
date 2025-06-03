@@ -1,0 +1,52 @@
+TecCom\Order\FunctionCallResponse\FunctionCallResponseType:
+    properties:
+        timestamp:
+            expose: true
+            access_type: public_method
+            serialized_name: Timestamp
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getTimestamp
+                setter: setTimestamp
+            type: TecCom\Order\FunctionCallResponse\DTODateTimeType
+        authentication:
+            expose: true
+            access_type: public_method
+            serialized_name: Authentication
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getAuthentication
+                setter: setAuthentication
+            type: TecCom\Order\FunctionCallResponse\AuthenticationDataType
+        reference:
+            expose: true
+            access_type: public_method
+            serialized_name: Reference
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getReference
+                setter: setReference
+            type: TecCom\Order\FunctionCallResponse\ReferenceDataType
+        originatingFunction:
+            expose: true
+            access_type: public_method
+            serialized_name: OriginatingFunction
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getOriginatingFunction
+                setter: setOriginatingFunction
+            type: TecCom\Order\FunctionCallResponse\ServiceDataType
+        status:
+            expose: true
+            access_type: public_method
+            serialized_name: Status
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getStatus
+                setter: setStatus
+            type: TecCom\Order\FunctionCallResponse\StatusDataType

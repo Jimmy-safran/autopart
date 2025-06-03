@@ -1,0 +1,18 @@
+TecCom\Order\TXML5\AdditionalPartyNumberType:
+    properties:
+        qualifier:
+            expose: true
+            access_type: public_method
+            serialized_name: Qualifier
+            accessor:
+                getter: getQualifier
+                setter: setQualifier
+            type: string
+        number:
+            expose: true
+            access_type: public_method
+            serialized_name: Number
+            accessor:
+                getter: getNumber
+                setter: setNumber
+            type: string

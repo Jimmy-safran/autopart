@@ -1,0 +1,23 @@
+xsd2php:
+  namespaces:
+    'teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest': 'TecCom\Order\FunctionCallRequest'
+    'teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse': 'TecCom\Order\FunctionCallResponse'
+    '': 'TecCom\Order\TXML5'
+    'http://www.teccom.de/tecorder/desadv/txml20': 'TecCom\Order\TXML4\DespatchAdvice'
+    'http://www.teccom.de/tecorder/invoic/txml25': 'TecCom\Order\TXML4\Invoice'
+
+ 
+  destinations_php:
+    'TecCom\Order\FunctionCallRequest': src/TecCom/Order/FunctionCallRequest
+    'TecCom\Order\FunctionCallResponse': src/TecCom/Order/FunctionCallResponse
+    'TecCom\Order\TXML5': src/TecCom/Order/TXML5
+    'TecCom\Order\TXML4\DespatchAdvice': src/TecCom/Order/TXML4/DespatchAdvice
+    'TecCom\Order\TXML4\Invoice': src/TecCom/Order/TXML4/Invoice
+
+  destinations_jms:
+    'TecCom\Order\FunctionCallRequest': metadata/TecCom/Order/FunctionCallRequest
+    'TecCom\Order\FunctionCallResponse': metadata/TecCom/Order/FunctionCallResponse
+    'TecCom\Order\TXML5': metadata/TecCom/Order/TXML5
+    'TecCom\Order\TXML4\DespatchAdvice': metadata/TecCom/Order/TXML4/DespatchAdvice
+    'TecCom\Order\TXML4\Invoice': metadata/TecCom/Order/TXML4/Invoice
+  

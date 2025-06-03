@@ -1,0 +1,66 @@
+TecCom\Order\TXML5\DeliveryInfoType:
+    properties:
+        quantity:
+            expose: true
+            access_type: public_method
+            serialized_name: Quantity
+            accessor:
+                getter: getQuantity
+                setter: setQuantity
+            type: float
+        uoM:
+            expose: true
+            access_type: public_method
+            serialized_name: UoM
+            accessor:
+                getter: getUoM
+                setter: setUoM
+            type: string
+        dispatchMode:
+            expose: true
+            access_type: public_method
+            serialized_name: DispatchMode
+            accessor:
+                getter: getDispatchMode
+                setter: setDispatchMode
+            type: string
+        warehouseReference:
+            expose: true
+            access_type: public_method
+            serialized_name: WarehouseReference
+            accessor:
+                getter: getWarehouseReference
+                setter: setWarehouseReference
+            type: string
+        infoText:
+            expose: true
+            access_type: public_method
+            serialized_name: InfoText
+            accessor:
+                getter: getInfoText
+                setter: setInfoText
+            type: string
+        deliveryInfoDate:
+            expose: true
+            access_type: public_method
+            serialized_name: DeliveryInfoDate
+            accessor:
+                getter: getDeliveryInfoDate
+                setter: setDeliveryInfoDate
+            type: TecCom\Order\TXML5\DateType
+        additionalCharge:
+            expose: true
+            access_type: public_method
+            serialized_name: AdditionalCharge
+            accessor:
+                getter: getAdditionalCharge
+                setter: setAdditionalCharge
+            type: float
+        cutOffTime:
+            expose: true
+            access_type: public_method
+            serialized_name: CutOffTime
+            accessor:
+                getter: getCutOffTime
+                setter: setCutOffTime
+            type: DateTime

@@ -1,0 +1,32 @@
+TecCom\Order\TXML5\ContactType:
+    properties:
+        information:
+            expose: true
+            access_type: public_method
+            serialized_name: Information
+            accessor:
+                getter: getInformation
+                setter: setInformation
+            type: TecCom\Order\TXML5\ContactType\InformationAType
+        communication:
+            expose: true
+            access_type: public_method
+            serialized_name: Communication
+            accessor:
+                getter: getCommunication
+                setter: setCommunication
+            xml_list:
+                inline: true
+                entry_name: Communication
+            type: array<TecCom\Order\TXML5\ContactType\CommunicationAType>
+        language:
+            expose: true
+            access_type: public_method
+            serialized_name: Language
+            accessor:
+                getter: getLanguage
+                setter: setLanguage
+            xml_list:
+                inline: true
+                entry_name: Language
+            type: array<string>

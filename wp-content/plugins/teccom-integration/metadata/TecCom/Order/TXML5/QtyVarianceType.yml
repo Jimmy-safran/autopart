@@ -1,0 +1,34 @@
+TecCom\Order\TXML5\QtyVarianceType:
+    properties:
+        quantity:
+            expose: true
+            access_type: public_method
+            serialized_name: Quantity
+            accessor:
+                getter: getQuantity
+                setter: setQuantity
+            type: TecCom\Order\TXML5\QuantityType
+        deviationReason:
+            expose: true
+            access_type: public_method
+            serialized_name: DeviationReason
+            accessor:
+                getter: getDeviationReason
+                setter: setDeviationReason
+            type: string
+        modificationReason:
+            expose: true
+            access_type: public_method
+            serialized_name: ModificationReason
+            accessor:
+                getter: getModificationReason
+                setter: setModificationReason
+            type: string
+        qtyVarComment:
+            expose: true
+            access_type: public_method
+            serialized_name: QtyVarComment
+            accessor:
+                getter: getQtyVarComment
+                setter: setQtyVarComment
+            type: string

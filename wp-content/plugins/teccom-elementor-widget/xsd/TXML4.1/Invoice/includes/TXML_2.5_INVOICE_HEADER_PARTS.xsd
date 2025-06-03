@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.teccom.de/tecorder/invoic/txml25" targetNamespace="http://www.teccom.de/tecorder/invoic/txml25" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- Invoice Header Part 1 -->
+	<xs:group name="InvoiceHeaderPart1a">
+		<xs:sequence>
+			<xs:element name="InvoiceId" type="InvoiceIdType"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="InvoiceHeaderPart1bCreditNote">
+		<xs:sequence>
+			<xs:element name="MessageType" type="MessageTypeTypeCreditNote" minOccurs="1"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="InvoiceHeaderPart1bInvoice">
+		<xs:sequence>
+			<xs:element name="MessageType" type="MessageTypeTypeInvoice" minOccurs="1"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="InvoiceHeaderPart1bDebitNote">
+		<xs:sequence>
+			<xs:element name="MessageType" type="MessageTypeTypeDebitNote" minOccurs="1"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="InvoiceHeaderPart1bDebitNote2">
+		<xs:sequence>
+			<xs:element name="MessageType" type="MessageTypeTypeDebitNote2" minOccurs="1"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="InvoiceHeaderPart1c">
+		<xs:sequence>
+			<xs:element name="MessageFunction" type="MessageFunctionType" minOccurs="1"/>
+			<xs:element name="InvoiceIssueDate" type="DateElementType"/>
+		</xs:sequence>
+	</xs:group>
+	<!-- Invoice Header Part 1 Invoice -->
+	<xs:group name="InvoiceHeaderPart1Invoice">
+		<xs:sequence>
+			<xs:group ref="InvoiceHeaderPart1a"/>
+			<xs:group ref="InvoiceHeaderPart1bInvoice"/>
+			<xs:group ref="InvoiceHeaderPart1c"/>
+		</xs:sequence>
+	</xs:group>
+	<!-- Invoice Header Part 1 CreditNote -->
+	<xs:group name="InvoiceHeaderPart1CreditNote">
+		<xs:sequence>
+			<xs:group ref="InvoiceHeaderPart1a"/>
+			<xs:group ref="InvoiceHeaderPart1bCreditNote"/>
+			<xs:group ref="InvoiceHeaderPart1c"/>
+		</xs:sequence>
+	</xs:group>
+	<!-- Invoice Header Part 1 DebitNote -->
+	<xs:group name="InvoiceHeaderPart1DebitNote">
+		<xs:sequence>
+			<xs:group ref="InvoiceHeaderPart1a"/>
+			<xs:group ref="InvoiceHeaderPart1bDebitNote"/>
+			<xs:group ref="InvoiceHeaderPart1c"/>
+		</xs:sequence>
+	</xs:group>
+		<xs:group name="InvoiceHeaderPart1DebitNote2">
+		<xs:sequence>
+			<xs:group ref="InvoiceHeaderPart1a"/>
+			<xs:group ref="InvoiceHeaderPart1bDebitNote2"/>
+			<xs:group ref="InvoiceHeaderPart1c"/>
+		</xs:sequence>
+	</xs:group>
+	<!-- Invoice Header Part 2 Order -->
+	<xs:group name="InvoiceHeaderPart2Order">
+		<xs:sequence>
+			<xs:element name="OrderRef" type="OrderRefType"/>
+		</xs:sequence>
+	</xs:group>
+	<!-- Invoice Header Part 2 DesAdv -->
+	<xs:group name="InvoiceHeaderPart2DesAdv">
+		<xs:sequence>
+			<xs:element name="DesAdvRef" type="DesAdvRefType"/>
+		</xs:sequence>
+	</xs:group>
+	<!-- Invoice Header Part 2 Invoice -->
+	<xs:group name="InvoiceHeaderPart2Invoice">
+		<xs:sequence>
+			<xs:element name="InvoiceRef" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DocumentNumber" type="string35" minOccurs="1"/>
+						<xs:element name="Date" type="DateType" minOccurs="1"/>
+						<xs:element name="DocumentLink" type="string512" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<!-- Invoice Header Part 2 Order -->
+	<xs:group name="InvoiceHeaderPart2Generic">
+		<xs:choice>
+			<xs:group ref="InvoiceHeaderPart2Order"/>
+			<xs:group ref="InvoiceHeaderPart2DesAdv"/>
+			<xs:group ref="InvoiceHeaderPart2Invoice"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="InvoiceHeaderPart2GenericCN">
+		<xs:sequence>
+			<xs:choice minOccurs="1" maxOccurs="1">
+				<xs:element name="OrderRef" type="OrderRefType" minOccurs="0"/>
+				<xs:element name="DesAdvRef" type="DesAdvRefType" minOccurs="0"/>
+				<xs:element name="InvoiceRef" type="InvoiceRefType" minOccurs="0"/>
+			</xs:choice>
+		</xs:sequence>
+		<!--<xs:choice>	
+			<xs:group ref="InvoiceHeaderPart2Order"/>
+			<xs:group ref="InvoiceHeaderPart2DesAdv"/>
+			<xs:group ref="InvoiceHeaderPart2Invoice" minOccurs="1"/>
+		</xs:choice>-->
+	</xs:group>
+	<!-- Invoice Header Part 3 -->
+	<xs:group name="InvoiceHeaderPart3">
+		<xs:sequence>
+			<xs:element name="TaxTreatmentCode">
+				<xs:complexType>
+					<xs:attribute name="Value" type="TaxTreatmentCodeType" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="InvoiceDueDate" type="DateElementType" minOccurs="0"/>
+			<xs:element name="PaymentInstruction" type="xs:string" minOccurs="0"/>
+			<xs:element name="PaymentTerms" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PaymentDeadline" type="PaymentDeadlineType"/>
+						<xs:element name="PaymentDiscount">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DiscountPercent" type="decimaldot3"/>
+									<xs:element name="DiscountDays" type="xs:nonNegativeInteger"/>
+									<xs:element name="Date" type="DateType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SellerParty" type="PartyType"/>
+			<xs:element name="BuyerParty" type="PartyType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="DeliveryParty" type="PartyTypeWithOutTaxRegistrationNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="InvoiceOrg" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="InvoiceParty" type="PartyType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AdditionalParty" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<!-- <xs:element name="TaxRegistrationNumber" type="VATType" minOccurs="0"/> -->
+						<xs:element name="AdditionalPartyNumber" type="AdditionalPartyNumberType"/>
+						<xs:element name="Address" type="AddressType"/>
+						<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Currency" type="ISO_4217_Code"/>
+			<xs:element name="Banking" type="BankingType" maxOccurs="unbounded"/>
+			<xs:element name="FreeText" type="FreeTextType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:group>
+</xs:schema>

@@ -1,0 +1,106 @@
+TecCom\Order\TXML5\AddressType:
+    properties:
+        name1:
+            expose: true
+            access_type: public_method
+            serialized_name: Name1
+            accessor:
+                getter: getName1
+                setter: setName1
+            type: string
+        name2:
+            expose: true
+            access_type: public_method
+            serialized_name: Name2
+            accessor:
+                getter: getName2
+                setter: setName2
+            type: string
+        name3:
+            expose: true
+            access_type: public_method
+            serialized_name: Name3
+            accessor:
+                getter: getName3
+                setter: setName3
+            type: string
+        name4:
+            expose: true
+            access_type: public_method
+            serialized_name: Name4
+            accessor:
+                getter: getName4
+                setter: setName4
+            type: string
+        street1:
+            expose: true
+            access_type: public_method
+            serialized_name: Street1
+            accessor:
+                getter: getStreet1
+                setter: setStreet1
+            type: string
+        street2:
+            expose: true
+            access_type: public_method
+            serialized_name: Street2
+            accessor:
+                getter: getStreet2
+                setter: setStreet2
+            type: string
+        street3:
+            expose: true
+            access_type: public_method
+            serialized_name: Street3
+            accessor:
+                getter: getStreet3
+                setter: setStreet3
+            type: string
+        street4:
+            expose: true
+            access_type: public_method
+            serialized_name: Street4
+            accessor:
+                getter: getStreet4
+                setter: setStreet4
+            type: string
+        postalCode:
+            expose: true
+            access_type: public_method
+            serialized_name: PostalCode
+            accessor:
+                getter: getPostalCode
+                setter: setPostalCode
+            type: string
+        city:
+            expose: true
+            access_type: public_method
+            serialized_name: City
+            accessor:
+                getter: getCity
+                setter: setCity
+            type: string
+        state:
+            expose: true
+            access_type: public_method
+            serialized_name: State
+            accessor:
+                getter: getState
+                setter: setState
+            type: string
+        countryCode:
+            expose: true
+            access_type: public_method
+            serialized_name: CountryCode
+            accessor:
+                getter: getCountryCode
+                setter: setCountryCode
+            type: string
+        coordinates:
+            expose: true
+            access_type: public_method
+            serialized_name: Coordinates
+            accessor:
+                getter: getCoordinates
+                setter: setCoordinates
+            type: string

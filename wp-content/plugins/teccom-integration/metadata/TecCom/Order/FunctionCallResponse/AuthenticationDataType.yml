@@ -1,0 +1,32 @@
+TecCom\Order\FunctionCallResponse\AuthenticationDataType:
+    properties:
+        user:
+            expose: true
+            access_type: public_method
+            serialized_name: User
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getUser
+                setter: setUser
+            type: string
+        password:
+            expose: true
+            access_type: public_method
+            serialized_name: Password
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getPassword
+                setter: setPassword
+            type: string
+        language:
+            expose: true
+            access_type: public_method
+            serialized_name: Language
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getLanguage
+                setter: setLanguage
+            type: string

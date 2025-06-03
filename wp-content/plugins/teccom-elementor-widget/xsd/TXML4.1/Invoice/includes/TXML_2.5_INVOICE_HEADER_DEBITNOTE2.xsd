@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.teccom.de/tecorder/invoic/txml25" targetNamespace="http://www.teccom.de/tecorder/invoic/txml25" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="TXML_SIMPLETYPES.xsd"/>
+	<xs:include schemaLocation="TXML_COMPLEXTYPES.xsd"/>
+	<xs:include schemaLocation="TXML_ENUMTYPES.xsd"/>
+	<xs:include schemaLocation="TXML_2.5_INVOICE_HEADER_PARTS.xsd"/>
+	<xs:complexType name="InvoiceHeaderType">
+		<xs:sequence>
+			<xs:group ref="InvoiceHeaderPart1DebitNote2"/>
+			<xs:group ref="InvoiceHeaderPart2Generic"/>
+			<xs:group ref="InvoiceHeaderPart3"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

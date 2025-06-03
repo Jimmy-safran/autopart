@@ -1,0 +1,26 @@
+TecCom\Order\TXML5\ItemProcessingType:
+    properties:
+        successor:
+            expose: true
+            access_type: public_method
+            serialized_name: Successor
+            accessor:
+                getter: getSuccessor
+                setter: setSuccessor
+            type: bool
+        substitution:
+            expose: true
+            access_type: public_method
+            serialized_name: Substitution
+            accessor:
+                getter: getSubstitution
+                setter: setSubstitution
+            type: bool
+        exchangePart:
+            expose: true
+            access_type: public_method
+            serialized_name: ExchangePart
+            accessor:
+                getter: getExchangePart
+                setter: setExchangePart
+            type: bool

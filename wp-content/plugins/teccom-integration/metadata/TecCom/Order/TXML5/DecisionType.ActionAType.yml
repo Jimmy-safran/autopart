@@ -1,0 +1,18 @@
+TecCom\Order\TXML5\DecisionType\ActionAType:
+    properties:
+        declineAction:
+            expose: true
+            access_type: public_method
+            serialized_name: DeclineAction
+            accessor:
+                getter: getDeclineAction
+                setter: setDeclineAction
+            type: string
+        acceptAction:
+            expose: true
+            access_type: public_method
+            serialized_name: AcceptAction
+            accessor:
+                getter: getAcceptAction
+                setter: setAcceptAction
+            type: string

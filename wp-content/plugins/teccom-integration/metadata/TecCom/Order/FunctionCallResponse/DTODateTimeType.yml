@@ -1,0 +1,32 @@
+TecCom\Order\FunctionCallResponse\DTODateTimeType:
+    properties:
+        dateString:
+            expose: true
+            access_type: public_method
+            serialized_name: DateString
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getDateString
+                setter: setDateString
+            type: string
+        timeBase:
+            expose: true
+            access_type: public_method
+            serialized_name: TimeBase
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getTimeBase
+                setter: setTimeBase
+            type: string
+        format:
+            expose: true
+            access_type: public_method
+            serialized_name: Format
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getFormat
+                setter: setFormat
+            type: string

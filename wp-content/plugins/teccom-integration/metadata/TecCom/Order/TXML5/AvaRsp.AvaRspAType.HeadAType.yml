@@ -1,0 +1,154 @@
+TecCom\Order\TXML5\AvaRsp\AvaRspAType\HeadAType:
+    properties:
+        documentNumber:
+            expose: true
+            access_type: public_method
+            serialized_name: DocumentNumber
+            accessor:
+                getter: getDocumentNumber
+                setter: setDocumentNumber
+            type: string
+        issueDate:
+            expose: true
+            access_type: public_method
+            serialized_name: IssueDate
+            accessor:
+                getter: getIssueDate
+                setter: setIssueDate
+            type: DateTime
+        reference:
+            expose: true
+            access_type: public_method
+            serialized_name: Reference
+            accessor:
+                getter: getReference
+                setter: setReference
+            xml_list:
+                inline: true
+                entry_name: Reference
+            type: array<TecCom\Order\TXML5\ReferenceHeaderType>
+        sellerParty:
+            expose: true
+            access_type: public_method
+            serialized_name: SellerParty
+            accessor:
+                getter: getSellerParty
+                setter: setSellerParty
+            type: TecCom\Order\TXML5\PartyType1Type
+        buyerParty:
+            expose: true
+            access_type: public_method
+            serialized_name: BuyerParty
+            accessor:
+                getter: getBuyerParty
+                setter: setBuyerParty
+            type: TecCom\Order\TXML5\PartyType1Type
+        deliveryParty:
+            expose: true
+            access_type: public_method
+            serialized_name: DeliveryParty
+            accessor:
+                getter: getDeliveryParty
+                setter: setDeliveryParty
+            type: TecCom\Order\TXML5\PartyType2Type
+        additionalParty:
+            expose: true
+            access_type: public_method
+            serialized_name: AdditionalParty
+            accessor:
+                getter: getAdditionalParty
+                setter: setAdditionalParty
+            xml_list:
+                inline: true
+                entry_name: AdditionalParty
+            type: array<TecCom\Order\TXML5\AdditionalPartyType>
+        currency:
+            expose: true
+            access_type: public_method
+            serialized_name: Currency
+            accessor:
+                getter: getCurrency
+                setter: setCurrency
+            type: TecCom\Order\TXML5\CurrencyType
+        processingInstructions:
+            expose: true
+            access_type: public_method
+            serialized_name: ProcessingInstructions
+            accessor:
+                getter: getProcessingInstructions
+                setter: setProcessingInstructions
+            type: TecCom\Order\TXML5\ProcessingInstructionsType
+        externalDocument:
+            expose: true
+            access_type: public_method
+            serialized_name: ExternalDocument
+            accessor:
+                getter: getExternalDocument
+                setter: setExternalDocument
+            xml_list:
+                inline: true
+                entry_name: ExternalDocument
+            type: array<TecCom\Order\TXML5\ExternalDocumentType>
+        allowOrCharge:
+            expose: true
+            access_type: public_method
+            serialized_name: AllowOrCharge
+            accessor:
+                getter: getAllowOrCharge
+                setter: setAllowOrCharge
+            xml_list:
+                inline: true
+                entry_name: AllowOrCharge
+            type: array<TecCom\Order\TXML5\AllowOrChargeType>
+        tax:
+            expose: true
+            access_type: public_method
+            serialized_name: Tax
+            accessor:
+                getter: getTax
+                setter: setTax
+            xml_list:
+                inline: true
+                entry_name: Tax
+            type: array<TecCom\Order\TXML5\TaxType>
+        additionalParameters:
+            expose: true
+            access_type: public_method
+            serialized_name: AdditionalParameters
+            accessor:
+                getter: getAdditionalParameters
+                setter: setAdditionalParameters
+            xml_list:
+                inline: true
+                entry_name: AdditionalParameters
+            type: array<TecCom\Order\TXML5\AdditionalParametersType>
+        payment:
+            expose: true
+            access_type: public_method
+            serialized_name: Payment
+            accessor:
+                getter: getPayment
+                setter: setPayment
+            type: TecCom\Order\TXML5\PaymentType
+        freeText:
+            expose: true
+            access_type: public_method
+            serialized_name: FreeText
+            accessor:
+                getter: getFreeText
+                setter: setFreeText
+            xml_list:
+                inline: true
+                entry_name: FreeText
+            type: array<TecCom\Order\TXML5\FreeTextValueType>
+        response:
+            expose: true
+            access_type: public_method
+            serialized_name: Response
+            accessor:
+                getter: getResponse
+                setter: setResponse
+            xml_list:
+                inline: true
+                entry_name: Response
+            type: array<TecCom\Order\TXML5\ResponseType>

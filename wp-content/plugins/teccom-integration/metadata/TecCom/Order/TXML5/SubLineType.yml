@@ -1,0 +1,18 @@
+TecCom\Order\TXML5\SubLineType:
+    properties:
+        type:
+            expose: true
+            access_type: public_method
+            serialized_name: Type
+            accessor:
+                getter: getType
+                setter: setType
+            type: string
+        subLineNumber:
+            expose: true
+            access_type: public_method
+            serialized_name: SubLineNumber
+            accessor:
+                getter: getSubLineNumber
+                setter: setSubLineNumber
+            type: int

@@ -1,0 +1,42 @@
+TecCom\Order\FunctionCallRequest\FunctionCallRequestType:
+    properties:
+        timestamp:
+            expose: true
+            access_type: public_method
+            serialized_name: Timestamp
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getTimestamp
+                setter: setTimestamp
+            type: TecCom\Order\FunctionCallRequest\DTODateTimeType
+        authentication:
+            expose: true
+            access_type: public_method
+            serialized_name: Authentication
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getAuthentication
+                setter: setAuthentication
+            type: TecCom\Order\FunctionCallRequest\AuthenticationDataType
+        reference:
+            expose: true
+            access_type: public_method
+            serialized_name: Reference
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getReference
+                setter: setReference
+            type: TecCom\Order\FunctionCallRequest\ReferenceDataType
+        requestedFunction:
+            expose: true
+            access_type: public_method
+            serialized_name: RequestedFunction
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getRequestedFunction
+                setter: setRequestedFunction
+            type: TecCom\Order\FunctionCallRequest\ServiceDataType

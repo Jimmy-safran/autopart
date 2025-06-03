@@ -1,0 +1,72 @@
+TecCom\Order\TXML5\AvaReq\AvaReqAType\LineAType:
+    properties:
+        number:
+            expose: true
+            access_type: public_method
+            serialized_name: Number
+            accessor:
+                getter: getNumber
+                setter: setNumber
+            type: int
+        quantity:
+            expose: true
+            access_type: public_method
+            serialized_name: Quantity
+            accessor:
+                getter: getQuantity
+                setter: setQuantity
+            type: TecCom\Order\TXML5\QuantityType
+        productId:
+            expose: true
+            access_type: public_method
+            serialized_name: ProductId
+            accessor:
+                getter: getProductId
+                setter: setProductId
+            type: TecCom\Order\TXML5\ProductIdChoiceType
+        productName:
+            expose: true
+            access_type: public_method
+            serialized_name: ProductName
+            accessor:
+                getter: getProductName
+                setter: setProductName
+            type: string
+        productChangeAllowed:
+            expose: true
+            access_type: public_method
+            serialized_name: ProductChangeAllowed
+            accessor:
+                getter: getProductChangeAllowed
+                setter: setProductChangeAllowed
+            type: bool
+        price:
+            expose: true
+            access_type: public_method
+            serialized_name: Price
+            accessor:
+                getter: getPrice
+                setter: setPrice
+            type: TecCom\Order\TXML5\ProductPriceType
+        additionalParameters:
+            expose: true
+            access_type: public_method
+            serialized_name: AdditionalParameters
+            accessor:
+                getter: getAdditionalParameters
+                setter: setAdditionalParameters
+            xml_list:
+                inline: true
+                entry_name: AdditionalParameters
+            type: array<TecCom\Order\TXML5\AdditionalParametersType>
+        freeText:
+            expose: true
+            access_type: public_method
+            serialized_name: FreeText
+            accessor:
+                getter: getFreeText
+                setter: setFreeText
+            xml_list:
+                inline: true
+                entry_name: FreeText
+            type: array<TecCom\Order\TXML5\FreeTextValueType>

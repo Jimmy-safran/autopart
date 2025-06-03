@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<!-- Enum data types -->
+	<!-- Tax treatment codes value list -->
+	<xs:simpleType name="TaxTreatmentCodeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NetInvoiceLevel"/>
+			<xs:enumeration value="NetLineLevel"/>
+			<xs:enumeration value="GrossLineLevel"/>
+			<xs:enumeration value="GrossInvoiceLevel"/>
+			<xs:enumeration value="NoTaxApplies"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- price category value list -->
+	<xs:simpleType name="PriceCategoryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="GrossPrice"/>
+			<xs:enumeration value="ListPrice"/>
+			<xs:enumeration value="RetailPrice"/>
+			<xs:enumeration value="NetPrice"/>
+			<xs:enumeration value="SpecialOffer"/>
+			<xs:enumeration value="NoPrice"/>
+			<xs:enumeration value="InfoPrice"/>
+			<xs:enumeration value="undefined"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- measurement dimensions value list -->
+	<xs:simpleType name="MeasurementUnitQualifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				<p xmlns="http://www.w3.org/1999/xhtml">
+					<b>The follwing values are derived from the EDIFACT standard D96.A:</b>
+				</p>
+				<table xmlns="http://www.w3.org/1999/xhtml">
+					<tr>
+						<th>Value</th>
+						<th>Description</th>
+					</tr>
+					<tr>
+						<td>AAA</td>
+						<td>UnitNetWeight</td>
+					</tr>
+					<tr>
+						<td>AAB</td>
+						<td>UnitGrossWeight</td>
+					</tr>
+					<tr>
+						<td>AAF</td>
+						<td>NetNetWeight</td>
+					</tr>
+					<tr>
+						<td>AAW</td>
+						<td>GrossVolume</td>
+					</tr>
+					<tr>
+						<td>AEB</td>
+						<td>StackingHeight</td>
+					</tr>
+					<tr>
+						<td>ABJ</td>
+						<td>Volume</td>
+					</tr>
+					<tr>
+						<td>LN</td>
+						<td>Length</td>
+					</tr>
+					<tr>
+						<td>WD</td>
+						<td>Width</td>
+					</tr>
+					<tr>
+						<td>HT</td>
+						<td>Height</td>
+					</tr>
+				</table>
+			</xs:documentation>
+			<xs:documentation xml:lang="en">
+				SAP Compatibility:
+				Only the following values are compatible with SAP systems:
+			
+				Value	SAP Field
+				AAA		NETGW
+				AAB		BRGEW						
+				AAW		BRVOL
+				ABJ		VOLEM / VOLUM
+				LN		LAENG
+				WD		BREIT
+				HT		HOEHE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AAA"/>
+			<xs:enumeration value="AAB"/>
+			<xs:enumeration value="AAF"/>
+			<xs:enumeration value="AAW"/>
+			<xs:enumeration value="AEB"/>
+			<xs:enumeration value="ABJ"/>
+			<xs:enumeration value="LN"/>
+			<xs:enumeration value="WD"/>
+			<xs:enumeration value="HT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Package kinds value list -->
+	<xs:simpleType name="PackageKindType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+			8	Pallet need not be returned to the point of expedition (despatch)	Oneway pallet (EAN Code)		08
+			9	Pallet must be returned to the point of expedition (despatch)	Returnable pallet (EAN Code)		09
+			200	Standard pallet with dimensions 80 X 60 cm	Pallet ISO 0 - ½ EURO Pallet (EAN Code)		200
+			201	Standard pallet with dimensions 80 X 120 cm	Pallet ISO 1 - 1/1 EURO Pallet (EAN Code)		201
+			202	Standard pallet with dimensions 100 X 120 cm	Pallet ISO 2 (EAN Code)		202
+			203	Standard pallet with dimensions 60 X 40 cm	¼ EURO Pallet (EAN Code)		203
+			204	Standard pallet with dimensions 40 X 30 cm	1/8 EURO Pallet (EAN Code)		204
+			210	Pallet provided by the wholesaler	Wholesaler pallet (EAN Code)		210
+			211	Pallet with dimensions 80 X 100 cm	Pallet 80 X 100 cm (EAN Code)		211
+			212	Pallet with dimensions 60 X 100 cm	Pallet 60 X 100 cm (EAN Code)		212
+			APE	Packaging using a thin sheets of aluminium	Aluminium packed (EAN Code)		APE
+			BGE	A non-rigid container made of fabric, paper, plastic, etc ... with an opening at the top which can be closed and which is suitable for use on pallets	Large bag, pallet sized (EAN Code)		BGE
+			BX	A lidded package which can be made of cardboard, wood, plastic, tin, etc	Box		BX
+			CCE	A package made of cardboard	Cardboard carrier (EAN Code)		CCE
+			CHC	A cage, which can be mounted in one or more layers, on a pallet base	CHEP cage (EAN Code)		CHC
+			CT	A cardboard box or container	Carton		CT
+			RO	A package of goods wound into a ball or cylinder	Roll		RO
+			DPE	A package used for the display of goods, usually during a promotion	Display package (EAN Code)		DPE
+			FP	Packaging using a clear thin plastic	Filmpack		FP
+			FPE	Packaging using metallic foil	Foil packed (EAN Code)		FPE
+			JC	A rigid rectangular container with a lid which is usually used for the storage and movement of oil, gasoline, etc	Jerrycan, rectangular		JC
+			JY	A rigid cylindrical container with a lid which is usually used for the storage and movement of oil, gasoline, etc	Jerrycan, cylindrical		JY
+			MPE	A container for the merchandising of multiple units of the same product	Multipack (EAN Code)		MPE
+			NE	A product merchandised or sold without packaging	Unpacked or unpackaged		NE
+			PK	A wrapper or boxed item	Package		PK
+			PLP	A package used for sterile products which may be torn open without touching the product inside	Peel park (EAN Code)		PLP
+			THE	A package containing three products	Three pack (EAN Code)		THE
+			TWE	A package containing two products	Two pack (EAN Code)		TWE
+		</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="8"/>
+			<xs:enumeration value="9"/>
+			<xs:enumeration value="200"/>
+			<xs:enumeration value="201"/>
+			<xs:enumeration value="202"/>
+			<xs:enumeration value="203"/>
+			<xs:enumeration value="204"/>
+			<xs:enumeration value="210"/>
+			<xs:enumeration value="211"/>
+			<xs:enumeration value="212"/>
+			<xs:enumeration value="APE"/>
+			<xs:enumeration value="BGE"/>
+			<xs:enumeration value="BX"/>
+			<xs:enumeration value="CCE"/>
+			<xs:enumeration value="CHC"/>
+			<xs:enumeration value="CT"/>
+			<xs:enumeration value="RO"/>
+			<xs:enumeration value="DPE"/>
+			<xs:enumeration value="FP"/>
+			<xs:enumeration value="FPE"/>
+			<xs:enumeration value="JC"/>
+			<xs:enumeration value="JY"/>
+			<xs:enumeration value="MPE"/>
+			<xs:enumeration value="NE"/>
+			<xs:enumeration value="PK"/>
+			<xs:enumeration value="PLP"/>
+			<xs:enumeration value="THE"/>
+			<xs:enumeration value="TWE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- DeviationReasonType -->
+	<xs:simpleType name="DeviationReasonType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AB"/>
+			<!-- Nicht mehr produziert -->
+			<xs:enumeration value="BP"/>
+			<!-- Teillieferung mit Rückstand -->
+			<xs:enumeration value="CP"/>
+			<!-- Teillieferung ohne Rückstand -->
+			<xs:enumeration value="CS"/>
+			<!-- Lieferung von Ersatzartikeln -->
+			<xs:enumeration value="IC"/>
+			<!-- Position abgesagt -->
+			<xs:enumeration value="PS"/>
+			<!-- In Bearbeitung (Liefertermin unbekannt) -->
+			<xs:enumeration value="RA"/>
+			<!-- Rationiert -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ModificationReasonType -->
+	<xs:simpleType name="ModificationReasonType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AS"/>
+			<!-- Artikel im Moment nicht lieferbar -->
+			<xs:enumeration value="AT"/>
+			<!-- Artikel nicht bestellt -->
+			<xs:enumeration value="AUE"/>
+			<!-- Artikel unbekannt -->
+			<xs:enumeration value="PC"/>
+			<!-- Verpackungseinheit -->
+			<xs:enumeration value="PS"/>
+			<!-- Materialänderung -->
+			<xs:enumeration value="QT"/>
+			<!-- Aufrundung Mindestbestellmenge -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- MessageStatusType -->
+	<xs:simpleType name="MessageStatusValueType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="undefined"/>
+			<xs:enumeration value="Modified"/>
+			<xs:enumeration value="Rejected"/>
+			<xs:enumeration value="Confirmed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ItemInstructionValueType -->
+	<xs:simpleType name="ItemInstructionValueType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="undefined"/>
+			<xs:enumeration value="ConfirmedWithChanges"/>
+			<xs:enumeration value="ConfirmedWithoutChanges"/>
+			<xs:enumeration value="NotProcessed"/>
+			<xs:enumeration value="Rejected"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ResponseClassType -->
+	<xs:simpleType name="ResponseClassType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Information"/>
+			<xs:enumeration value="Warning"/>
+			<xs:enumeration value="Error"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ResponseTypeType -->
+	<xs:simpleType name="ResponseTypeType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- AddtionalPartyNumber Qualifier value list -->
+	<xs:simpleType name="AdditionalPartyNumberQualifierType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Payee"/>
+			<xs:enumeration value="Transporter"/>
+			<xs:enumeration value="DUNS"/>
+			<xs:enumeration value="ILN"/>
+			<xs:enumeration value="RomingID"/>
+			<xs:enumeration value="ZR"/>
+			<xs:enumeration value="ZF"/>
+			<xs:enumeration value="TAXRegistrationNumber"/>
+			<xs:enumeration value="Supplier"/>
+			<xs:enumeration value="Buyer"/>
+			<xs:enumeration value="Delivery"/>
+			<xs:enumeration value="Invoicee"/>
+			<xs:enumeration value="CorporateOffice"/>
+			<xs:enumeration value="IssuerOfInvoice"/>
+			<xs:enumeration value="WorldPac"/>
+			<xs:enumeration value="Golda"/>
+			<xs:enumeration value="MemberShipNumber"/>
+			<xs:enumeration value="FiscalInfo"/>
+			<xs:enumeration value="ZZZ"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- TaxCodeType -->
+	<xs:simpleType name="TaxCodeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VAT"/>
+			<xs:enumeration value="AAD"/>
+			<xs:enumeration value="AAF"/>
+			<xs:enumeration value="AAJ"/>
+			<xs:enumeration value="ACT"/>
+			<xs:enumeration value="CAR"/>
+			<xs:enumeration value="ENV"/>
+			<xs:enumeration value="EXC"/>
+			<xs:enumeration value="GST"/>
+			<xs:enumeration value="IMP"/>
+			<xs:enumeration value="OTH"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- TaxCodeType -->
+	<xs:simpleType name="AllowOrChargeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FreeGoods"/>
+			<xs:enumeration value="Discount"/>
+			<xs:enumeration value="PalletDiscount"/>
+			<xs:enumeration value="QuantityDiscount"/>
+			<xs:enumeration value="TruckloadDiscount"/>
+			<xs:enumeration value="TradeDiscount"/>
+			<xs:enumeration value="WholesalingDiscount"/>
+			<xs:enumeration value="AdvertisingAllowance"/>
+			<xs:enumeration value="LogisticChainAllowance"/>
+			<xs:enumeration value="CompetitiveAllowance"/>
+			<xs:enumeration value="IntroductionAllowance"/>
+			<xs:enumeration value="PromotionalAllowance"/>
+			<xs:enumeration value="TemporaryAllowance"/>
+			<xs:enumeration value="EarlyBuyAllowance"/>
+			<xs:enumeration value="EarlyPaymentAllowance"/>
+			<xs:enumeration value="FreightAllowance"/>
+			<xs:enumeration value="PickUpAllowance"/>
+			<xs:enumeration value="ReSuppliersDiscount"/>
+			<xs:enumeration value="Rebate"/>
+			<xs:enumeration value="MaterialSurcharge"/>
+			<xs:enumeration value="CopperSurcharge"/>
+			<xs:enumeration value="SilverSurcharge"/>
+			<xs:enumeration value="EcoTax"/>
+			<xs:enumeration value="Packing"/>
+			<xs:enumeration value="Insurance"/>
+			<xs:enumeration value="FreightCharges"/>
+			<xs:enumeration value="BrokenPackageCharge"/>
+			<xs:enumeration value="NonReturnableContainer"/>
+			<xs:enumeration value="ReturnableContainer"/>
+			<xs:enumeration value="ReturnedProductCharge"/>
+			<xs:enumeration value="ReturnHandling"/>
+			<xs:enumeration value="FinancialCharges"/>
+			<xs:enumeration value="InvoiceServices"/>
+			<xs:enumeration value="Adjustments"/>
+			<xs:enumeration value="OtherAllowancesOrCharges"/>
+			<xs:enumeration value="ZZZZ"/>
+			<xs:enumeration value="TX"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- MessageFunctionType -->
+	<xs:simpleType name="MessageFunctionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Original"/>
+			<xs:enumeration value="Duplicate"/>
+			<xs:enumeration value="Copy"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- OrderTypeType -->
+	<xs:simpleType name="OrderTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RequestForOffer"/>
+			<!-- Inquiry -->
+			<xs:enumeration value="Order"/>
+			<!-- Order -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- OfferReferenceQualifierType -->
+	<xs:simpleType name="OfferReferenceQualifierType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="undefined"/>
+			<xs:enumeration value="QuotationNumber"/>
+			<xs:enumeration value="PromotionalDealNumber"/>
+			<xs:enumeration value="ContractNumber"/>
+			<xs:enumeration value="ProductInquiryNumber"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- OrderPartyNumberQualifierType -->
+	<xs:simpleType name="OrderPartyNumberQualifierType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SupplierNumber"/>
+			<xs:enumeration value="BuyerNumber"/>
+			<xs:enumeration value="ILN"/>
+			<xs:enumeration value="NAT"/>
+			<xs:enumeration value="VAT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- DispatchModeStockType -->
+	<xs:simpleType name="DispatchModeStockType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="StockOrder"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- DispatchModeExpressType -->
+	<xs:simpleType name="DispatchModeExpressType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Normal"/>
+			<xs:enumeration value="Express"/>
+			<xs:enumeration value="OverNight"/>
+			<xs:enumeration value="PickUp"/>
+			<xs:enumeration value="COD"/>
+			<xs:enumeration value="SeaFreight"/>
+			<xs:enumeration value="AirFreight"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ParamIdType -->
+	<xs:simpleType name="ParamIdType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="undefined"/>
+			<xs:enumeration value="PromotionCode"/>
+			<xs:enumeration value="ArrivalNotice"/>
+			<xs:enumeration value="Incoterms1"/>
+			<xs:enumeration value="Incoterms2"/>
+			<xs:enumeration value="StorageLocation"/>
+			<xs:enumeration value="CarrierIdILN"/>
+			<xs:enumeration value="Spedition"/>
+			<xs:enumeration value="FreeText"/>
+			<xs:enumeration value="ExpressDlvCond"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- INCOTERMS® 2000 http://de.wikipedia.org/wiki/Incoterms -->
+	<xs:simpleType name="Incoterms2000">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EXW"/>
+			<xs:enumeration value="FCA"/>
+			<xs:enumeration value="FAS"/>
+			<xs:enumeration value="FOB"/>
+			<xs:enumeration value="CFR"/>
+			<xs:enumeration value="CIF"/>
+			<xs:enumeration value="CPT"/>
+			<xs:enumeration value="CIP"/>
+			<xs:enumeration value="DAF"/>
+			<xs:enumeration value="DES"/>
+			<xs:enumeration value="DEQ"/>
+			<xs:enumeration value="DDU"/>
+			<xs:enumeration value="DDP"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- YesNoType -->
+	<xs:simpleType name="YesNoType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Yes"/>
+			<xs:enumeration value="No"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- PaymentDeadlineType -->
+	<xs:simpleType name="PaymentDeadlineType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Basic"/>
+			<xs:enumeration value="Value"/>
+			<xs:enumeration value="Discount"/>
+			<xs:enumeration value="Net"/>
+			<xs:enumeration value="Installment"/>
+			<xs:enumeration value="Penalty"/>
+			<xs:enumeration value="Instant"/>
+			<xs:enumeration value="Extended"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- MessageTypeType -->
+	<xs:simpleType name="MessageTypeTypeInvoice">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Invoice"/>
+			<!-- Invoice related to goods with reference to Order or Delivery -->
+			<xs:enumeration value="ProFormaInvoice"/>
+			<xs:enumeration value="PrePaymentInvoice"/>
+			<xs:enumeration value="DelcredereInvoice"/>
+			<xs:enumeration value="FactoredInvoice"/>
+			<xs:enumeration value="SelfBilledInvoice"/>
+			<xs:enumeration value="MeteredServicesInvoice"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- MessageTypeType -->
+	<xs:simpleType name="MessageTypeTypeCreditNote">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CreditNote"/>
+			<!-- CreditNote related to goods with reference to Order, Delivery or Invoice -->
+			<xs:enumeration value="CreditNoteFinancialAdjustments"/>
+			<xs:enumeration value="SelfBilledCreditNote"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- MessageTypeType -->
+	<xs:simpleType name="MessageTypeTypeDebitNote">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DebitNote"/>
+			<xs:enumeration value="DebitNoteFinancialAdjustments"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MessageTypeTypeDebitNote2">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DebitNote"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Value list for package ident system -->
+	<xs:simpleType name="PkgIdentSystemType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+			17		Lieferanten Nummern Logik
+			33E		SSCC Nummern Logik (Besteller)
+			34E		EAN/UPC Nummern Logik
+			</xs:documentation>
+			<xs:documentation xml:lang="en">
+			17		Supplier’s instructions
+			33E		Marked with serial shipping contained code (EAN Code) SSCC
+			34E		Marked with EAN/UPC number (EAN Code)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="17"/>
+			<xs:enumeration value="33E"/>
+			<xs:enumeration value="34E"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Value list for package ident number system -->
+	<xs:simpleType name="PkgIdentNumberQualifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+			BN	Lieferanten Nummern Logik
+			BJ	SSCC Nummern Logik
+			EU	EAN/UPC Nummern Logik
+			</xs:documentation>
+			<xs:documentation xml:lang="en">
+			BN	Serial number
+			BJ	Serial shipping container code (EAN Code)
+			EU	EAN/UPC number (EAN Code)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BN"/>
+			<xs:enumeration value="BJ"/>
+			<xs:enumeration value="EU"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Value list for package reference qualifiers -->
+	<xs:simpleType name="PkgRefQualifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">
+			PK	Packstückliste
+			</xs:documentation>
+			<xs:documentation xml:lang="en">
+			PK	Picking list numbers
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PK"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Unit of measurements value list -->
+	<xs:simpleType name="UnitOfMeasurementsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+			EDI
+			Data element: 6411 
+			Name: MEASURE UNIT QUALIFIER 
+			Source: http://www.unece.org/cefact/codesfortrade/codes_index.html
+			Value: 
+			CEL Degree celsius 
+			CMT Centimetre 
+			EA 	Each 
+			FAH Degree fahrenheit 
+			GRM Gram 
+			HUR Hour 
+			INH Inch (25,4 mm) 
+			KGM Kilogram 
+			LTR Litre (1 dm3) 
+			MIN Minute 
+			MLT Millilitre 
+			MMT Millimetre 
+			MTK Square metre 
+			MTQ Cubic metre 
+			MTR Metre 
+			NAR Number of articles 
+			NRL Number of rolls 
+			PCE Piece 
+			TNE Metric ton (1000 kg)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CEL"/>
+			<xs:enumeration value="CMT"/>
+			<xs:enumeration value="EA"/>
+			<xs:enumeration value="FAH"/>
+			<xs:enumeration value="GRM"/>
+			<xs:enumeration value="HUR"/>
+			<xs:enumeration value="INH"/>
+			<xs:enumeration value="KGM"/>
+			<xs:enumeration value="LTR"/>
+			<xs:enumeration value="MIN"/>
+			<xs:enumeration value="MLT"/>
+			<xs:enumeration value="MMT"/>
+			<xs:enumeration value="MTK"/>
+			<xs:enumeration value="MTQ"/>
+			<xs:enumeration value="MTR"/>
+			<xs:enumeration value="NAR"/>
+			<xs:enumeration value="NRL"/>
+			<xs:enumeration value="PCE"/>
+			<xs:enumeration value="TNE"/>
+			<!-- Used in teccom, but not allowed in EDI 2014-02-14 CD -->
+			<xs:enumeration value="SET"/>
+			<xs:enumeration value="BOX"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISO_3166-1_Alpha-2_Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AF"/>
+			<xs:enumeration value="AX"/>
+			<xs:enumeration value="AL"/>
+			<xs:enumeration value="DZ"/>
+			<xs:enumeration value="AS"/>
+			<xs:enumeration value="AD"/>
+			<xs:enumeration value="AO"/>
+			<xs:enumeration value="AI"/>
+			<xs:enumeration value="AQ"/>
+			<xs:enumeration value="AG"/>
+			<xs:enumeration value="AR"/>
+			<xs:enumeration value="AM"/>
+			<xs:enumeration value="AW"/>
+			<xs:enumeration value="AU"/>
+			<xs:enumeration value="AT"/>
+			<xs:enumeration value="AZ"/>
+			<xs:enumeration value="BS"/>
+			<xs:enumeration value="BH"/>
+			<xs:enumeration value="BD"/>
+			<xs:enumeration value="BB"/>
+			<xs:enumeration value="BY"/>
+			<xs:enumeration value="BE"/>
+			<xs:enumeration value="BZ"/>
+			<xs:enumeration value="BJ"/>
+			<xs:enumeration value="BM"/>
+			<xs:enumeration value="BT"/>
+			<xs:enumeration value="BO"/>
+			<xs:enumeration value="BQ"/>
+			<xs:enumeration value="BA"/>
+			<xs:enumeration value="BW"/>
+			<xs:enumeration value="BV"/>
+			<xs:enumeration value="BR"/>
+			<xs:enumeration value="IO"/>
+			<xs:enumeration value="BN"/>
+			<xs:enumeration value="BG"/>
+			<xs:enumeration value="BF"/>
+			<xs:enumeration value="BI"/>
+			<xs:enumeration value="KH"/>
+			<xs:enumeration value="CM"/>
+			<xs:enumeration value="CA"/>
+			<xs:enumeration value="CV"/>
+			<xs:enumeration value="KY"/>
+			<xs:enumeration value="CF"/>
+			<xs:enumeration value="TD"/>
+			<xs:enumeration value="CL"/>
+			<xs:enumeration value="CN"/>
+			<xs:enumeration value="CX"/>
+			<xs:enumeration value="CC"/>
+			<xs:enumeration value="CO"/>
+			<xs:enumeration value="KM"/>
+			<xs:enumeration value="CG"/>
+			<xs:enumeration value="CD"/>
+			<xs:enumeration value="CK"/>
+			<xs:enumeration value="CR"/>
+			<xs:enumeration value="CI"/>
+			<xs:enumeration value="HR"/>
+			<xs:enumeration value="CU"/>
+			<xs:enumeration value="CW"/>
+			<xs:enumeration value="CY"/>
+			<xs:enumeration value="CZ"/>
+			<xs:enumeration value="DK"/>
+			<xs:enumeration value="DJ"/>
+			<xs:enumeration value="DM"/>
+			<xs:enumeration value="DO"/>
+			<xs:enumeration value="EC"/>
+			<xs:enumeration value="EG"/>
+			<xs:enumeration value="SV"/>
+			<xs:enumeration value="GQ"/>
+			<xs:enumeration value="ER"/>
+			<xs:enumeration value="EE"/>
+			<xs:enumeration value="ET"/>
+			<xs:enumeration value="FK"/>
+			<xs:enumeration value="FO"/>
+			<xs:enumeration value="FJ"/>
+			<xs:enumeration value="FI"/>
+			<xs:enumeration value="FR"/>
+			<xs:enumeration value="GF"/>
+			<xs:enumeration value="PF"/>
+			<xs:enumeration value="TF"/>
+			<xs:enumeration value="GA"/>
+			<xs:enumeration value="GM"/>
+			<xs:enumeration value="GE"/>
+			<xs:enumeration value="DE"/>
+			<xs:enumeration value="GH"/>
+			<xs:enumeration value="GI"/>
+			<xs:enumeration value="GR"/>
+			<xs:enumeration value="GL"/>
+			<xs:enumeration value="GD"/>
+			<xs:enumeration value="GP"/>
+			<xs:enumeration value="GU"/>
+			<xs:enumeration value="GT"/>
+			<xs:enumeration value="GG"/>
+			<xs:enumeration value="GN"/>
+			<xs:enumeration value="GW"/>
+			<xs:enumeration value="GY"/>
+			<xs:enumeration value="HT"/>
+			<xs:enumeration value="HM"/>
+			<xs:enumeration value="VA"/>
+			<xs:enumeration value="HN"/>
+			<xs:enumeration value="HK"/>
+			<xs:enumeration value="HU"/>
+			<xs:enumeration value="IS"/>
+			<xs:enumeration value="IN"/>
+			<xs:enumeration value="ID"/>
+			<xs:enumeration value="IR"/>
+			<xs:enumeration value="IQ"/>
+			<xs:enumeration value="IE"/>
+			<xs:enumeration value="IM"/>
+			<xs:enumeration value="IL"/>
+			<xs:enumeration value="IT"/>
+			<xs:enumeration value="JM"/>
+			<xs:enumeration value="JP"/>
+			<xs:enumeration value="JE"/>
+			<xs:enumeration value="JO"/>
+			<xs:enumeration value="KZ"/>
+			<xs:enumeration value="KE"/>
+			<xs:enumeration value="KI"/>
+			<xs:enumeration value="KP"/>
+			<xs:enumeration value="KR"/>
+			<xs:enumeration value="KW"/>
+			<xs:enumeration value="KG"/>
+			<xs:enumeration value="LA"/>
+			<xs:enumeration value="LV"/>
+			<xs:enumeration value="LB"/>
+			<xs:enumeration value="LS"/>
+			<xs:enumeration value="LR"/>
+			<xs:enumeration value="LY"/>
+			<xs:enumeration value="LI"/>
+			<xs:enumeration value="LT"/>
+			<xs:enumeration value="LU"/>
+			<xs:enumeration value="MO"/>
+			<xs:enumeration value="MK"/>
+			<xs:enumeration value="MG"/>
+			<xs:enumeration value="MW"/>
+			<xs:enumeration value="MY"/>
+			<xs:enumeration value="MV"/>
+			<xs:enumeration value="ML"/>
+			<xs:enumeration value="MT"/>
+			<xs:enumeration value="MH"/>
+			<xs:enumeration value="MQ"/>
+			<xs:enumeration value="MR"/>
+			<xs:enumeration value="MU"/>
+			<xs:enumeration value="YT"/>
+			<xs:enumeration value="MX"/>
+			<xs:enumeration value="FM"/>
+			<xs:enumeration value="MD"/>
+			<xs:enumeration value="MC"/>
+			<xs:enumeration value="MN"/>
+			<xs:enumeration value="ME"/>
+			<xs:enumeration value="MS"/>
+			<xs:enumeration value="MA"/>
+			<xs:enumeration value="MZ"/>
+			<xs:enumeration value="MM"/>
+			<xs:enumeration value="NA"/>
+			<xs:enumeration value="NR"/>
+			<xs:enumeration value="NP"/>
+			<xs:enumeration value="NL"/>
+			<xs:enumeration value="NC"/>
+			<xs:enumeration value="NZ"/>
+			<xs:enumeration value="NI"/>
+			<xs:enumeration value="NE"/>
+			<xs:enumeration value="NG"/>
+			<xs:enumeration value="NU"/>
+			<xs:enumeration value="NF"/>
+			<xs:enumeration value="MP"/>
+			<xs:enumeration value="NO"/>
+			<xs:enumeration value="OM"/>
+			<xs:enumeration value="PK"/>
+			<xs:enumeration value="PW"/>
+			<xs:enumeration value="PS"/>
+			<xs:enumeration value="PA"/>
+			<xs:enumeration value="PG"/>
+			<xs:enumeration value="PY"/>
+			<xs:enumeration value="PE"/>
+			<xs:enumeration value="PH"/>
+			<xs:enumeration value="PN"/>
+			<xs:enumeration value="PL"/>
+			<xs:enumeration value="PT"/>
+			<xs:enumeration value="PR"/>
+			<xs:enumeration value="QA"/>
+			<xs:enumeration value="RE"/>
+			<xs:enumeration value="RO"/>
+			<xs:enumeration value="RU"/>
+			<xs:enumeration value="RW"/>
+			<xs:enumeration value="BL"/>
+			<xs:enumeration value="SH"/>
+			<xs:enumeration value="KN"/>
+			<xs:enumeration value="LC"/>
+			<xs:enumeration value="MF"/>
+			<xs:enumeration value="PM"/>
+			<xs:enumeration value="VC"/>
+			<xs:enumeration value="WS"/>
+			<xs:enumeration value="SM"/>
+			<xs:enumeration value="ST"/>
+			<xs:enumeration value="SA"/>
+			<xs:enumeration value="SN"/>
+			<xs:enumeration value="RS"/>
+			<xs:enumeration value="SC"/>
+			<xs:enumeration value="SL"/>
+			<xs:enumeration value="SG"/>
+			<xs:enumeration value="SX"/>
+			<xs:enumeration value="SK"/>
+			<xs:enumeration value="SI"/>
+			<xs:enumeration value="SB"/>
+			<xs:enumeration value="SO"/>
+			<xs:enumeration value="ZA"/>
+			<xs:enumeration value="GS"/>
+			<xs:enumeration value="SS"/>
+			<xs:enumeration value="ES"/>
+			<xs:enumeration value="LK"/>
+			<xs:enumeration value="SD"/>
+			<xs:enumeration value="SR"/>
+			<xs:enumeration value="SJ"/>
+			<xs:enumeration value="SZ"/>
+			<xs:enumeration value="SE"/>
+			<xs:enumeration value="CH"/>
+			<xs:enumeration value="SY"/>
+			<xs:enumeration value="TW"/>
+			<xs:enumeration value="TJ"/>
+			<xs:enumeration value="TZ"/>
+			<xs:enumeration value="TH"/>
+			<xs:enumeration value="TL"/>
+			<xs:enumeration value="TG"/>
+			<xs:enumeration value="TK"/>
+			<xs:enumeration value="TO"/>
+			<xs:enumeration value="TT"/>
+			<xs:enumeration value="TN"/>
+			<xs:enumeration value="TR"/>
+			<xs:enumeration value="TM"/>
+			<xs:enumeration value="TC"/>
+			<xs:enumeration value="TV"/>
+			<xs:enumeration value="UG"/>
+			<xs:enumeration value="UA"/>
+			<xs:enumeration value="AE"/>
+			<xs:enumeration value="GB"/>
+			<xs:enumeration value="US"/>
+			<xs:enumeration value="UM"/>
+			<xs:enumeration value="UY"/>
+			<xs:enumeration value="UZ"/>
+			<xs:enumeration value="VU"/>
+			<xs:enumeration value="VE"/>
+			<xs:enumeration value="VN"/>
+			<xs:enumeration value="VG"/>
+			<xs:enumeration value="VI"/>
+			<xs:enumeration value="WF"/>
+			<xs:enumeration value="EH"/>
+			<xs:enumeration value="YE"/>
+			<xs:enumeration value="ZM"/>
+			<xs:enumeration value="ZW"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- currency values -->
+	<xs:simpleType name="ISO_4217_Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AED"/>
+			<xs:enumeration value="AFN"/>
+			<xs:enumeration value="ALL"/>
+			<xs:enumeration value="AMD"/>
+			<xs:enumeration value="ANG"/>
+			<xs:enumeration value="AOA"/>
+			<xs:enumeration value="ARS"/>
+			<xs:enumeration value="AUD"/>
+			<xs:enumeration value="AWG"/>
+			<xs:enumeration value="AZN"/>
+			<xs:enumeration value="BAM"/>
+			<xs:enumeration value="BBD"/>
+			<xs:enumeration value="BDT"/>
+			<xs:enumeration value="BGN"/>
+			<xs:enumeration value="BHD"/>
+			<xs:enumeration value="BIF"/>
+			<xs:enumeration value="BMD"/>
+			<xs:enumeration value="BND"/>
+			<xs:enumeration value="BOB"/>
+			<xs:enumeration value="BOV"/>
+			<xs:enumeration value="BRL"/>
+			<xs:enumeration value="BSD"/>
+			<xs:enumeration value="BTN"/>
+			<xs:enumeration value="BWP"/>
+			<xs:enumeration value="BYR"/>
+			<xs:enumeration value="BZD"/>
+			<xs:enumeration value="CAD"/>
+			<xs:enumeration value="CDF"/>
+			<xs:enumeration value="CHE"/>
+			<xs:enumeration value="CHF"/>
+			<xs:enumeration value="CHW"/>
+			<xs:enumeration value="CLF"/>
+			<xs:enumeration value="CLP"/>
+			<xs:enumeration value="CNY"/>
+			<xs:enumeration value="COP"/>
+			<xs:enumeration value="COU"/>
+			<xs:enumeration value="CRC"/>
+			<xs:enumeration value="CUC"/>
+			<xs:enumeration value="CUP"/>
+			<xs:enumeration value="CVE"/>
+			<xs:enumeration value="CZK"/>
+			<xs:enumeration value="DJF"/>
+			<xs:enumeration value="DKK"/>
+			<xs:enumeration value="DOP"/>
+			<xs:enumeration value="DZD"/>
+			<xs:enumeration value="EGP"/>
+			<xs:enumeration value="ERN"/>
+			<xs:enumeration value="ETB"/>
+			<xs:enumeration value="EUR"/>
+			<xs:enumeration value="FJD"/>
+			<xs:enumeration value="FKP"/>
+			<xs:enumeration value="GBP"/>
+			<xs:enumeration value="GEL"/>
+			<xs:enumeration value="GHS"/>
+			<xs:enumeration value="GIP"/>
+			<xs:enumeration value="GMD"/>
+			<xs:enumeration value="GNF"/>
+			<xs:enumeration value="GTQ"/>
+			<xs:enumeration value="GYD"/>
+			<xs:enumeration value="HKD"/>
+			<xs:enumeration value="HNL"/>
+			<xs:enumeration value="HRK"/>
+			<xs:enumeration value="HTG"/>
+			<xs:enumeration value="HUF"/>
+			<xs:enumeration value="IDR"/>
+			<xs:enumeration value="ILS"/>
+			<xs:enumeration value="INR"/>
+			<xs:enumeration value="IQD"/>
+			<xs:enumeration value="IRR"/>
+			<xs:enumeration value="ISK"/>
+			<xs:enumeration value="JMD"/>
+			<xs:enumeration value="JOD"/>
+			<xs:enumeration value="JPY"/>
+			<xs:enumeration value="KES"/>
+			<xs:enumeration value="KGS"/>
+			<xs:enumeration value="KHR"/>
+			<xs:enumeration value="KMF"/>
+			<xs:enumeration value="KPW"/>
+			<xs:enumeration value="KRW"/>
+			<xs:enumeration value="KWD"/>
+			<xs:enumeration value="KYD"/>
+			<xs:enumeration value="KZT"/>
+			<xs:enumeration value="LAK"/>
+			<xs:enumeration value="LBP"/>
+			<xs:enumeration value="LKR"/>
+			<xs:enumeration value="LRD"/>
+			<xs:enumeration value="LSL"/>
+			<xs:enumeration value="LTL"/>
+			<xs:enumeration value="LYD"/>
+			<xs:enumeration value="MAD"/>
+			<xs:enumeration value="MDL"/>
+			<xs:enumeration value="MGA"/>
+			<xs:enumeration value="MKD"/>
+			<xs:enumeration value="MMK"/>
+			<xs:enumeration value="MNT"/>
+			<xs:enumeration value="MOP"/>
+			<xs:enumeration value="MRO"/>
+			<xs:enumeration value="MUR"/>
+			<xs:enumeration value="MVR"/>
+			<xs:enumeration value="MWK"/>
+			<xs:enumeration value="MXN"/>
+			<xs:enumeration value="MXV"/>
+			<xs:enumeration value="MYR"/>
+			<xs:enumeration value="MZN"/>
+			<xs:enumeration value="NAD"/>
+			<xs:enumeration value="NGN"/>
+			<xs:enumeration value="NIO"/>
+			<xs:enumeration value="NOK"/>
+			<xs:enumeration value="NPR"/>
+			<xs:enumeration value="NZD"/>
+			<xs:enumeration value="OMR"/>
+			<xs:enumeration value="PAB"/>
+			<xs:enumeration value="PEN"/>
+			<xs:enumeration value="PGK"/>
+			<xs:enumeration value="PHP"/>
+			<xs:enumeration value="PKR"/>
+			<xs:enumeration value="PLN"/>
+			<xs:enumeration value="PYG"/>
+			<xs:enumeration value="QAR"/>
+			<xs:enumeration value="RON"/>
+			<xs:enumeration value="RSD"/>
+			<xs:enumeration value="RUB"/>
+			<xs:enumeration value="RWF"/>
+			<xs:enumeration value="SAR"/>
+			<xs:enumeration value="SBD"/>
+			<xs:enumeration value="SCR"/>
+			<xs:enumeration value="SDG"/>
+			<xs:enumeration value="SSP"/>
+			<xs:enumeration value="SEK"/>
+			<xs:enumeration value="SGD"/>
+			<xs:enumeration value="SHP"/>
+			<xs:enumeration value="SLL"/>
+			<xs:enumeration value="SOS"/>
+			<xs:enumeration value="SRD"/>
+			<xs:enumeration value="STD"/>
+			<xs:enumeration value="SVC"/>
+			<xs:enumeration value="SYP"/>
+			<xs:enumeration value="SZL"/>
+			<xs:enumeration value="THB"/>
+			<xs:enumeration value="TJS"/>
+			<xs:enumeration value="TMT"/>
+			<xs:enumeration value="TND"/>
+			<xs:enumeration value="TOP"/>
+			<xs:enumeration value="TRY"/>
+			<xs:enumeration value="TTD"/>
+			<xs:enumeration value="TWD"/>
+			<xs:enumeration value="TZS"/>
+			<xs:enumeration value="UAH"/>
+			<xs:enumeration value="UGX"/>
+			<xs:enumeration value="USD"/>
+			<xs:enumeration value="UYI"/>
+			<xs:enumeration value="UYU"/>
+			<xs:enumeration value="UZS"/>
+			<xs:enumeration value="VEF"/>
+			<xs:enumeration value="VND"/>
+			<xs:enumeration value="VUV"/>
+			<xs:enumeration value="WST"/>
+			<xs:enumeration value="XAF"/>
+			<xs:enumeration value="XCD"/>
+			<xs:enumeration value="XOF"/>
+			<xs:enumeration value="XPF"/>
+			<xs:enumeration value="YER"/>
+			<xs:enumeration value="ZAR"/>
+			<xs:enumeration value="ZMW"/>
+			<xs:enumeration value="ZWL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for Transport modes -->
+	<xs:simpleType name="TransportModeType">
+		<xs:annotation>
+			<xs:documentation>
+				10	See		Maritime
+				20	Bahn	Rail
+				30	Straße	Road transport
+				40	Luft	Air
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:enumeration value="10"/>
+			<xs:enumeration value="20"/>
+			<xs:enumeration value="30"/>
+			<xs:enumeration value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for Transport type means codes -->
+	<xs:simpleType name="TransportTypeMeansCodeType">
+		<xs:annotation>
+			<xs:documentation>
+				25	Bahnexpress
+				31	LKW
+				34	Straßen-Packetexpress (EAN-Code)
+				52	Expreßdienst der Post (EAN-Code)
+				101	Kurierdienst (EAN-Code)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:enumeration value="25"/>
+			<xs:enumeration value="31"/>
+			<xs:enumeration value="34"/>
+			<xs:enumeration value="52"/>
+			<xs:enumeration value="101"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for IBAN -->
+	<xs:simpleType name="IBANType">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="[a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{4}[0-9]{7}([a-zA-Z0-9]?){0,16}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for BIC -->
+	<xs:simpleType name="BICType">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="[a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for EAN -->
+	<xs:simpleType name="EANType">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:totalDigits value="13" fixed="true"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for EU VAT-->
+	<xs:simpleType name="VATType">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="(AT)?U[0-9]{8}|(BE)?0?[0-9]{9}|(BG)?[0-9]{9,10}|(CY)?[0-9]{8}L|(CZ)?[0-9]{8,10}|(DE)?[0-9]{9}|(DK)?[0-9]{8}|(EE)?[0-9]{9}|(EL|GR)?[0-9]{9}|(ES)?[0-9A-Z][0-9]{7}[0-9A-Z]|(FI)?[0-9]{8}|(FR)?[0-9A-Z]{2}[0-9]{9}|(GB)?([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})|(HU)?[0-9]{8}|(IE)?[0-9]S[0-9]{5}L|(IT)?[0-9]{11}|(LT)?([0-9]{9}|[0-9]{12})|(LU)?[0-9]{8}|(LV)?[0-9]{11}|(MT)?[0-9]{8}|(NL)?[0-9]{9}B[0-9]{2}|(PL)?[0-9]{10}|(PT)?[0-9]{9}|(RO)?[0-9]{2,10}|(SE)?[0-9]{12}|(SI)?[0-9]{8}|(SK)?[0-9]{10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for French Code Siret-->
+	<xs:simpleType name="CodeSiretType">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="^[0-9]{3} ?[0-9]{3} ?[0-9]{3} ?[0-9]{5}$"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,42 @@
+TecCom\Order\TXML5\PaymentType\FinancialInstitutionAType:
+    properties:
+        type:
+            expose: true
+            access_type: public_method
+            serialized_name: Type
+            accessor:
+                getter: getType
+                setter: setType
+            type: string
+        name:
+            expose: true
+            access_type: public_method
+            serialized_name: Name
+            accessor:
+                getter: getName
+                setter: setName
+            type: string
+        accountHolder:
+            expose: true
+            access_type: public_method
+            serialized_name: AccountHolder
+            accessor:
+                getter: getAccountHolder
+                setter: setAccountHolder
+            type: string
+        iBAN:
+            expose: true
+            access_type: public_method
+            serialized_name: IBAN
+            accessor:
+                getter: getIBAN
+                setter: setIBAN
+            type: string
+        sWIFTBIC:
+            expose: true
+            access_type: public_method
+            serialized_name: SWIFT-BIC
+            accessor:
+                getter: getSWIFTBIC
+                setter: setSWIFTBIC
+            type: string

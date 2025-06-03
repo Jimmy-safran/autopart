@@ -1,0 +1,16 @@
+TecCom\Order\FunctionCallRequest\ArrayOfParameterDataType:
+    properties:
+        parameterData:
+            expose: true
+            access_type: public_method
+            serialized_name: ParameterData
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getParameterData
+                setter: setParameterData
+            xml_list:
+                inline: true
+                entry_name: ParameterData
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            type: array<TecCom\Order\FunctionCallRequest\ParameterDataType>

@@ -1,0 +1,42 @@
+TecCom\Order\TXML5\TaxType:
+    properties:
+        code:
+            expose: true
+            access_type: public_method
+            serialized_name: Code
+            accessor:
+                getter: getCode
+                setter: setCode
+            type: string
+        category:
+            expose: true
+            access_type: public_method
+            serialized_name: Category
+            accessor:
+                getter: getCategory
+                setter: setCategory
+            type: string
+        percent:
+            expose: true
+            access_type: public_method
+            serialized_name: Percent
+            accessor:
+                getter: getPercent
+                setter: setPercent
+            type: float
+        amount:
+            expose: true
+            access_type: public_method
+            serialized_name: Amount
+            accessor:
+                getter: getAmount
+                setter: setAmount
+            type: float
+        taxableAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxableAmount
+            accessor:
+                getter: getTaxableAmount
+                setter: setTaxableAmount
+            type: float

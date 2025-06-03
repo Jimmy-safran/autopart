@@ -1,0 +1,26 @@
+TecCom\Order\TXML5\ResponseType:
+    properties:
+        class:
+            expose: true
+            access_type: public_method
+            serialized_name: Class
+            accessor:
+                getter: getClass
+                setter: setClass
+            type: string
+        code:
+            expose: true
+            access_type: public_method
+            serialized_name: Code
+            accessor:
+                getter: getCode
+                setter: setCode
+            type: int
+        text:
+            expose: true
+            access_type: public_method
+            serialized_name: Text
+            accessor:
+                getter: getText
+                setter: setText
+            type: string

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.teccom.de/tecorder/invoic/txml25" xmlns:txml="http://www.teccom.de/tecorder/invoic/txml25" targetNamespace="http://www.teccom.de/tecorder/invoic/txml25" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:include schemaLocation="TXML_SIMPLETYPES.xsd" />
+  <xs:include schemaLocation="TXML_COMPLEXTYPES.xsd" />
+  <xs:include schemaLocation="TXML_ENUMTYPES.xsd" />
+	<xs:include schemaLocation="TXML_2.5_INVOICE_HEADER_PARTS.xsd"/>
+
+	<!-- Invoice Header -->
+	<xs:complexType name="InvoiceHeaderType">
+		<xs:sequence>
+			<xs:group ref="InvoiceHeaderPart1Invoice" />
+			<xs:group ref="InvoiceHeaderPart2Order" />
+			<xs:element name="InvoiceRef" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DocumentNumber" type="string35" minOccurs="1"/>
+						<xs:element name="Date" type="DateType" minOccurs="1"/>
+						<xs:element name="DocumentLink" type="string512" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TaxTreatmentCode">
+				<xs:complexType>
+					<xs:attribute name="Value" type="TaxTreatmentCodeType" use="required" />
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="InvoiceDueDate" type="DateElementType" minOccurs="0"/>
+			<xs:element name="PaymentInstruction" type="xs:string" minOccurs="0"/>
+			<xs:element name="PaymentTerms"> <!-- only one payment term is allowed for Golda -->
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PaymentDeadline" type="PaymentDeadlineType"/>
+						<xs:element name="PaymentDiscount" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DiscountPercent" type="decimaldot3"/>
+									<xs:element name="DiscountDays" type="xs:nonNegativeInteger"/>
+									<xs:element name="Date" type="DateType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SellerParty" type="GoldaSellerPartyType"/>
+			<xs:element name="BuyerParty" type="PartyType" /> <!-- mandatory for Golda -->
+			<xs:element name="DeliveryParty" type="PartyTypeWithOutTaxRegistrationNumber" /> <!-- mandatory for Golda -->
+			<xs:element name="InvoiceOrg">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="InvoiceParty" type="GoldaInvoicePartyType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AdditionalParty">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="TaxRegistrationNumber" type="VATType" minOccurs="1" />
+						<xs:element name="AdditionalPartyNumber" type="AdditionalPartyNumberZRType" minOccurs="1" maxOccurs="1"/>
+						<xs:element name="Address" type="AddressType"/>
+						<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Currency" type="ISO_4217_Code" />
+			<xs:element name="Banking" type="BankingType"  maxOccurs="unbounded" />
+			<xs:element name="FreeText" minOccurs="4" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="string210">
+							<xs:attribute name="Caption" use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="REGNAME"/>
+										<xs:enumeration value="REGFORM"/>
+										<xs:enumeration value="REGCAPITAL"/>
+										<xs:enumeration value="PENALTY"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- AddtionalPartyNumber Qualifier for AdditionalParty -->
+	<xs:complexType name="AdditionalPartyNumberZRType">
+		<xs:simpleContent>
+			<xs:extension base="CodeSiretType">
+				<xs:attribute name="Qualifier" use="required" fixed="ZR" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<!-- GoldaInvoicePartyType -->
+	<xs:complexType name="GoldaInvoicePartyType">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="string13" minOccurs="1"  maxOccurs="1"/>
+			<xs:element name="TaxRegistrationNumber" type="VATType" minOccurs="1"/>
+			<xs:element name="AdditionalPartyNumber">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="GoldaRestrictionType">
+							<xs:attribute name="Qualifier" use="required" fixed="ZZZ" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Address" type="AddressType"/>
+			<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Type to restrict content of AdditionalPartyNumber to Golda -->
+	<xs:simpleType name="GoldaRestrictionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Golda" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- GoldaSellerPartyType -->
+	<xs:complexType name="GoldaSellerPartyType">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="string13" minOccurs="1"  maxOccurs="1"/>
+			<xs:element name="TaxRegistrationNumber" type="VATType" minOccurs="0"/>
+			<xs:element name="AdditionalPartyNumber">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="Qualifier" use="required" fixed="CorporateOffice" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Address" type="AddressType"/>
+			<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

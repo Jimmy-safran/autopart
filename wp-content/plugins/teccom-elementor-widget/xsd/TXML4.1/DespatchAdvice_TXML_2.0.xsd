@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.teccom.de/tecorder/desadv/txml20" targetNamespace="http://www.teccom.de/tecorder/desadv/txml20" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="DesAdvType">
+		<xs:sequence>
+			<xs:element name="Document" type="DocumentType"/>
+			<xs:element name="DesAdvHeader" type="DesAdvHeaderType"/>
+			<xs:element name="Package" type="PackageType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DesAdv" type="DesAdvType"/>
+	<xs:complexType name="DesAdvHeaderType">
+		<xs:sequence>
+			<xs:element name="DesAdvId" type="xs:string"/>
+			<xs:element name="DesAdvIssueDate" type="DateElementType"/>
+			<xs:element name="DeliveryDate" type="DateElementType"/>
+			<xs:element name="TransportDetails" type="TransportDetailsType" minOccurs="0"/>
+			<xs:element name="OrderRef" type="OrderRefType" maxOccurs="unbounded"/>
+			<xs:element name="SellerParty" type="PartyType1"/>
+			<xs:element name="BuyerParty" type="PartyType1"/>
+			<xs:element name="DeliveryParty" type="PartyType11" minOccurs="0"/>
+			<xs:element name="InvoiceParty" type="PartyType11" minOccurs="0"/>
+			<xs:element name="FreeText" type="FreeTextType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransportDetailsType">
+		<xs:sequence>
+			<xs:element name="TransportMode" type="xs:string"/>
+			<xs:element name="TransportTypeMeansCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="TransportTypeMeansFree" type="xs:string" minOccurs="0"/>
+			<xs:element name="CarrierIdentificationILN" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackageType">
+		<xs:sequence>
+			<xs:element name="PkgNumber" type="xs:string"/>
+			<xs:element name="PkgInfo" type="PkgInfoType" minOccurs="0"/>
+			<xs:element name="PkgId" type="PkgIdType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PkgRef" type="PkgRefType" minOccurs="0"/>
+			<xs:element name="Measurements" type="MeasurementsType" minOccurs="0"/>
+			<xs:element name="FreeText" type="FreeTextType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="Package" type="PackageType"/>
+				<xs:element name="PkgItem" type="PkgItemType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PkgInfoType">
+		<xs:sequence>
+			<xs:element name="PacketCount" type="xs:string"/>
+			<xs:element name="PacketKind" type="xs:string"/>
+			<xs:element name="PacketKindFreeText" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PkgIdType">
+		<xs:sequence>
+			<xs:element name="PkgIdentSystem" type="xs:string"/>
+			<xs:element name="PkgIdentNumberQualifier" type="xs:string"/>
+			<xs:element name="PkgIdentNumber" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PkgRefType">
+		<xs:sequence>
+			<xs:element name="PkgRefQualifier" type="xs:string"/>
+			<xs:element name="PkgRefNumber" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PkgItemType">
+		<xs:sequence>
+			<xs:element name="PositionNumber" type="xs:string"/>
+			<xs:element name="DeliveredQuantity" type="QuantityElementType"/>
+			<xs:element name="ProductId" type="ProductIdType2"/>
+			<xs:element name="ProductDescription" type="ProductDescriptionType"/>
+			<xs:element name="QtyVariance" type="QtyVarianceType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="OrderRef" type="OrderRefType"/>
+			<xs:element name="OrderItemRef" type="OrderItemRefType"/>
+			<xs:element name="Measurements" type="MeasurementsType" minOccurs="0"/>
+			<xs:element name="FreeText" type="FreeTextType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdditionalPartyNumberType" mixed="true">
+		<xs:attribute name="Qualifier" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Payee"/>
+					<xs:enumeration value="WorldPac"/>
+					<xs:enumeration value="ZZZ"/>
+					<xs:enumeration value="CorporateOffice"/>
+					<xs:enumeration value="Invoicee"/>
+					<xs:enumeration value="DUNS"/>
+					<xs:enumeration value="TAXRegistrationNumber"/>
+					<xs:enumeration value="ILN"/>
+					<xs:enumeration value="ZR"/>
+					<xs:enumeration value="Delivery"/>
+					<xs:enumeration value="RomingID"/>
+					<xs:enumeration value="Transporter"/>
+					<xs:enumeration value="ZF"/>
+					<xs:enumeration value="IssuerOfInvoice"/>
+					<xs:enumeration value="Buyer"/>
+					<xs:enumeration value="Supplier"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="Name1" type="xs:string"/>
+			<xs:element name="Name2" type="xs:string" minOccurs="0"/>
+			<xs:element name="Street1" type="xs:string"/>
+			<xs:element name="Street2" type="xs:string" minOccurs="0"/>
+			<xs:element name="PostalCode" type="xs:string"/>
+			<xs:element name="City" type="xs:string"/>
+			<xs:element name="CountryCode" type="xs:string"/>
+			<xs:element name="CountryName" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactInformationType">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string"/>
+			<xs:element name="Telephone" type="xs:string" minOccurs="0"/>
+			<xs:element name="Fax" type="xs:string" minOccurs="0"/>
+			<xs:element name="EMail" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContractRefType">
+		<xs:sequence>
+			<xs:element name="ContractNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="ScheduleNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="CostCenter" type="xs:string" minOccurs="0"/>
+			<xs:element name="Assignment" type="xs:string" minOccurs="0"/>
+			<xs:element name="ProjectNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="DeliveryDate" type="DateType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateElementType">
+		<xs:sequence>
+			<xs:element name="Date" type="DateType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateType" mixed="true">
+		<xs:attribute name="Qualifier" default="At">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Before"/>
+					<xs:enumeration value="At"/>
+					<xs:enumeration value="After"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Format" default="YYYYMMDD">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="YYYYMMDD"/>
+					<xs:enumeration value="YYYYMMDDHHMM"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="DesAdvItemRefType">
+		<xs:sequence>
+			<xs:element name="PositionNumber" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DesAdvRefType">
+		<xs:sequence>
+			<xs:element name="DocumentNumber" type="xs:string"/>
+			<xs:element name="Date" type="DateType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentType">
+		<xs:attribute name="Type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="OrdStatReport"/>
+					<xs:enumeration value="Archive"/>
+					<xs:enumeration value="OrdStatRequest"/>
+					<xs:enumeration value="DesAdv"/>
+					<xs:enumeration value="OrdRsp"/>
+					<xs:enumeration value="Notif"/>
+					<xs:enumeration value="Invoice"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Version" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="FreeTextType" mixed="true">
+		<xs:attribute name="Caption" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="InvoiceOrgType">
+		<xs:sequence>
+			<xs:element name="TaxRegistrationNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="InvoiceParty" type="PartyType1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InvoiceOrgType2">
+		<xs:sequence>
+			<xs:element name="TaxRegistrationNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="InvoiceParty" type="PartyType3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MeasurementsType">
+		<xs:sequence>
+			<xs:element name="MeasurementUnit" type="MeasurementUnitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MeasurementUnitType" mixed="true">
+		<xs:attribute name="MeasurementUnitQualifier" type="xs:anySimpleType" use="required"/>
+		<xs:attribute name="UoM" type="xs:anySimpleType" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="OrderItemRefType">
+		<xs:sequence>
+			<xs:element name="SellerOrderItemRef" type="xs:string"/>
+			<xs:element name="BuyerOrderItemRef" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrderRefType">
+		<xs:sequence>
+			<xs:element name="SellerOrderNumber" type="xs:string"/>
+			<xs:element name="BuyerOrderNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="Date" type="DateType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrdStatReqData">
+		<xs:sequence>
+			<xs:element name="OrdStatReqIssueDate" type="DateElementType"/>
+			<xs:element name="OrdStatReqNumber" type="xs:string"/>
+			<xs:element name="SellerParty" type="PartyType1"/>
+			<xs:element name="BuyerParty" type="PartyType1"/>
+			<xs:element name="RequestedStatus" type="RequestedStatusType"/>
+			<xs:element name="SellerOrderNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="BuyerOrderNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="ProductId" type="ProductIdType2" minOccurs="0"/>
+			<xs:element name="DateFrom" type="DateElementType" minOccurs="0"/>
+			<xs:element name="DateTo" type="DateElementType" minOccurs="0"/>
+			<xs:element name="MaxNrOfOrders" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartyType11">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="Address" type="AddressType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartyType1">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="xs:string"/>
+			<xs:element name="Address" type="AddressType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartyType3">
+		<xs:sequence>
+			<xs:element name="PartyNumber" type="xs:string"/>
+			<xs:element name="TaxRegistrationNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="AdditionalPartyNumber" type="AdditionalPartyNumberType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Address" type="AddressType"/>
+			<xs:element name="ContactInformation" type="ContactInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductDescriptionType">
+		<xs:sequence>
+			<xs:element name="ProductName1" type="xs:string"/>
+			<xs:element name="ProductName2" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductDescriptionType2">
+		<xs:sequence>
+			<xs:element name="ProductName1" type="xs:string"/>
+			<xs:element name="ProductName2" type="ProductName2Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductIdType1">
+		<xs:sequence>
+			<xs:element name="MakerCode" type="xs:string"/>
+			<xs:element name="ProductNumber" type="xs:string"/>
+			<xs:element name="Ean" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductIdType2">
+		<xs:sequence>
+			<xs:element name="MakerCode" type="xs:string"/>
+			<xs:element name="ProductNumber" type="xs:string"/>
+			<xs:element name="Ean" type="xs:string" minOccurs="0"/>
+			<xs:element name="BuyerProductNumber" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductIdType3">
+		<xs:sequence>
+			<xs:element name="MakerCode" type="xs:string"/>
+			<xs:element name="ProductNumber" type="xs:string"/>
+			<xs:element name="Ean" type="xs:string" minOccurs="0"/>
+			<xs:element name="BuyerProductNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="SubstitutedProductNumber" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductName2Type" mixed="true">
+		<xs:attribute name="Language" type="xs:anySimpleType"/>
+	</xs:complexType>
+	<xs:complexType name="ProductPriceType">
+		<xs:sequence>
+			<xs:element name="PriceCategory" type="xs:string" minOccurs="0"/>
+			<xs:element name="Price" type="xs:string"/>
+			<xs:element name="DiscountGroup" type="xs:string" minOccurs="0"/>
+			<xs:element name="PriceUnit" type="QuantityElementType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QtyVarianceType">
+		<xs:sequence>
+			<xs:element name="Quantity" type="QuantityType"/>
+			<xs:element name="DeviationReason" type="xs:string" minOccurs="0"/>
+			<xs:element name="ModificationReason" type="xs:string" minOccurs="0"/>
+			<xs:element name="QtyVarComment" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuantityElementType">
+		<xs:sequence>
+			<xs:element name="Quantity" type="QuantityType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuantityType" mixed="true">
+		<xs:attribute name="UoM" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="RequestedStatusType">
+		<xs:attribute name="Open" default="Yes">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="No"/>
+					<xs:enumeration value="Yes"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="CompletelyProcessed" default="Yes">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="No"/>
+					<xs:enumeration value="Yes"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ResponseType">
+		<xs:sequence>
+			<xs:element name="Text" type="xs:string"/>
+			<xs:element name="Parameter" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="Code" type="xs:string" use="required"/>
+		<xs:attribute name="Class" type="xs:string" use="required"/>
+		<xs:attribute name="Type" type="xs:string"/>
+	</xs:complexType>
+</xs:schema>

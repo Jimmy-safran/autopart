@@ -1,0 +1,10 @@
+TecCom\Order\TXML5\AllowOrChargeType\AllowanceAType:
+    properties:
+        code:
+            expose: true
+            access_type: public_method
+            serialized_name: Code
+            accessor:
+                getter: getCode
+                setter: setCode
+            type: string

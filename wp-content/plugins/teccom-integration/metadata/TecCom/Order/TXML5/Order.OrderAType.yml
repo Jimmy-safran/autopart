@@ -1,0 +1,30 @@
+TecCom\Order\TXML5\Order\OrderAType:
+    properties:
+        version:
+            expose: true
+            access_type: public_method
+            serialized_name: version
+            accessor:
+                getter: getVersion
+                setter: setVersion
+            xml_attribute: true
+            type: string
+        head:
+            expose: true
+            access_type: public_method
+            serialized_name: Head
+            accessor:
+                getter: getHead
+                setter: setHead
+            type: TecCom\Order\TXML5\Order\OrderAType\HeadAType
+        line:
+            expose: true
+            access_type: public_method
+            serialized_name: Line
+            accessor:
+                getter: getLine
+                setter: setLine
+            xml_list:
+                inline: true
+                entry_name: Line
+            type: array<TecCom\Order\TXML5\Order\OrderAType\LineAType>

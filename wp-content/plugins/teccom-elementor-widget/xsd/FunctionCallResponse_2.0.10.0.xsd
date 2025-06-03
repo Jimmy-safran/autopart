@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tc="teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse" version="2.0.10.0 (Generator:1.0.0)" id="TecCom.OpenMessaging.DTO.FunctionCallResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="FunctionCallResponse" type="tc:FunctionCallResponse" />
+  <xs:complexType name="FunctionCallResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Timestamp" type="tc:DTODateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Authentication" type="tc:AuthenticationData" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Reference" type="tc:ReferenceData" />
+      <xs:element minOccurs="0" maxOccurs="1" name="OriginatingFunction" type="tc:ServiceData" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Status" type="tc:StatusData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DTODateTime">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="DateString" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="TimeBase" type="tc:DTODateTimeBase" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Format" type="tc:DTODateTimeFormat" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="DTODateTimeBase">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="localtime" />
+      <xs:enumeration value="utc" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DTODateTimeFormat">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="iso8601" />
+      <xs:enumeration value="yyyymmdd" />
+      <xs:enumeration value="yyyymmddhhmm" />
+      <xs:enumeration value="yyyy" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AuthenticationData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="User" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Password" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Language" type="tc:Language" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Language">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="de" />
+      <xs:enumeration value="en" />
+      <xs:enumeration value="it" />
+      <xs:enumeration value="es" />
+      <xs:enumeration value="fr" />
+      <xs:enumeration value="nl" />
+      <xs:enumeration value="pl" />
+      <xs:enumeration value="hu" />
+      <xs:enumeration value="cz" />
+      <xs:enumeration value="el" />
+      <xs:enumeration value="tr" />
+      <xs:enumeration value="ru" />
+      <xs:enumeration value="pt" />
+      <xs:enumeration value="sk" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ReferenceData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="BusinessRelationID" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="BusinessTransactionID" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="RoutingInfo" type="tc:RoutingInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RoutingInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="RequestOriginator" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="RequestDestination" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="ResponseOriginator" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceData">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="FunctionID" type="tc:FunctionID" />
+      <xs:element minOccurs="0" maxOccurs="1" name="ParameterList" type="tc:ArrayOfParameterData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="FunctionID">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unspecified" />
+      <xs:enumeration value="Order_SendDocument" />
+      <xs:enumeration value="Order_GetDocuments" />
+      <xs:enumeration value="Order_DeliverDocument" />
+      <xs:enumeration value="Order_SubmitInquiry" />
+      <xs:enumeration value="Order_SubmitOrder" />
+      <xs:enumeration value="Order_ProcessInquiry" />
+      <xs:enumeration value="Order_ProcessOrder" />
+      <xs:enumeration value="OpenMessaging_Main" />
+      <xs:enumeration value="OpenMessaging_Reflect" />
+      <xs:enumeration value="OpenMessaging_SubmitMessage" />
+      <xs:enumeration value="OpenMessaging_ITC" />
+      <xs:enumeration value="Warranty_SubmitClaim" />
+      <xs:enumeration value="Warranty_SubmitForwardClaim" />
+      <xs:enumeration value="Warranty_ProcessClaim" />
+      <xs:enumeration value="Warranty_SubmitDecision" />
+      <xs:enumeration value="Warranty_ProcessDecision" />
+      <xs:enumeration value="Warranty_GetClaim" />
+      <xs:enumeration value="Warranty_GetClaimList" />
+      <xs:enumeration value="CMI_GetDocuments" />
+      <xs:enumeration value="CMI_SendDocument" />
+      <xs:enumeration value="BasicSupply_GetDocuments" />
+      <xs:enumeration value="BasicSupply_SendDocuments" />
+      <xs:enumeration value="Warranty_SubmitDeciderInfo" />
+      <xs:enumeration value="BusinessDirectory_GetUserData" />
+      <xs:enumeration value="TDC_SubmitDocument" />
+      <xs:enumeration value="TDC_SPI" />
+      <xs:enumeration value="CMD_TraderCall" />
+      <xs:enumeration value="CMD_SupplierCall" />
+      <xs:enumeration value="CMD_InternalCall" />
+      <xs:enumeration value="CMD_TecSiTraderCall" />
+      <xs:enumeration value="CMD_TecSiSupplierCall" />
+      <xs:enumeration value="TDC_DeliverDocumentToSender" />
+      <xs:enumeration value="TDC_DeliverDocumentToReceiver" />
+      <xs:enumeration value="Identify_TraderCall" />
+      <xs:enumeration value="Identify_InternalCall" />
+      <xs:enumeration value="Identify_CheckBarcodeAnonymous" />
+      <xs:enumeration value="Identify_TecSiSupplierCall" />
+      <xs:enumeration value="Identify_RoutingSP" />
+      <xs:enumeration value="TDC_ParsePDFDocument" />
+      <xs:enumeration value="Order_SubmitTrackingRequest" />
+      <xs:enumeration value="Order_SubmitFollowUp" />
+      <xs:enumeration value="Order_GetStatus" />
+      <xs:enumeration value="Order_SendStatus" />
+      <xs:enumeration value="Order_SendAcceptMessage" />
+      <xs:enumeration value="Order_CommandMessage" />
+      <xs:enumeration value="Connect_ControlMessages" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ArrayOfParameterData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ParameterData" nillable="true" type="tc:ParameterData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ParameterData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="ParameterValue" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="ParameterType" type="tc:ParameterTypeID" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Attributes" type="tc:DTOStringDictionary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ParameterTypeID">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TextPlain" />
+      <xs:enumeration value="Inquiry" />
+      <xs:enumeration value="InqRsp" />
+      <xs:enumeration value="Order" />
+      <xs:enumeration value="OrdRsp" />
+      <xs:enumeration value="DesAdv" />
+      <xs:enumeration value="Invoice" />
+      <xs:enumeration value="Empty" />
+      <xs:enumeration value="WtyClaim" />
+      <xs:enumeration value="CstmMaArtloc" />
+      <xs:enumeration value="TrInvrpt" />
+      <xs:enumeration value="TrResvs" />
+      <xs:enumeration value="TrOrders" />
+      <xs:enumeration value="TrSlsevent" />
+      <xs:enumeration value="TrNxtordid" />
+      <xs:enumeration value="TrHistory" />
+      <xs:enumeration value="MaGroup" />
+      <xs:enumeration value="MaArt" />
+      <xs:enumeration value="MaArtloc" />
+      <xs:enumeration value="MaLoccond" />
+      <xs:enumeration value="OutOrders" />
+      <xs:enumeration value="OutEvents" />
+      <xs:enumeration value="OutEvwarn" />
+      <xs:enumeration value="DataTransferObject" />
+      <xs:enumeration value="Out_Orders" />
+      <xs:enumeration value="Out_OrdHead" />
+      <xs:enumeration value="Out_Report0" />
+      <xs:enumeration value="Out_Report1" />
+      <xs:enumeration value="Out_Report2" />
+      <xs:enumeration value="Out_Report3" />
+      <xs:enumeration value="Out_Report4" />
+      <xs:enumeration value="Out_Report5" />
+      <xs:enumeration value="Out_Report6" />
+      <xs:enumeration value="Out_Report7" />
+      <xs:enumeration value="Out_Report8" />
+      <xs:enumeration value="Out_Report9" />
+      <xs:enumeration value="WtyInq" />
+      <xs:enumeration value="WtyInqRsp" />
+      <xs:enumeration value="WtyStatistic" />
+      <xs:enumeration value="TrackingRequest" />
+      <xs:enumeration value="TrackingResponse" />
+      <xs:enumeration value="FollowUp" />
+      <xs:enumeration value="OrdStatRequest" />
+      <xs:enumeration value="OrdStatResponse" />
+      <xs:enumeration value="Acknowledgement" />
+      <xs:enumeration value="CommandMessage" />
+      <xs:enumeration value="InvRpt" />
+      <xs:enumeration value="EdiBat" />
+      <xs:enumeration value="OrdPrp" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DTOStringDictionary">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Items" type="tc:ArrayOfKeyValueItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfKeyValueItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueItem" nillable="true" type="tc:KeyValueItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="KeyValueItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="key" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="value" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StatusData">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="Severity" type="tc:SeverityLevel" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Code" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Domain" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Value" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="SeverityLevel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Information" />
+      <xs:enumeration value="Warning" />
+      <xs:enumeration value="FatalError" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

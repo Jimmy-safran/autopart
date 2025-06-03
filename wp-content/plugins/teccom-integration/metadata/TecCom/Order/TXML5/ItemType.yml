@@ -1,0 +1,97 @@
+TecCom\Order\TXML5\ItemType:
+    properties:
+        number:
+            expose: true
+            access_type: public_method
+            serialized_name: Number
+            accessor:
+                getter: getNumber
+                setter: setNumber
+            type: int
+        deliveredQuantity:
+            expose: true
+            access_type: public_method
+            serialized_name: DeliveredQuantity
+            accessor:
+                getter: getDeliveredQuantity
+                setter: setDeliveredQuantity
+            type: TecCom\Order\TXML5\QuantityType
+        productId:
+            expose: true
+            access_type: public_method
+            serialized_name: ProductId
+            accessor:
+                getter: getProductId
+                setter: setProductId
+            type: TecCom\Order\TXML5\ProductIdChoiceType
+        productName:
+            expose: true
+            access_type: public_method
+            serialized_name: ProductName
+            accessor:
+                getter: getProductName
+                setter: setProductName
+            type: string
+        reference:
+            expose: true
+            access_type: public_method
+            serialized_name: Reference
+            accessor:
+                getter: getReference
+                setter: setReference
+            xml_list:
+                inline: true
+                entry_name: Reference
+            type: array<TecCom\Order\TXML5\ReferenceLineType>
+        measurements:
+            expose: true
+            access_type: public_method
+            serialized_name: Measurements
+            accessor:
+                getter: getMeasurements
+                setter: setMeasurements
+            xml_list:
+                inline: true
+                entry_name: Measurements
+            type: array<TecCom\Order\TXML5\MeasurementsType>
+        externalTrade:
+            expose: true
+            access_type: public_method
+            serialized_name: ExternalTrade
+            accessor:
+                getter: getExternalTrade
+                setter: setExternalTrade
+            type: TecCom\Order\TXML5\ExternalTradeType
+        externalDocument:
+            expose: true
+            access_type: public_method
+            serialized_name: ExternalDocument
+            accessor:
+                getter: getExternalDocument
+                setter: setExternalDocument
+            xml_list:
+                inline: true
+                entry_name: ExternalDocument
+            type: array<TecCom\Order\TXML5\ExternalDocumentType>
+        additionalParameters:
+            expose: true
+            access_type: public_method
+            serialized_name: AdditionalParameters
+            accessor:
+                getter: getAdditionalParameters
+                setter: setAdditionalParameters
+            xml_list:
+                inline: true
+                entry_name: AdditionalParameters
+            type: array<TecCom\Order\TXML5\AdditionalParametersType>
+        freeText:
+            expose: true
+            access_type: public_method
+            serialized_name: FreeText
+            accessor:
+                getter: getFreeText
+                setter: setFreeText
+            xml_list:
+                inline: true
+                entry_name: FreeText
+            type: array<TecCom\Order\TXML5\FreeTextValueType>

@@ -1,0 +1,26 @@
+TecCom\Order\TXML5\SummaryType:
+    properties:
+        netAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: NetAmount
+            accessor:
+                getter: getNetAmount
+                setter: setNetAmount
+            type: float
+        taxAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: TaxAmount
+            accessor:
+                getter: getTaxAmount
+                setter: setTaxAmount
+            type: float
+        totalAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: TotalAmount
+            accessor:
+                getter: getTotalAmount
+                setter: setTotalAmount
+            type: float

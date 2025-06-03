@@ -1,0 +1,66 @@
+TecCom\Order\TXML5\PriceType:
+    properties:
+        category:
+            expose: true
+            access_type: public_method
+            serialized_name: Category
+            accessor:
+                getter: getCategory
+                setter: setCategory
+            type: string
+        quantity:
+            expose: true
+            access_type: public_method
+            serialized_name: Quantity
+            accessor:
+                getter: getQuantity
+                setter: setQuantity
+            type: float
+        uoM:
+            expose: true
+            access_type: public_method
+            serialized_name: UoM
+            accessor:
+                getter: getUoM
+                setter: setUoM
+            type: string
+        netPrice:
+            expose: true
+            access_type: public_method
+            serialized_name: NetPrice
+            accessor:
+                getter: getNetPrice
+                setter: setNetPrice
+            type: float
+        grossPrice:
+            expose: true
+            access_type: public_method
+            serialized_name: GrossPrice
+            accessor:
+                getter: getGrossPrice
+                setter: setGrossPrice
+            type: float
+        netAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: NetAmount
+            accessor:
+                getter: getNetAmount
+                setter: setNetAmount
+            type: float
+        grossAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: GrossAmount
+            accessor:
+                getter: getGrossAmount
+                setter: setGrossAmount
+            type: float
+        currency:
+            expose: true
+            access_type: public_method
+            serialized_name: Currency
+            accessor:
+                getter: getCurrency
+                setter: setCurrency
+            type: string

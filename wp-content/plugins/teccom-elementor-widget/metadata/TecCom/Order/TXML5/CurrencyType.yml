@@ -1,0 +1,26 @@
+TecCom\Order\TXML5\CurrencyType:
+    properties:
+        request:
+            expose: true
+            access_type: public_method
+            serialized_name: Request
+            accessor:
+                getter: getRequest
+                setter: setRequest
+            type: string
+        response:
+            expose: true
+            access_type: public_method
+            serialized_name: Response
+            accessor:
+                getter: getResponse
+                setter: setResponse
+            type: string
+        exchangeRate:
+            expose: true
+            access_type: public_method
+            serialized_name: ExchangeRate
+            accessor:
+                getter: getExchangeRate
+                setter: setExchangeRate
+            type: float

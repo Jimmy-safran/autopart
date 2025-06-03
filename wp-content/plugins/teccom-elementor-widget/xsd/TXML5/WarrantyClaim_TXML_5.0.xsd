@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Txml_5.0_Common.xsd"/>
+	<xs:element name="WarrantyClaim">
+		<xs:annotation>
+			<xs:documentation>QM - Message for posting all warranty related claim data - complete claim</xs:documentation>
+			<xs:documentation>TXML 5.0 WarrantyClaim v1.4 changed by CD  20240124, remove schema version from file-name</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Head">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="IssueDate" type="xs:dateTime">
+								<xs:annotation>
+									<xs:documentation>Issue date of the message</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Reference" type="ReferenceHeaderType" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Mandatory reference: "TecClaimNumber" = Returns ClaimID</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CreatedBy">
+								<xs:annotation>
+									<xs:documentation>Cllaim creator</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="512"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ModifyDate" type="xs:dateTime">
+								<xs:annotation>
+									<xs:documentation>Modification date of the claim</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ModifiedBy">
+								<xs:annotation>
+									<xs:documentation>Claim modified by</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="70"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="SendDate" type="xs:dateTime">
+								<xs:annotation>
+									<xs:documentation>Send claim date</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DocumentNumber" type="xs:long">
+								<xs:annotation>
+									<xs:documentation>Returns ClaimID</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Subject">
+								<xs:annotation>
+									<xs:documentation>Claim subject - Returns</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="70"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ClaimStatus" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Returns platform claim status</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="35"/>
+										<xs:enumeration value="Draft"/>
+										<xs:enumeration value="Finished"/>
+										<xs:enumeration value="Sent"/>
+										<xs:enumeration value="New"/>
+										<xs:enumeration value="Decided"/>
+										<xs:enumeration value="Decision"/>
+										<xs:enumeration value="Pending"/>
+										<xs:enumeration value="InWork"/>
+										<xs:enumeration value="DecidedManually"/>
+										<xs:enumeration value="ReceiverCreated"/>
+										<xs:enumeration value="SelfCreated"/>
+										<xs:enumeration value="Opened"/>
+										<xs:enumeration value="Viewed"/>
+										<xs:enumeration value="SentToErp"/>
+										<xs:enumeration value="FinancialReview"/>
+										<xs:enumeration value="Cancelled"/>
+										<xs:enumeration value="Reopened"/>
+										<xs:enumeration value="WaitingForDetails"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Category" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Returns process category</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="35"/>
+										<xs:enumeration value="Warranty"/>
+										<xs:enumeration value="Returns"/>
+										<xs:enumeration value="ShippingDifference"/>
+										<xs:enumeration value="StockClearance"/>
+										<xs:enumeration value="RepairCalibrate"/>
+										<xs:enumeration value="Recall"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ReturnReason" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Return reason of the Returns platform process</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="ReturnReasonList">
+										<xs:maxLength value="30"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="SellerParty">
+								<xs:annotation>
+									<xs:documentation>Is the supplier 
+---  in Returns the Receiver</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="PartyType1">
+											<xs:sequence>
+												<xs:element name="Branch" minOccurs="0">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:maxLength value="35"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="BuyerParty">
+								<xs:annotation>
+									<xs:documentation>Is the orderer
+--- In Returns the Sender</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="PartyType1">
+											<xs:sequence>
+												<xs:element name="Branch" minOccurs="0">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:maxLength value="35"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DeliveryParty" type="PartyType1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Contains the delivery party ID, if existing</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AdditionalParty" type="AdditionalPartyType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Caontains information about additional parties, e.g. the workshop, if existing</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Problem">
+								<xs:annotation>
+									<xs:documentation>Detailed problem description for the claimed part</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="WasFitted" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>Part was fitted</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Description">
+											<xs:annotation>
+												<xs:documentation>Problem description</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Text">
+														<xs:annotation>
+															<xs:documentation>Text</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:maxLength value="1000"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="Language" type="LanguageList">
+														<xs:annotation>
+															<xs:documentation>Language</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="PackagingCondition">
+											<xs:annotation>
+												<xs:documentation>Condition of packaging</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="255"/>
+													<xs:enumeration value="Broken"/>
+													<xs:enumeration value="Without"/>
+													<xs:enumeration value="LikeNew"/>
+													<xs:enumeration value="Used"/>
+													<xs:enumeration value="WrongBrand"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="PlaceOfDetection">
+											<xs:annotation>
+												<xs:documentation>Place of detection</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="255"/>
+													<xs:enumeration value="Repair Shop/Technician"/>
+													<xs:enumeration value="End Customer"/>
+													<xs:enumeration value="Distributor"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="DetectionDate" type="xs:dateTime" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Detection date</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ProblemConditions">
+											<xs:annotation>
+												<xs:documentation>Problem conditions</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="255"/>
+													<xs:enumeration value="Warm"/>
+													<xs:enumeration value="Cold"/>
+													<xs:enumeration value="Wet"/>
+													<xs:enumeration value="Dry"/>
+													<xs:enumeration value="Permanent"/>
+													<xs:enumeration value="Sporadically"/>
+													<xs:enumeration value="Others"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="OtherConditionDescription" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Other description</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Text">
+														<xs:annotation>
+															<xs:documentation>Text</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:maxLength value="1000"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="Language" type="LanguageList">
+														<xs:annotation>
+															<xs:documentation>Language</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ClaimDecision" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Detailed claim decssion information</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Decision">
+											<xs:annotation>
+												<xs:documentation>Decision summary in receiver console</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="35"/>
+													<xs:enumeration value="None"/>
+													<xs:enumeration value="Goodwill"/>
+													<xs:enumeration value="Accept"/>
+													<xs:enumeration value="Decline"/>
+													<xs:enumeration value="PartiallyAccepted"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:choice>
+											<xs:element name="AcceptDecision" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>What to do in case of acception?</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:maxLength value="35"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="DeclineDecision" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>What to do in case of rejection?</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:maxLength value="35"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+										</xs:choice>
+										<xs:element name="AcceptAction" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Sender requested action in case of acception</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="CreditNote"/>
+													<xs:enumeration value="Replacement"/>
+													<xs:enumeration value="Repair"/>
+													<xs:enumeration value="SubsequentDeliveryOfMissing"/>
+													<xs:enumeration value="GetPartBack"/>
+													<xs:enumeration value="Invoice"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="DeclineAction" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Sender requested action in case of rejection</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="NoFurtherAction"/>
+													<xs:enumeration value="SendBack"/>
+													<xs:enumeration value="Scrap"/>
+													<xs:enumeration value="NoPartsReceived"/>
+													<xs:enumeration value="FinancialRejection"/>
+													<xs:enumeration value="Repair"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="PartDestruction" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Parts destruction agreement </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="DateForResponse" type="xs:dateTime" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Customer requested date for response</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Comment" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Sender Comment</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Text" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Comment text</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:maxLength value="1000"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="Language" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Comment language</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="LanguageList"/>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="CreditNoteNumber" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>If provided by Returns</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="35"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="CreditNoteDate" type="xs:dateTime" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>If provided by Returns</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="FinalAmount" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Final amount</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:decimal">
+													<xs:fractionDigits value="2"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Currency" type="CurrencyCodeList" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Currency</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Remark" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Possible comments</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="512"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="RepairNumber" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Repair number</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="35"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="RepairDate" type="xs:dateTime" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Repair date</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="DeliveryNoteNumber" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Delivery note number</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="35"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="DeliveryNoteDate" type="xs:dateTime" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Delivery note date</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="TrackingId" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Tracking ID</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="100"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="DestructionNumber" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Destruction number</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="35"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="DestructionDate" type="xs:dateTime" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Destruction date</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PartsInfo" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Detailed parts information (status, dates + shipping)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="PartsStatus" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Parts status</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="255"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="PartsReceivedDate" type="xs:dateTime" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Parts received date</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="PartsSentDate" type="xs:dateTime" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Parts send date</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="AllowPrintLabel" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Allow label to be printed</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="PartsTrackingId" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Parts tracking ID</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="100"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Vehicle" type="VehicleType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Detailed vehicle data in which parts were fitted</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Notes" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Internal notes for Sender + Receiver</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ReceiverInternalNote" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Internal note of the receiver</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="500"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="SenderInternalNote" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Internal note of the receiver</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="500"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Individual" type="QualifierValueType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Additional individual information related to the claim</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AdditionalParameters" type="AdditionalParametersType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Additional standard information related to the claim</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="FreeText" type="FreeTextValueType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Additional unprocessed information related to the claim</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ExternalDocument" type="ExternalDocumentType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Link to attachments related to the claim (NO document transported)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Part" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Number">
+								<xs:annotation>
+									<xs:documentation>Claim line number of the item</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:int">
+										<xs:minExclusive value="0"/>
+										<xs:totalDigits value="6"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ItemType" type="LineTypeList">
+								<xs:annotation>
+									<xs:documentation>Item type to distinguish different item characteristics</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Quantity">
+								<xs:annotation>
+									<xs:documentation>Item quantities</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Claimed" type="QuantityType">
+											<xs:annotation>
+												<xs:documentation>Claimed quantity by the customer</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Requested" type="QuantityType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Requested quantity for the return of goods by the receiver</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Received" type="QuantityType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Received quantity by the receiver according to goods entry</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Accepted" type="QuantityType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Accepted quantity by the receiver</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Rejected" type="QuantityType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Rejected quantity by the receiver</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ProductId" type="ProductIdChoiceType">
+								<xs:annotation>
+									<xs:documentation>Item identification number</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ProductName" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Item description</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="256"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ValidationState">
+								<xs:annotation>
+									<xs:documentation>State of validation</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="255"/>
+										<xs:enumeration value="Undefined"/>
+										<xs:enumeration value="Valid"/>
+										<xs:enumeration value="CanNotCheck"/>
+										<xs:enumeration value="Invalid"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Returnability" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Parts returnability</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="100"/>
+										<xs:enumeration value="Undefined"/>
+										<xs:enumeration value="No"/>
+										<xs:enumeration value="Yes"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ProductPrice" type="ProductPriceType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Item price</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AllowOrCharge" type="AllowOrChargeType" minOccurs="0" maxOccurs="99"/>
+							<xs:element name="Reference" type="ReferenceLineType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Document reference related to a line item</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Decision" type="DecisionType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Additional individual information related to the claim</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AdditionalParameters" type="AdditionalParametersType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Additional standard information related to the line item</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="FreeText" type="FreeTextValueType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Additional unprocessed information related to the line item</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ExternalDocument" type="ExternalDocumentType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Link to attachments related to the claim (NO document transported)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="MaterialGroup" type="xs:int" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Part material grouop</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="5.0">
+				<xs:annotation>
+					<xs:documentation>Version control reference for the XSD scheme and message processing</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

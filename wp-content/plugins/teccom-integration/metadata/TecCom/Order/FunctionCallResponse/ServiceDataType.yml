@@ -1,0 +1,27 @@
+TecCom\Order\FunctionCallResponse\ServiceDataType:
+    properties:
+        functionID:
+            expose: true
+            access_type: public_method
+            serialized_name: FunctionID
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getFunctionID
+                setter: setFunctionID
+            type: string
+        parameterList:
+            expose: true
+            access_type: public_method
+            serialized_name: ParameterList
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getParameterList
+                setter: setParameterList
+            type: array<TecCom\Order\FunctionCallResponse\ParameterDataType>
+            xml_list:
+                inline: false
+                entry_name: ParameterData
+                skip_when_empty: true
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse

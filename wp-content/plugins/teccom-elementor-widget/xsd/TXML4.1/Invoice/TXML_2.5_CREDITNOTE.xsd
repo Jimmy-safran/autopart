@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.teccom.de/tecorder/invoic/txml25" xmlns:txml="http://www.teccom.de/tecorder/invoic/txml25" targetNamespace="http://www.teccom.de/tecorder/invoic/txml25" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <!-- Schema imports -->
+  <xs:include schemaLocation="includes/TXML_2.5_INVOICE_META.xsd"/>
+  <xs:include schemaLocation="includes/TXML_2.5_INVOICE_HEADER_CREDITNOTE.xsd"/>
+  <xs:include schemaLocation="includes/TXML_2.5_INVOICE_DETAIL.xsd"/>
+  <xs:include schemaLocation="includes/TXML_2.5_INVOICE_SUMMARY.xsd"/>
+
+  <xs:element name="Invoice">
+    <xs:complexType>
+      <xs:sequence>
+
+        <!-- Invoice Document meta data -->
+        <xs:element name="Document" type="DocumentType" />
+
+        <!-- Invoice Header -->
+        <xs:element name="InvoiceHeader" type="InvoiceHeaderType" />
+
+        <!-- Invoice Detail -->
+        <xs:element name="InvoiceDetail" type="InvoiceDetailType" maxOccurs="unbounded" />
+
+        <!-- Invoice Summary -->
+        <xs:element name="InvoiceSummary" type="InvoiceSummaryType" />
+
+      </xs:sequence>
+    </xs:complexType>
+    <xs:key name="restrictPositionNumber">
+      <xs:selector xpath="txml:InvoiceDetail/txml:PositionNumber"/>
+      <xs:field xpath="."/>
+    </xs:key>
+  </xs:element>
+</xs:schema>

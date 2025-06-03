@@ -1,0 +1,18 @@
+TecCom\Order\TXML5\ContactType\InformationAType:
+    properties:
+        qualifier:
+            expose: true
+            access_type: public_method
+            serialized_name: Qualifier
+            accessor:
+                getter: getQualifier
+                setter: setQualifier
+            type: string
+        name:
+            expose: true
+            access_type: public_method
+            serialized_name: Name
+            accessor:
+                getter: getName
+                setter: setName
+            type: string

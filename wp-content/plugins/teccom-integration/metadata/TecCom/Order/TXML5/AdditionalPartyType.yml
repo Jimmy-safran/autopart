@@ -1,0 +1,37 @@
+TecCom\Order\TXML5\AdditionalPartyType:
+    properties:
+        qualifier:
+            expose: true
+            access_type: public_method
+            serialized_name: Qualifier
+            accessor:
+                getter: getQualifier
+                setter: setQualifier
+            type: string
+        number:
+            expose: true
+            access_type: public_method
+            serialized_name: Number
+            accessor:
+                getter: getNumber
+                setter: setNumber
+            xml_list:
+                inline: true
+                entry_name: Number
+            type: array<TecCom\Order\TXML5\AdditionalPartyNumberType>
+        address:
+            expose: true
+            access_type: public_method
+            serialized_name: Address
+            accessor:
+                getter: getAddress
+                setter: setAddress
+            type: TecCom\Order\TXML5\AddressType
+        contact:
+            expose: true
+            access_type: public_method
+            serialized_name: Contact
+            accessor:
+                getter: getContact
+                setter: setContact
+            type: TecCom\Order\TXML5\ContactType

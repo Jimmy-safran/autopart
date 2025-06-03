@@ -1119,11 +1119,21 @@ function custom_review_form_shortcode() {
     </div>
 
     <script>
-    jQuery(document).ready(function($) {
-        $('.toggle-review-btn').click(function() {
-            $('.custom-review-form').toggle();
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButton = document.querySelector('.toggle-review-btn');
+            const reviewForm = document.querySelector('.custom-review-form');
+
+            if (toggleButton && reviewForm) {
+                toggleButton.addEventListener('click', function() {
+                // Check the current display style and toggle it
+                if (window.getComputedStyle(reviewForm).display === 'none') {
+                    reviewForm.style.display = 'block';
+                } else {
+                    reviewForm.style.display = 'none';
+                }
+                });
+            }
         });
-    });
     </script>
     <?php
     return ob_get_clean();
@@ -1289,10 +1299,9 @@ add_action('wp_enqueue_scripts', 'check_jquery_registered', 0); // Check very ea
 
 
 
-
-
-
 // Remove the footer banner from the single product page
 add_action( 'wp_loaded', function() {
     remove_action( 'woocommerce_after_single_product', 'mobex_enovathemes_woocommerce_after_single_product' );
 } );
+
+

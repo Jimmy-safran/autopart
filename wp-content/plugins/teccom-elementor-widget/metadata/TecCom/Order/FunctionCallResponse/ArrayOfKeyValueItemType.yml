@@ -1,0 +1,16 @@
+TecCom\Order\FunctionCallResponse\ArrayOfKeyValueItemType:
+    properties:
+        keyValueItem:
+            expose: true
+            access_type: public_method
+            serialized_name: KeyValueItem
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getKeyValueItem
+                setter: setKeyValueItem
+            xml_list:
+                inline: true
+                entry_name: KeyValueItem
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            type: array<TecCom\Order\FunctionCallResponse\KeyValueItemType>

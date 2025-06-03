@@ -1,1 +1,0 @@
-C:/xampp/htdocs/autopart/wp-content/plugins/query-monitor/wp-content/db.php

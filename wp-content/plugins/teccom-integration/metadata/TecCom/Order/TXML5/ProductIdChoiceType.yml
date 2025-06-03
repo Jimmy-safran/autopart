@@ -1,0 +1,45 @@
+TecCom\Order\TXML5\ProductIdChoiceType:
+    properties:
+        brand:
+            expose: true
+            access_type: public_method
+            serialized_name: Brand
+            accessor:
+                getter: getBrand
+                setter: setBrand
+            type: TecCom\Order\TXML5\BrandType
+        productNumber:
+            expose: true
+            access_type: public_method
+            serialized_name: ProductNumber
+            accessor:
+                getter: getProductNumber
+                setter: setProductNumber
+            type: string
+        ean:
+            expose: true
+            access_type: public_method
+            serialized_name: Ean
+            accessor:
+                getter: getEan
+                setter: setEan
+            type: string
+        additionalProductId:
+            expose: true
+            access_type: public_method
+            serialized_name: AdditionalProductId
+            accessor:
+                getter: getAdditionalProductId
+                setter: setAdditionalProductId
+            xml_list:
+                inline: true
+                entry_name: AdditionalProductId
+            type: array<TecCom\Order\TXML5\QualifierNumberType>
+        buyerProductNumber:
+            expose: true
+            access_type: public_method
+            serialized_name: BuyerProductNumber
+            accessor:
+                getter: getBuyerProductNumber
+                setter: setBuyerProductNumber
+            type: string

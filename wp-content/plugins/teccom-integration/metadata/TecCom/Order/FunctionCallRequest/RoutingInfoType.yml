@@ -1,0 +1,32 @@
+TecCom\Order\FunctionCallRequest\RoutingInfoType:
+    properties:
+        requestOriginator:
+            expose: true
+            access_type: public_method
+            serialized_name: RequestOriginator
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getRequestOriginator
+                setter: setRequestOriginator
+            type: string
+        requestDestination:
+            expose: true
+            access_type: public_method
+            serialized_name: RequestDestination
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getRequestDestination
+                setter: setRequestDestination
+            type: string
+        responseOriginator:
+            expose: true
+            access_type: public_method
+            serialized_name: ResponseOriginator
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallRequest
+            accessor:
+                getter: getResponseOriginator
+                setter: setResponseOriginator
+            type: string

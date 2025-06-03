@@ -1,0 +1,18 @@
+TecCom\Order\TXML5\OrdRsp\OrdRspAType\LineAType\TotalQuantityAType:
+    properties:
+        requested:
+            expose: true
+            access_type: public_method
+            serialized_name: Requested
+            accessor:
+                getter: getRequested
+                setter: setRequested
+            type: TecCom\Order\TXML5\QuantityType
+        confirmed:
+            expose: true
+            access_type: public_method
+            serialized_name: Confirmed
+            accessor:
+                getter: getConfirmed
+                setter: setConfirmed
+            type: TecCom\Order\TXML5\QuantityType

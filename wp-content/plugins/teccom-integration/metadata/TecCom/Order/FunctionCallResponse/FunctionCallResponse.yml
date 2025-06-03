@@ -1,0 +1,3 @@
+TecCom\Order\FunctionCallResponse\FunctionCallResponse:
+    xml_root_name: FunctionCallResponse
+    xml_root_namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse

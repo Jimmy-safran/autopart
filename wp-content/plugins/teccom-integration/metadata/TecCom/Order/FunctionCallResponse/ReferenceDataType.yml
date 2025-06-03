@@ -1,0 +1,32 @@
+TecCom\Order\FunctionCallResponse\ReferenceDataType:
+    properties:
+        businessRelationID:
+            expose: true
+            access_type: public_method
+            serialized_name: BusinessRelationID
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getBusinessRelationID
+                setter: setBusinessRelationID
+            type: string
+        businessTransactionID:
+            expose: true
+            access_type: public_method
+            serialized_name: BusinessTransactionID
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getBusinessTransactionID
+                setter: setBusinessTransactionID
+            type: string
+        routingInfo:
+            expose: true
+            access_type: public_method
+            serialized_name: RoutingInfo
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getRoutingInfo
+                setter: setRoutingInfo
+            type: TecCom\Order\FunctionCallResponse\RoutingInfoType

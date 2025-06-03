@@ -1,0 +1,42 @@
+TecCom\Order\FunctionCallResponse\StatusDataType:
+    properties:
+        severity:
+            expose: true
+            access_type: public_method
+            serialized_name: Severity
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getSeverity
+                setter: setSeverity
+            type: string
+        code:
+            expose: true
+            access_type: public_method
+            serialized_name: Code
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getCode
+                setter: setCode
+            type: string
+        domain:
+            expose: true
+            access_type: public_method
+            serialized_name: Domain
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getDomain
+                setter: setDomain
+            type: string
+        value:
+            expose: true
+            access_type: public_method
+            serialized_name: Value
+            xml_element:
+                namespace: teccom.de/TecCom.OpenMessaging.DTO.FunctionCallResponse
+            accessor:
+                getter: getValue
+                setter: setValue
+            type: string

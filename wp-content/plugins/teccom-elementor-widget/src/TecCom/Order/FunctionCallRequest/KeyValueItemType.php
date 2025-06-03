@@ -1,0 +1,67 @@
+<?php
+
+namespace TecCom\Order\FunctionCallRequest;
+
+/**
+ * Class representing KeyValueItemType
+ *
+ * 
+ * XSD Type: KeyValueItem
+ */
+class KeyValueItemType
+{
+    /**
+     * @var string $key
+     */
+    private $key = null;
+
+    /**
+     * @var string $value
+     */
+    private $value = null;
+
+    /**
+     * Gets as key
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * Sets a new key
+     *
+     * @param string $key
+     * @return self
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+        return $this;
+    }
+
+    /**
+     * Gets as value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Sets a new value
+     *
+     * @param string $value
+     * @return self
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+        return $this;
+    }
+}
+

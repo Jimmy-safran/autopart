@@ -1,0 +1,45 @@
+TecCom\Order\TXML5\ProductPriceType:
+    properties:
+        netPrice:
+            expose: true
+            access_type: public_method
+            serialized_name: NetPrice
+            accessor:
+                getter: getNetPrice
+                setter: setNetPrice
+            type: float
+        grossPrice:
+            expose: true
+            access_type: public_method
+            serialized_name: GrossPrice
+            accessor:
+                getter: getGrossPrice
+                setter: setGrossPrice
+            type: float
+        netAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: NetAmount
+            accessor:
+                getter: getNetAmount
+                setter: setNetAmount
+            type: float
+        grossAmount:
+            expose: true
+            access_type: public_method
+            serialized_name: GrossAmount
+            accessor:
+                getter: getGrossAmount
+                setter: setGrossAmount
+            type: float
+        additionalPrice:
+            expose: true
+            access_type: public_method
+            serialized_name: AdditionalPrice
+            accessor:
+                getter: getAdditionalPrice
+                setter: setAdditionalPrice
+            xml_list:
+                inline: true
+                entry_name: AdditionalPrice
+            type: array<TecCom\Order\TXML5\PriceType>

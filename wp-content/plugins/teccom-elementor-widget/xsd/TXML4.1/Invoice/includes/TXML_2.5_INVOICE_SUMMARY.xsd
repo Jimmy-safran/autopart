@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.teccom.de/tecorder/invoic/txml25" targetNamespace="http://www.teccom.de/tecorder/invoic/txml25" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="TXML_SIMPLETYPES.xsd"/>
+	<xs:include schemaLocation="TXML_COMPLEXTYPES.xsd"/>
+	<xs:include schemaLocation="TXML_ENUMTYPES.xsd"/>
+	<!-- Invoice Summary -->
+	<xs:complexType name="InvoiceSummaryType">
+		<xs:sequence>
+			<!-- Invoice level allowances or charges -->
+			<xs:element name="AllowOrCharge" type="AllowOrChargeType" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- Invoice level Tax - not used any more -->
+			<xs:element name="Tax" type="TaxType" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- Invoice Totals -->
+			<xs:element name="InvoiceTotals">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="InvoiceNetValue" type="AmountType2"/>
+						<xs:element name="InvoiceGrossValue" type="AmountType2"/>
+						<xs:element name="InvoiceTaxAmount" type="AmountType2"/>
+						<xs:element name="InvoiceDiscount" type="AmountType2" minOccurs="0"/>
+						<xs:element name="InvoiceCharge" type="AmountType2" minOccurs="0"/>
+						<xs:element name="PrepaidAmount" type="AmountType2" minOccurs="0"/>
+						<xs:element name="InvoiceAmountPayable" type="AmountType2"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- Tax Totals -->
+			<xs:element name="TaxTotals">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Tax" type="TaxTypeInvoiceSummary" minOccurs="1" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- Allow or Charge totals -->
+			<xs:element name="AllowOrChargeTotals" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowOrCharge" type="AllowOrChargeType" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- Tax Code description -->
+			<xs:element name="TaxCodeDescription" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="TaxCode" type="TaxCodeType"/>
+						<xs:element name="TaxDescription" type="string70"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- Free text information for additional infos-->
+			<xs:element name="FreeText" type="FreeTextType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,234 @@
+TecCom\Order\TXML5\VehicleType:
+    properties:
+        id:
+            expose: true
+            access_type: public_method
+            serialized_name: Id
+            accessor:
+                getter: getId
+                setter: setId
+            type: int
+        rMITypeId:
+            expose: true
+            access_type: public_method
+            serialized_name: RMITypeId
+            accessor:
+                getter: getRMITypeId
+                setter: setRMITypeId
+            type: string
+        registration1:
+            expose: true
+            access_type: public_method
+            serialized_name: Registration1
+            accessor:
+                getter: getRegistration1
+                setter: setRegistration1
+            type: string
+        registration2:
+            expose: true
+            access_type: public_method
+            serialized_name: Registration2
+            accessor:
+                getter: getRegistration2
+                setter: setRegistration2
+            type: string
+        vehicleType:
+            expose: true
+            access_type: public_method
+            serialized_name: VehicleType
+            accessor:
+                getter: getVehicleType
+                setter: setVehicleType
+            type: string
+        manufacturer:
+            expose: true
+            access_type: public_method
+            serialized_name: Manufacturer
+            accessor:
+                getter: getManufacturer
+                setter: setManufacturer
+            type: string
+        model:
+            expose: true
+            access_type: public_method
+            serialized_name: Model
+            accessor:
+                getter: getModel
+                setter: setModel
+            type: string
+        modelType:
+            expose: true
+            access_type: public_method
+            serialized_name: ModelType
+            accessor:
+                getter: getModelType
+                setter: setModelType
+            type: string
+        modelYear:
+            expose: true
+            access_type: public_method
+            serialized_name: ModelYear
+            accessor:
+                getter: getModelYear
+                setter: setModelYear
+            type: int
+        version:
+            expose: true
+            access_type: public_method
+            serialized_name: Version
+            accessor:
+                getter: getVersion
+                setter: setVersion
+            type: string
+        power:
+            expose: true
+            access_type: public_method
+            serialized_name: Power
+            accessor:
+                getter: getPower
+                setter: setPower
+            type: int
+        powerUnits:
+            expose: true
+            access_type: public_method
+            serialized_name: PowerUnits
+            accessor:
+                getter: getPowerUnits
+                setter: setPowerUnits
+            type: string
+        capacity:
+            expose: true
+            access_type: public_method
+            serialized_name: Capacity
+            accessor:
+                getter: getCapacity
+                setter: setCapacity
+            type: int
+        transmission:
+            expose: true
+            access_type: public_method
+            serialized_name: Transmission
+            accessor:
+                getter: getTransmission
+                setter: setTransmission
+            type: string
+        vehicleSearch:
+            expose: true
+            access_type: public_method
+            serialized_name: VehicleSearch
+            accessor:
+                getter: getVehicleSearch
+                setter: setVehicleSearch
+            type: string
+        country:
+            expose: true
+            access_type: public_method
+            serialized_name: Country
+            accessor:
+                getter: getCountry
+                setter: setCountry
+            type: string
+        fuelType:
+            expose: true
+            access_type: public_method
+            serialized_name: FuelType
+            accessor:
+                getter: getFuelType
+                setter: setFuelType
+            type: string
+        vIN:
+            expose: true
+            access_type: public_method
+            serialized_name: VIN
+            accessor:
+                getter: getVIN
+                setter: setVIN
+            type: string
+        engineCode:
+            expose: true
+            access_type: public_method
+            serialized_name: EngineCode
+            accessor:
+                getter: getEngineCode
+                setter: setEngineCode
+            type: string
+        engineNo:
+            expose: true
+            access_type: public_method
+            serialized_name: EngineNo
+            accessor:
+                getter: getEngineNo
+                setter: setEngineNo
+            type: string
+        errorCode:
+            expose: true
+            access_type: public_method
+            serialized_name: ErrorCode
+            accessor:
+                getter: getErrorCode
+                setter: setErrorCode
+            type: string
+        fittedBy:
+            expose: true
+            access_type: public_method
+            serialized_name: FittedBy
+            accessor:
+                getter: getFittedBy
+                setter: setFittedBy
+            type: string
+        fittingDate:
+            expose: true
+            access_type: public_method
+            serialized_name: FittingDate
+            accessor:
+                getter: getFittingDate
+                setter: setFittingDate
+            type: DateTime
+        mileageFitting:
+            expose: true
+            access_type: public_method
+            serialized_name: MileageFitting
+            accessor:
+                getter: getMileageFitting
+                setter: setMileageFitting
+            type: int
+        mileageFittingUnits:
+            expose: true
+            access_type: public_method
+            serialized_name: MileageFittingUnits
+            accessor:
+                getter: getMileageFittingUnits
+                setter: setMileageFittingUnits
+            type: string
+        mileageRemoval:
+            expose: true
+            access_type: public_method
+            serialized_name: MileageRemoval
+            accessor:
+                getter: getMileageRemoval
+                setter: setMileageRemoval
+            type: int
+        mileageRemovalUnits:
+            expose: true
+            access_type: public_method
+            serialized_name: MileageRemovalUnits
+            accessor:
+                getter: getMileageRemovalUnits
+                setter: setMileageRemovalUnits
+            type: string
+        removalDate:
+            expose: true
+            access_type: public_method
+            serialized_name: RemovalDate
+            accessor:
+                getter: getRemovalDate
+                setter: setRemovalDate
+            type: DateTime
+        removedBy:
+            expose: true
+            access_type: public_method
+            serialized_name: RemovedBy
+            accessor:
+                getter: getRemovedBy
+                setter: setRemovedBy
+            type: string

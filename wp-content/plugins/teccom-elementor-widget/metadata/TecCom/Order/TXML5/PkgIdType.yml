@@ -1,0 +1,18 @@
+TecCom\Order\TXML5\PkgIdType:
+    properties:
+        system:
+            expose: true
+            access_type: public_method
+            serialized_name: System
+            accessor:
+                getter: getSystem
+                setter: setSystem
+            type: string
+        number:
+            expose: true
+            access_type: public_method
+            serialized_name: Number
+            accessor:
+                getter: getNumber
+                setter: setNumber
+            type: string

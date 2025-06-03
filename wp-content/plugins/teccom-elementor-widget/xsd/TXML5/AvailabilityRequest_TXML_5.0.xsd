@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bearbeitet mit XMLSpy v2023 rel. 2 (x64) (http://www.altova.com) von TecAlliance GmbH (TecAlliance GmbH) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="Txml_5.0_Common.xsd"/>
+    <xs:annotation>
+        <xs:appinfo>
+            <history>
+                <version>1.0</version>
+                <changedBy>CD</changedBy>
+                <changedOn>20200810</changedOn>
+                <change>add name space</change>
+            </history>
+            <history>
+                <version>1.1</version>
+                <changedBy>RMA</changedBy>
+                <changedOn>20201005</changedOn>
+                <change>Upgrade TXML Common to v1.1</change>
+            </history>
+            <history>
+                <version>1.2</version>
+                <changedBy>RMA</changedBy>
+                <changedOn>20210311</changedOn>
+                <change>Upgrade TXML Common to v1.6</change>
+            </history>
+            <history>
+                <version>1.3</version>
+                <changedBy>RMA</changedBy>
+                <changedOn>20210413</changedOn>
+                <change>Upgrade TXML Common to v1.7</change>
+            </history>
+            <history>
+                <version>1.4</version>
+                <changedBy>RMA</changedBy>
+                <changedOn>20210803</changedOn>
+                <change>Upgrade TXML Common to v1.8</change>
+            </history>
+            <history>
+                <version>1.5</version>
+                <changedBy>RHA</changedBy>
+                <changedOn>20210827</changedOn>
+                <change>Upgrade TXML Common to v1.9</change>
+            </history>
+            <history>
+                <version>1.6</version>
+                <changedBy>RMA</changedBy>
+                <changedOn>20211005</changedOn>
+                <change>Upgrade TXML Common to v1.10</change>
+            </history>
+            <history>
+                <version>1.7</version>
+                <changedBy>MDR</changedBy>
+                <changedOn>20220927</changedOn>
+                <change>Upgrade TXML Common to v1.11</change>
+            </history>
+            <history>
+                <version>1.8</version>
+                <changedBy>CD</changedBy>
+                <changedOn>20240124</changedOn>
+                <change>Remove schema version from filename; remove derived by extension from AdditionalParty and DeliveryParty</change>
+            </history>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:element name="AvaReq">
+        <xs:annotation>
+            <xs:documentation>The availability request is used by the buyer to request the availability of articles and prices from the seller.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Head">
+                    <xs:annotation>
+                        <xs:documentation>Information about the whole availability request.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="DocumentNumber" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>The identifier of the availability request.
+
+This **must** be unique over all availability requests the buyer sends (that is, no two availability requests may share the same identifier).</xs:documentation>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="0"/>
+                                        <xs:maxLength value="35"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IssueDate" type="xs:dateTime">
+                                <xs:annotation>
+                                    <xs:documentation>The specific point in time when the availability request was created.
+
+It **must** include the time zone (which is the number of hours and minutes the given time is ahead or behind UTC time).</xs:documentation>
+                                    <xs:appinfo>
+                                        <altova:exampleValues>
+                                            <altova:example value="2024-01-04T15:51:39+01:00"/>
+                                        </altova:exampleValues>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AvaReqOptions">
+                                <xs:annotation>
+                                    <xs:documentation>Options for configuring the availability request.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Type" type="AvaReqOptionsTypeCodeList">
+                                            <xs:annotation>
+                                                <xs:documentation>The type of the availability request.</xs:documentation>
+                                                <xs:appinfo>
+                                                    <altova:exampleValues>
+                                                        <altova:example value="Exact"/>
+                                                    </altova:exampleValues>
+                                                </xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="PriceInfo" type="xs:boolean">
+                                            <xs:annotation>
+                                                <xs:documentation>Indicates if the buyer wants to receive prices or not.
+
+Usually, the seller can answer faster if no prices are requested due to the sometimes considerable complexity of the calculation logic for prices.</xs:documentation>
+                                                <xs:appinfo>
+                                                    <altova:exampleValues>
+                                                        <altova:example value="true"/>
+                                                    </altova:exampleValues>
+                                                </xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="SellerParty" type="PartyType1">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the seller.
+
+The `Number` for the seller party is usually assigned by the buyer. It is the number under which the seller is known in the buyer's ERP system.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="BuyerParty" type="PartyType1">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the buyer.
+
+The `Number` for the buyer party is usually assigned by the seller. It is the number under which the buyer is known in the seller's ERP system.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="DeliveryParty" type="PartyType2" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the recipient of the order.
+
+The delivery party **must not** be used to provide a shipping address for dropshipping. For that an `AdditionalParty` **must** be used.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AdditionalParty" type="AdditionalPartyType" minOccurs="0" maxOccurs="10">
+                                <xs:annotation>
+                                    <xs:documentation>Information about another party involved in the availability request.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Currency" type="CurrencyType" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the currency of the availability request.
+
+A buyer **must** only use the `Request` element, but omit `Response` and `ExchangeRate`.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ProcessingInstructions" type="ProcessingInstructionsType">
+                                <xs:annotation>
+                                    <xs:documentation>The processing instructions the  seller **must** follow when processing the availability request.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AdditionalParameters" type="AdditionalParametersType" minOccurs="0" maxOccurs="30">
+                                <xs:annotation>
+                                    <xs:documentation>An additional parameter that conveys specific information that applies to the whole document.
+
+The buyer **must** only use these qualifiers:
+
+1.  `PromotionCode`
+2.  `StorageLocation`</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Payment" type="Payment" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the terms of payment.
+
+1.  If present, the seller **must** evaluate the mode sent by the buyer and warn them in the availability response if they sent an unsupported payment mode.
+
+2.  For the payment mode `PayBeforeOrder` the seller **must** return a payment reference in the availability response that the buyer must use for payment before they can place the order.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Incoterms" type="IncotermsType" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>The Incoterms rule.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="FreeText" type="FreeTextValueType" minOccurs="0" maxOccurs="50">
+                                <xs:annotation>
+                                    <xs:documentation>Arbitrary information that relates to the whole document.
+
+Free text **must** be agreed between buyer and seller, otherwise the seller will ignore it.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Line" maxOccurs="999999">
+                    <xs:annotation>
+                        <xs:documentation>Information about an individual availability request line.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Number">
+                                <xs:annotation>
+                                    <xs:documentation>The position number of the line.
+
+This number **must** be a positive integer and be greater than the position number of the previous line (if any).</xs:documentation>
+                                    <xs:appinfo>
+                                        <altova:exampleValues>
+                                            <altova:example value="1"/>
+                                        </altova:exampleValues>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:int">
+                                        <xs:minExclusive value="0"/>
+                                        <xs:totalDigits value="6"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="Quantity" type="QuantityType">
+                                <xs:annotation>
+                                    <xs:documentation>Information about the requested quantity.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ProductId" type="ProductIdChoiceType">
+                                <xs:annotation>
+                                    <xs:documentation>One or more product identifiers of the requested article.
+
+The seller **must** search for the article in their ERP system in this order:
+
+1.  `Ean`
+2.  `ProductNumber`
+3.  `BuyerProductNumber`
+4.  `AdditionalProductId` (OENumber)
+5.  `AdditionalProductId` (TradeNumber).</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="ProductName" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>The name of the article.</xs:documentation>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="256"/>
+                                        <xs:minLength value="0"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="ProductChangeAllowed" type="xs:boolean">
+                                <xs:annotation>
+                                    <xs:documentation>Indicates to the seller if the buyer allows them to return alternative articles.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="Price" type="ProductPriceType" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Information about different types of prices.
+
+Any prices the buyer sends in an order have just informational value unless there is some sort of agreement between buyer and seller.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="AdditionalParameters" type="AdditionalParametersType" minOccurs="0" maxOccurs="30">
+                                <xs:annotation>
+                                    <xs:documentation>An additional parameter that conveys specific information that applies to the line.
+
+The buyer **must** only use these qualifiers:
+
+1.  `PromotionCode`
+2.  `StorageLocation`</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="FreeText" type="FreeTextValueType" minOccurs="0" maxOccurs="50">
+                                <xs:annotation>
+                                    <xs:documentation>Arbitrary information that relates to the line.
+
+Free text **must** be agreed between buyer and seller, otherwise the seller will ignore it.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:string" use="required" fixed="5.0">
+                <xs:annotation>
+                    <xs:documentation>The document's TXML version.
+
+This **must** be set to the fixed value provided in the schema.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.teccom.de/tecorder/invoic/txml25" targetNamespace="http://www.teccom.de/tecorder/invoic/txml25" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<!-- Invoice Meta data -->
+  <xs:complexType name="DocumentType">
+    <xs:attribute name="Type" use="required" type="xs:string" fixed="Invoice" />
+    <xs:attribute name="Version" use="required" type="xs:string" fixed="2.5"/>
+  </xs:complexType>
+</xs:schema>
